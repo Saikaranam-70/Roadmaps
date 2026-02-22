@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Computing Roadmap — AWS · Azure · GCP · DevOps</title>
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700;800&family=Share+Tech+Mono&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #02060f;
+  --surface: #060d1a;
+  --surface2: #0a1525;
+  --surface3: #0e1c30;
+  --border: rgba(56,189,248,0.08);
+  --border2: rgba(56,189,248,0.18);
+  --text: #e8f4fd;
+  --muted: #4d7a9e;
+  --dim: #7eb8d4;
+
+  --aws: #ff9900;
+  --azure: #0078d4;
+  --gcp: #4285f4;
+  --devops: #00d4aa;
+
+  --cyan: #22d3ee;
+  --blue: #38bdf8;
+  --green: #00d4aa;
+  --orange: #ff9900;
+  --red: #f87171;
+  --purple: #a78bfa;
+  --yellow: #fbbf24;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Nunito',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── Cosmic atmosphere ── */
+body::before{
+  content:'';position:fixed;top:-60%;left:-30%;width:100%;height:100%;
+  background:radial-gradient(ellipse at 30% 40%,rgba(34,211,238,0.05) 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 80%,rgba(0,120,212,0.05) 0%,transparent 50%);
+  pointer-events:none;z-index:0;
+}
+.stars{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
+.stars::before,.stars::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, rgba(56,189,248,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 42%, rgba(56,189,248,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 8%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 65%, rgba(56,189,248,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 55%, rgba(56,189,248,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 92% 20%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 18% 78%, rgba(56,189,248,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 62% 90%, rgba(255,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 47% 50%, rgba(56,189,248,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 33% 25%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 78% 72%, rgba(56,189,248,0.3) 0%, transparent 100%);
+}
+.stars::after{
+  background-image:
+    radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 88%, rgba(56,189,248,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 38% 70%, rgba(255,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 12%, rgba(56,189,248,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 45%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 90% 85%, rgba(56,189,248,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 22% 35%, rgba(255,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 95%, rgba(56,189,248,0.2) 0%, transparent 100%);
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+@keyframes twinkle{0%{opacity:.6;}100%{opacity:1;}}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(2,6,15,0.92);backdrop-filter:blur(28px);
+  border-bottom:1px solid var(--border);height:58px;
+  display:flex;align-items:center;padding:0 1.8rem;gap:1.2rem;
+}
+.nav-logo{
+  font-family:'Oxanium',sans-serif;font-size:0.82rem;font-weight:700;
+  color:var(--cyan);letter-spacing:0.12em;white-space:nowrap;text-transform:uppercase;
+}
+.nav-logo span{color:rgba(34,211,238,.45);}
+.nav-providers{display:flex;gap:.4rem;flex:1;}
+.np{
+  font-family:'Share Tech Mono',monospace;font-size:.6rem;
+  padding:.22rem .65rem;border-radius:4px;border:1px solid;
+  cursor:pointer;transition:all .2s;letter-spacing:.05em;text-transform:uppercase;
+}
+.np-aws{color:var(--aws);border-color:rgba(255,153,0,.2);background:rgba(255,153,0,.06);}
+.np-aws.act{background:rgba(255,153,0,.16);border-color:var(--aws);box-shadow:0 0 12px rgba(255,153,0,.2);}
+.np-azure{color:var(--azure);border-color:rgba(0,120,212,.2);background:rgba(0,120,212,.06);}
+.np-azure.act{background:rgba(0,120,212,.16);border-color:var(--azure);box-shadow:0 0 12px rgba(0,120,212,.2);}
+.np-gcp{color:#7cb9f8;border-color:rgba(66,133,244,.2);background:rgba(66,133,244,.06);}
+.np-gcp.act{background:rgba(66,133,244,.16);border-color:#7cb9f8;box-shadow:0 0 12px rgba(66,133,244,.2);}
+.np-devops{color:var(--devops);border-color:rgba(0,212,170,.2);background:rgba(0,212,170,.06);}
+.np-devops.act{background:rgba(0,212,170,.16);border-color:var(--devops);box-shadow:0 0 12px rgba(0,212,170,.2);}
+.np-all{color:var(--dim);border-color:rgba(126,184,212,.15);background:transparent;}
+.np-all.act{color:var(--cyan);border-color:var(--border2);}
+.nav-right{display:flex;align-items:center;gap:1rem;margin-left:auto;}
+.npct{font-family:'Share Tech Mono',monospace;font-size:.62rem;color:var(--muted);}
+.npct b{color:var(--cyan);}
+.nbar{width:90px;height:3px;background:rgba(34,211,238,.08);border-radius:99px;overflow:hidden;}
+.nfill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--blue));border-radius:99px;transition:width .5s ease;}
+.rbtn{
+  font-family:'Share Tech Mono',monospace;font-size:.58rem;
+  background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.18);
+  color:var(--red);padding:.3rem .65rem;border-radius:4px;cursor:pointer;
+  letter-spacing:.05em;text-transform:uppercase;transition:background .2s;
+}
+.rbtn:hover{background:rgba(248,113,113,.15);}
+@media(max-width:768px){.nav-providers{display:none;}.nav-right{display:none;}}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;padding:100px 2rem 48px;
+  text-align:center;max-width:860px;margin:0 auto;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.55rem;
+  background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.18);
+  border-radius:4px;padding:.3rem 1rem;
+  font-family:'Share Tech Mono',monospace;font-size:.6rem;
+  color:var(--cyan);letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:1.5rem;animation:rise .5s ease both;
+}
+.dot-pulse{width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:dpulse 2s infinite;}
+@keyframes dpulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,211,238,.5);}50%{opacity:.6;box-shadow:0 0 0 6px rgba(34,211,238,0);}}
+h1{
+  font-family:'Oxanium',sans-serif;
+  font-size:clamp(2rem,5.5vw,4.2rem);font-weight:800;
+  line-height:1.04;letter-spacing:-0.02em;
+  animation:rise .5s .08s ease both;
+}
+.grad-text{
+  background:linear-gradient(135deg,var(--cyan) 0%,var(--blue) 40%,var(--purple) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.provider-badges{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;
+  margin:1.3rem 0 .9rem;animation:rise .5s .16s ease both;
+}
+.pb{
+  font-family:'Share Tech Mono',monospace;font-size:.64rem;font-weight:700;
+  padding:.32rem .9rem;border-radius:3px;border:1px solid;letter-spacing:.08em;text-transform:uppercase;
+}
+.pb-aws{color:var(--aws);border-color:rgba(255,153,0,.3);background:rgba(255,153,0,.08);}
+.pb-azure{color:#60a5fa;border-color:rgba(0,120,212,.35);background:rgba(0,120,212,.08);}
+.pb-gcp{color:#7cb9f8;border-color:rgba(66,133,244,.3);background:rgba(66,133,244,.08);}
+.pb-devops{color:var(--devops);border-color:rgba(0,212,170,.3);background:rgba(0,212,170,.08);}
+.hero p{
+  color:var(--muted);font-size:.93rem;line-height:1.75;
+  max-width:510px;margin:0 auto;animation:rise .5s .24s ease both;
+}
+@keyframes rise{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── FILTER BAR ── */
+.filter-bar{
+  position:relative;z-index:1;max-width:1120px;
+  margin:0 auto 2rem;padding:0 2rem;
+  animation:rise .4s .3s ease both;
+}
+.filter-wrap{
+  display:flex;gap:.4rem;padding:.55rem;
+  background:var(--surface);
+  border:1px solid var(--border);border-radius:8px;
+  flex-wrap:wrap;
+}
+.fb{
+  font-family:'Share Tech Mono',monospace;font-size:.62rem;
+  padding:.42rem 1rem;border-radius:4px;border:1px solid transparent;
+  cursor:pointer;transition:all .2s;font-weight:500;letter-spacing:.06em;
+  color:var(--muted);background:transparent;text-transform:uppercase;
+}
+.fb:hover{color:var(--text);background:rgba(255,255,255,.04);}
+.fb.act{color:var(--text);background:var(--surface2);border-color:var(--border2);}
+.fb-aws.act{color:var(--aws);border-color:rgba(255,153,0,.3);background:rgba(255,153,0,.08);}
+.fb-azure.act{color:#60a5fa;border-color:rgba(0,120,212,.3);background:rgba(0,120,212,.08);}
+.fb-gcp.act{color:#7cb9f8;border-color:rgba(66,133,244,.3);background:rgba(66,133,244,.08);}
+.fb-devops.act{color:var(--devops);border-color:rgba(0,212,170,.3);background:rgba(0,212,170,.08);}
+.fb-sep{width:1px;background:var(--border);margin:.1rem 0;flex-shrink:0;}
+
+/* ── DASHBOARD ── */
+.dash{
+  position:relative;z-index:1;max-width:1120px;
+  margin:0 auto 2.5rem;padding:0 2rem;
+  animation:rise .4s .35s ease both;
+}
+.dgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:.7rem;}
+.dc{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:.95rem 1.05rem;position:relative;overflow:hidden;
+}
+.dc::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--dc-c,var(--cyan));
+}
+.dc::after{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom,var(--dc-c,var(--cyan)),transparent);
+  opacity:.4;
+}
+.dlbl{
+  font-family:'Share Tech Mono',monospace;font-size:.52rem;
+  color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.45rem;
+}
+.dval{font-family:'Oxanium',sans-serif;font-size:1.65rem;font-weight:800;line-height:1;color:var(--text);}
+.dval small{font-size:.78rem;color:var(--muted);font-weight:400;}
+.dsub{font-size:.68rem;color:var(--muted);margin-top:.2rem;font-family:'Share Tech Mono',monospace;}
+.ring-wrap{display:flex;align-items:center;gap:.8rem;margin-top:.3rem;}
+.ring{position:relative;width:54px;height:54px;flex-shrink:0;}
+.ring svg{transform:rotate(-90deg);}
+.rbg2{fill:none;stroke:rgba(34,211,238,.06);stroke-width:5;}
+.rfg2{fill:none;stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .9s ease;}
+.rtxt2{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:'Share Tech Mono',monospace;font-size:.6rem;font-weight:700;color:var(--cyan);
+}
+@media(max-width:900px){.dgrid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:580px){.dgrid{grid-template-columns:repeat(2,1fr);}}
+
+/* ── MAIN ── */
+main{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 2rem 6rem;}
+.sec-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.3rem;}
+.sec-line{flex:1;height:1px;background:var(--border);}
+.sec-lbl{
+  font-family:'Share Tech Mono',monospace;font-size:.56rem;
+  color:var(--muted);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
+}
+
+/* ── PROVIDER SECTION ── */
+.prov-section{margin-bottom:3.5rem;}
+.prov-section.hidden{display:none;}
+.prov-hdr{
+  display:flex;align-items:center;gap:1rem;padding:1rem 1.4rem;
+  border-radius:8px;margin-bottom:1rem;position:relative;overflow:hidden;
+  border:1px solid var(--ph-border,rgba(34,211,238,.15));
+}
+.prov-hdr::before{
+  content:'';position:absolute;inset:0;
+  background:var(--ph-bg,rgba(34,211,238,.04));
+}
+.prov-hdr::after{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:3px;
+  background:var(--ph-color,var(--cyan));
+}
+.prov-icon{font-size:1.6rem;position:relative;}
+.prov-info{position:relative;}
+.prov-name{
+  font-family:'Oxanium',sans-serif;font-size:1.25rem;font-weight:800;
+  letter-spacing:.02em;
+}
+.prov-sub{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--muted);margin-top:.1rem;}
+.prov-stat{
+  position:relative;margin-left:auto;
+  font-family:'Share Tech Mono',monospace;font-size:.62rem;
+  padding:.28rem .7rem;border-radius:4px;border:1px solid;letter-spacing:.04em;
+}
+
+/* ── PHASE ── */
+.phase{margin-bottom:1.3rem;animation:rise .4s ease both;}
+.phd{
+  display:flex;align-items:center;gap:.75rem;padding:.8rem 1.1rem;
+  border-radius:7px 7px 0 0;cursor:pointer;user-select:none;
+  transition:filter .2s;
+}
+.phd:hover{filter:brightness(1.08);}
+.phnum{
+  font-family:'Share Tech Mono',monospace;font-size:.52rem;
+  letter-spacing:.1em;opacity:.55;text-transform:uppercase;
+}
+.phtitle{font-family:'Oxanium',sans-serif;font-size:.9rem;font-weight:700;flex:1;letter-spacing:.01em;}
+.phmons{font-family:'Share Tech Mono',monospace;font-size:.55rem;opacity:.5;}
+.phpill{
+  background:rgba(0,0,0,.4);border-radius:3px;
+  padding:.16rem .58rem;font-family:'Share Tech Mono',monospace;
+  font-size:.58rem;display:flex;align-items:center;gap:.32rem;white-space:nowrap;
+}
+.phdot{width:4px;height:4px;border-radius:50%;}
+.chev{opacity:.5;font-size:.68rem;transition:transform .3s;}
+.phase.closed .chev{transform:rotate(-90deg);}
+.phb{
+  background:var(--surface);border:1px solid var(--border);
+  border-top:none;border-radius:0 0 8px 8px;overflow:hidden;
+  transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s;
+  max-height:6000px;opacity:1;
+}
+.phase.closed .phb{max-height:0;opacity:0;}
+.phpbar{height:2px;background:rgba(255,255,255,.04);}
+.phpbfill{height:100%;transition:width .5s ease;}
+
+/* ── TABS ── */
+.tabs{display:flex;border-bottom:1px solid var(--border);padding:0 .9rem;gap:.02rem;overflow-x:auto;}
+.tabs::-webkit-scrollbar{display:none;}
+.tb{
+  font-family:'Share Tech Mono',monospace;font-size:.55rem;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted);background:none;border:none;
+  border-bottom:2px solid transparent;padding:.6rem .6rem;cursor:pointer;
+  transition:color .2s,border-color .2s;margin-bottom:-1px;white-space:nowrap;
+}
+.tb.on{color:var(--tc,var(--cyan));border-bottom-color:var(--tc,var(--cyan));}
+.tcw{display:none;padding:.95rem 1.05rem;}
+.tcw.on{display:block;}
+
+/* ── TOPICS ── */
+.cklist{display:flex;flex-direction:column;gap:.38rem;}
+.ci{
+  display:flex;align-items:flex-start;gap:.65rem;padding:.55rem .75rem;
+  background:rgba(34,211,238,.018);border:1px solid rgba(34,211,238,.06);
+  border-radius:5px;cursor:pointer;transition:background .15s;user-select:none;
+}
+.ci:hover{background:rgba(34,211,238,.038);}
+.ci.done{background:rgba(0,212,170,.05);border-color:rgba(0,212,170,.15);}
+.cbox{
+  width:14px;height:14px;border:1.5px solid var(--muted);border-radius:3px;
+  flex-shrink:0;margin-top:2px;display:flex;align-items:center;
+  justify-content:center;font-size:.56rem;transition:all .2s;
+}
+.ci.done .cbox{background:var(--green);border-color:var(--green);color:#000;}
+.clbl{font-size:.82rem;color:var(--dim);line-height:1.5;}
+.ci.done .clbl{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(77,122,158,.4);}
+
+/* ── SERVICES (like libraries) ── */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.5rem;}
+.sc{
+  background:rgba(34,211,238,.018);border:1px solid rgba(34,211,238,.06);
+  border-radius:6px;padding:.72rem;cursor:pointer;
+  transition:background .15s;display:flex;align-items:flex-start;gap:.58rem;user-select:none;
+}
+.sc:hover{background:rgba(34,211,238,.04);}
+.sc.done{background:rgba(0,212,170,.05);border-color:rgba(0,212,170,.18);}
+.svc-icon{
+  width:26px;height:26px;border-radius:4px;background:rgba(34,211,238,.07);
+  display:flex;align-items:center;justify-content:center;font-size:.82rem;flex-shrink:0;
+}
+.svc-info{flex:1;min-width:0;}
+.svc-name{font-family:'Share Tech Mono',monospace;font-size:.65rem;color:var(--text);font-weight:700;margin-bottom:.08rem;}
+.svc-desc{font-size:.67rem;color:var(--muted);line-height:1.3;}
+.svc-tag{font-family:'Share Tech Mono',monospace;font-size:.52rem;color:var(--cyan);margin-top:.22rem;opacity:.75;}
+.svc-chk{
+  width:12px;height:12px;border:1.5px solid var(--muted);border-radius:3px;
+  display:flex;align-items:center;justify-content:center;font-size:.48rem;
+  flex-shrink:0;margin-top:1px;transition:all .2s;
+}
+.sc.done .svc-chk{background:var(--green);border-color:var(--green);color:#000;}
+
+/* ── RESOURCES ── */
+.res-note{
+  font-family:'Share Tech Mono',monospace;font-size:.6rem;
+  color:var(--muted);margin-bottom:.75rem;display:flex;align-items:center;gap:.4rem;
+}
+.res-note::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--blue);flex-shrink:0;}
+.rgrid{display:flex;flex-direction:column;gap:.45rem;}
+.rc{
+  display:flex;align-items:center;gap:.72rem;padding:.75rem .9rem;
+  background:rgba(56,189,248,.015);border:1px solid rgba(56,189,248,.07);
+  border-radius:6px;text-decoration:none;
+  transition:background .15s,border-color .2s,transform .15s;
+}
+.rc:hover{background:rgba(34,211,238,.05);border-color:rgba(34,211,238,.22);transform:translateX(4px);}
+.rtype{
+  font-family:'Share Tech Mono',monospace;font-size:.52rem;letter-spacing:.07em;
+  text-transform:uppercase;padding:.14rem .42rem;border-radius:3px;
+  white-space:nowrap;flex-shrink:0;font-weight:700;
+}
+.tv{background:rgba(239,68,68,.14);color:#f87171;}
+.tc{background:rgba(34,211,238,.14);color:var(--cyan);}
+.tb2{background:rgba(251,191,36,.14);color:var(--yellow);}
+.td{background:rgba(126,184,212,.1);color:var(--dim);}
+.tpr{background:rgba(0,212,170,.14);color:var(--green);}
+.tto{background:rgba(167,139,250,.14);color:var(--purple);}
+.tpa{background:rgba(251,146,60,.14);color:#fb923c;}
+.rinfo{flex:1;min-width:0;}
+.rname{font-size:.82rem;color:var(--text);font-weight:500;line-height:1.3;margin-bottom:.15rem;}
+.rurl{font-family:'Share Tech Mono',monospace;font-size:.58rem;color:var(--cyan);opacity:.65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rwho{font-size:.66rem;color:var(--muted);margin-top:.1rem;}
+.rright{display:flex;align-items:center;gap:.38rem;flex-shrink:0;}
+.ftag{font-family:'Share Tech Mono',monospace;font-size:.52rem;color:var(--green);background:rgba(0,212,170,.1);padding:.11rem .38rem;border-radius:3px;}
+.rarr{color:var(--cyan);opacity:.35;font-size:.78rem;transition:opacity .2s,transform .2s;}
+.rc:hover .rarr{opacity:1;transform:translateX(3px);}
+
+/* ── CERTS ── */
+.cert-note{
+  font-family:'Share Tech Mono',monospace;font-size:.6rem;
+  color:var(--muted);margin-bottom:.75rem;display:flex;align-items:center;gap:.4rem;
+}
+.cert-note::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--orange);flex-shrink:0;}
+.cgrid{display:flex;flex-direction:column;gap:.45rem;}
+.cc{
+  display:flex;align-items:center;gap:.72rem;padding:.75rem .9rem;
+  background:rgba(255,153,0,.015);border:1px solid rgba(255,153,0,.08);
+  border-radius:6px;text-decoration:none;
+  transition:background .15s,border-color .2s,transform .15s;
+}
+.cc:hover{background:rgba(255,153,0,.06);border-color:rgba(255,153,0,.28);transform:translateX(4px);}
+.cprov{
+  font-family:'Share Tech Mono',monospace;font-size:.52rem;letter-spacing:.06em;
+  text-transform:uppercase;padding:.14rem .42rem;border-radius:3px;
+  white-space:nowrap;flex-shrink:0;font-weight:700;
+  background:rgba(255,153,0,.12);color:var(--orange);
+}
+.cinfo{flex:1;min-width:0;}
+.cname{font-size:.82rem;color:var(--text);font-weight:500;line-height:1.3;margin-bottom:.15rem;}
+.curl{font-family:'Share Tech Mono',monospace;font-size:.58rem;color:var(--orange);opacity:.65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cnote{font-size:.66rem;color:var(--muted);margin-top:.1rem;}
+.ctag-free{font-family:'Share Tech Mono',monospace;font-size:.52rem;color:var(--green);background:rgba(0,212,170,.1);padding:.11rem .38rem;border-radius:3px;white-space:nowrap;}
+.ctag-paid{font-family:'Share Tech Mono',monospace;font-size:.52rem;color:var(--orange);background:rgba(255,153,0,.1);padding:.11rem .38rem;border-radius:3px;white-space:nowrap;}
+.carr{color:var(--orange);opacity:.35;font-size:.78rem;transition:opacity .2s,transform .2s;}
+.cc:hover .carr{opacity:1;transform:translateX(3px);}
+
+/* ── NOTES ── */
+.nlbl{
+  font-family:'Share Tech Mono',monospace;font-size:.56rem;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:.5rem;
+}
+.nta{
+  width:100%;background:rgba(34,211,238,.018);border:1px solid rgba(34,211,238,.07);
+  border-radius:6px;padding:.8rem;color:var(--dim);font-family:'Nunito',sans-serif;
+  font-size:.82rem;line-height:1.65;resize:vertical;min-height:95px;
+  outline:none;transition:border-color .2s;
+}
+.nta:focus{border-color:rgba(34,211,238,.3);}
+.nta::placeholder{color:var(--muted);}
+
+/* ── TOOLS ── */
+.tools-section{margin-top:3rem;}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.55rem;}
+.tool{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:7px;padding:.82rem;text-decoration:none;
+  display:flex;align-items:center;gap:.65rem;
+  transition:border-color .2s,transform .15s,background .2s;
+}
+.tool:hover{border-color:var(--border2);transform:translateY(-2px);background:var(--surface2);}
+.te{font-size:1.1rem;}
+.tnm{font-family:'Oxanium',sans-serif;font-size:.78rem;font-weight:700;color:var(--text);}
+.tds{font-size:.67rem;color:var(--muted);margin-top:.04rem;}
+
+/* ── BANNER ── */
+.banner{
+  display:none;
+  background:linear-gradient(135deg,rgba(0,212,170,.08),rgba(34,211,238,.08));
+  border:1px solid rgba(0,212,170,.22);border-radius:8px;
+  padding:1.2rem 1.6rem;text-align:center;margin-bottom:1.5rem;
+}
+.banner.show{display:block;animation:rise .4s ease;}
+.banner h3{font-family:'Oxanium',sans-serif;font-size:1.2rem;font-weight:800;color:var(--green);margin-bottom:.2rem;}
+.banner p{font-size:.82rem;color:var(--muted);}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:rgba(34,211,238,.2);border-radius:99px;}
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 12px;
+  /* background-color: #ffffff; */
+  /* border-bottom: 2px solid #e5e7eb; */
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #374151;
+  font-size: 15px;
+  font-weight: 500;
+  position: relative;
+  padding: 6px 0;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -4px;
+  background-color: #2563eb;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #2563eb;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+
+<nav>
+  <div class="nav-logo">☁ <span>//</span> Cloud Roadmap</div>
+  <div class="nav-providers">
+    <button class="np np-aws act" onclick="filterProv('aws')">AWS</button>
+    <button class="np np-azure" onclick="filterProv('azure')">Azure</button>
+    <button class="np np-gcp" onclick="filterProv('gcp')">GCP</button>
+    <button class="np np-devops" onclick="filterProv('devops')">DevOps</button>
+    <button class="np np-all" onclick="filterProv('all')">All</button>
+  </div>
+  <div class="nav-links">
+    <a href="/index.html">AIML</a>
+    <a href="/FullStack_Roadmap_Tracker.html">Full Stack</a>
+    <a href="/">Cloud</a>
+    <a href="/Data_Roadmap_Tracker.html">Data</a>
+  </div>
+  <div class="nav-right">
+    <span class="npct">Progress: <b id="nav-pct">0</b>%</span>
+    <div class="nbar"><div class="nfill" id="nav-fill" style="width:0%"></div></div>
+    <button class="rbtn" onclick="resetAll()">↺ Reset</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow"><div class="dot-pulse"></div>Interactive Progress Tracker · Auto-Saved</div>
+  <h1>Cloud Computing<br><span class="grad-text">Roadmap 2025</span></h1>
+  <div class="provider-badges">
+    <span class="pb pb-aws">☁ Amazon AWS</span>
+    <span class="pb pb-azure">⬡ Microsoft Azure</span>
+    <span class="pb pb-gcp">◈ Google Cloud</span>
+    <span class="pb pb-devops">⚙ Cloud DevOps</span>
+  </div>
+  <p>A complete learning path across all major cloud platforms and DevOps practices. Track topics, services, resources, and certifications. Progress auto-saves in your browser.</p>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-wrap">
+    <button class="fb act" onclick="filterProv('all')">🌐 All Providers</button>
+    <div class="fb-sep"></div>
+    <button class="fb fb-aws" onclick="filterProv('aws')">☁ Amazon AWS</button>
+    <button class="fb fb-azure" onclick="filterProv('azure')">⬡ Microsoft Azure</button>
+    <button class="fb fb-gcp" onclick="filterProv('gcp')">◈ Google Cloud Platform</button>
+    <button class="fb fb-devops" onclick="filterProv('devops')">⚙ Cloud DevOps</button>
+  </div>
+</div>
+
+<div class="dash">
+  <div class="dgrid">
+    <div class="dc" style="--dc-c:var(--cyan)">
+      <div class="dlbl">Overall Progress</div>
+      <div class="ring-wrap">
+        <div class="ring">
+          <svg width="54" height="54" viewBox="0 0 54 54">
+            <circle class="rbg2" cx="27" cy="27" r="22"/>
+            <circle class="rfg2" id="main-ring" cx="27" cy="27" r="22" stroke="var(--cyan)" stroke-dasharray="138.23" stroke-dashoffset="138.23"/>
+          </svg>
+          <div class="rtxt2" id="ring-pct">0%</div>
+        </div>
+        <div>
+          <div class="dval" id="d-overall">0<small>%</small></div>
+          <div class="dsub" id="d-msg">Boot up! ☁</div>
+        </div>
+      </div>
+    </div>
+    <div class="dc" style="--dc-c:var(--aws)">
+      <div class="dlbl">AWS Progress</div>
+      <div class="dval" id="d-aws">0<small>%</small></div>
+      <div class="dsub" id="d-aws-sub">0 / 0 items</div>
+    </div>
+    <div class="dc" style="--dc-c:#60a5fa">
+      <div class="dlbl">Azure Progress</div>
+      <div class="dval" id="d-azure">0<small>%</small></div>
+      <div class="dsub" id="d-azure-sub">0 / 0 items</div>
+    </div>
+    <div class="dc" style="--dc-c:#7cb9f8">
+      <div class="dlbl">GCP Progress</div>
+      <div class="dval" id="d-gcp">0<small>%</small></div>
+      <div class="dsub" id="d-gcp-sub">0 / 0 items</div>
+    </div>
+    <div class="dc" style="--dc-c:var(--devops)">
+      <div class="dlbl">DevOps Progress</div>
+      <div class="dval" id="d-devops">0<small>%</small></div>
+      <div class="dsub" id="d-devops-sub">0 / 0 items</div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="banner" id="banner">
+    <h3>🎉 Cloud Master Unlocked!</h3>
+    <p>You've completed the entire Cloud Computing roadmap. You're ready to architect, deploy, and scale on any cloud platform.</p>
+  </div>
+  <div id="roadmap-root"></div>
+
+  <div class="tools-section">
+    <div class="sec-head"><div class="sec-line"></div><div class="sec-lbl">Essential Cloud Tools</div><div class="sec-line"></div></div>
+    <div class="tgrid">
+      <a href="https://aws.amazon.com/cli" target="_blank" class="tool"><span class="te">⌨️</span><div><div class="tnm">AWS CLI</div><div class="tds">Command-line for AWS</div></div></a>
+      <a href="https://learn.microsoft.com/cli/azure" target="_blank" class="tool"><span class="te">⌨️</span><div><div class="tnm">Azure CLI</div><div class="tds">Command-line for Azure</div></div></a>
+      <a href="https://cloud.google.com/sdk" target="_blank" class="tool"><span class="te">⌨️</span><div><div class="tnm">Google Cloud SDK</div><div class="tds">gcloud CLI tool</div></div></a>
+      <a href="https://www.terraform.io" target="_blank" class="tool"><span class="te">🏗️</span><div><div class="tnm">Terraform</div><div class="tds">Infrastructure as Code</div></div></a>
+      <a href="https://www.docker.com" target="_blank" class="tool"><span class="te">🐳</span><div><div class="tnm">Docker</div><div class="tds">Containerization</div></div></a>
+      <a href="https://kubernetes.io" target="_blank" class="tool"><span class="te">⚙️</span><div><div class="tnm">Kubernetes</div><div class="tds">Container orchestration</div></div></a>
+      <a href="https://www.ansible.com" target="_blank" class="tool"><span class="te">🤖</span><div><div class="tnm">Ansible</div><div class="tds">Config management</div></div></a>
+      <a href="https://github.com" target="_blank" class="tool"><span class="te">🐙</span><div><div class="tnm">GitHub</div><div class="tds">Code + CI/CD pipelines</div></div></a>
+      <a href="https://grafana.com" target="_blank" class="tool"><span class="te">📊</span><div><div class="tnm">Grafana</div><div class="tds">Monitoring dashboards</div></div></a>
+      <a href="https://www.packer.io" target="_blank" class="tool"><span class="te">📦</span><div><div class="tnm">Packer</div><div class="tds">Machine image builder</div></div></a>
+    </div>
+  </div>
+</main>
+
+<script>
+// ═══════════════════════════════════════
+//  DATA
+// ═══════════════════════════════════════
+const PROVIDERS = [
+
+  // ─────────────────────────────────────
+  //  AWS
+  // ─────────────────────────────────────
+  {
+    id:'aws', name:'Amazon Web Services', icon:'☁️', color:'#ff9900',
+    desc:'EC2 · S3 · RDS · Lambda · VPC · IAM · CloudFormation · EKS',
+    phases:[
+      {
+        id:'aws-foundations', num:'PHASE 01', title:'AWS Cloud Foundations', months:'Month 1–2', emoji:'🌩️',
+        topics:[
+          'What is Cloud Computing — IaaS, PaaS, SaaS models explained',
+          'AWS Global Infrastructure — Regions, AZs, Edge Locations',
+          'AWS Management Console, CLI and SDKs overview',
+          'AWS IAM — Users, Groups, Roles, Policies, MFA',
+          'IAM best practices — least privilege, root account security',
+          'AWS Billing — Cost Explorer, Budgets, Free Tier limits',
+          'AWS Support Plans and Shared Responsibility Model',
+          'Creating your first EC2 instance — AMI, instance types, key pairs',
+          'Security Groups and Network ACLs — stateful vs stateless',
+          'Amazon S3 — buckets, objects, storage classes, versioning',
+        ],
+        services:[
+          {name:'IAM',desc:'Identity & Access Management',tag:'aws iam',icon:'🔐'},
+          {name:'EC2',desc:'Virtual servers in the cloud',tag:'aws ec2',icon:'🖥️'},
+          {name:'S3',desc:'Object storage service',tag:'aws s3',icon:'🪣'},
+          {name:'VPC',desc:'Virtual Private Cloud',tag:'aws vpc',icon:'🌐'},
+          {name:'CloudWatch',desc:'Monitoring & observability',tag:'aws cloudwatch',icon:'👁️'},
+          {name:'AWS CLI',desc:'Command line interface',tag:'pip install awscli',icon:'⌨️'},
+        ],
+        resources:[
+          {name:'AWS Cloud Practitioner Essentials',who:'AWS Training — Free',type:'tc',url:'https://explore.skillbuilder.aws/learn/course/134/aws-cloud-practitioner-essentials',label:'skillbuilder.aws — CLF-C02 Prep',free:true},
+          {name:'AWS Free Tier — Hands-on Lab Account',who:'Amazon',type:'tto',url:'https://aws.amazon.com/free',label:'aws.amazon.com/free',free:true},
+          {name:'freeCodeCamp AWS Practitioner Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=NhDYbskXRgc',label:'youtube.com — fCC AWS',free:true},
+          {name:'AWS Well-Architected Framework',who:'AWS Documentation',type:'td',url:'https://aws.amazon.com/architecture/well-architected',label:'aws.amazon.com/architecture',free:true},
+          {name:'Cloud Computing Fundamentals — Google/Coursera',who:'Google Cloud — Coursera',type:'tc',url:'https://www.coursera.org/learn/cloud-computing-foundations-aws',label:'coursera.org — Cloud Foundations',free:true},
+        ],
+        certs:[
+          {name:'AWS Certified Cloud Practitioner (CLF-C02)',provider:'Amazon Web Services',url:'https://aws.amazon.com/certification/certified-cloud-practitioner',label:'aws.amazon.com/certification/cloud-practitioner',free:false,note:'Most popular entry cert — exam ~$100. Free prep on AWS Skill Builder'},
+          {name:'AWS Skill Builder — Free Digital Training',provider:'AWS',url:'https://explore.skillbuilder.aws',label:'skillbuilder.aws',free:true,note:'100s of free courses from AWS — no cost'},
+          {name:'Cloud Foundations Badge — AWS',provider:'AWS Skill Builder',url:'https://explore.skillbuilder.aws/learn/course/1070/cloud-essentials-knowledge-badge-readiness-path',label:'skillbuilder.aws — Cloud Essentials Badge',free:true,note:'Free digital badge on completion'},
+        ]
+      },
+      {
+        id:'aws-compute', num:'PHASE 02', title:'Compute, Storage & Databases', months:'Month 2–4', emoji:'⚡',
+        topics:[
+          'EC2 instance lifecycle — launch, stop, terminate, hibernate',
+          'EC2 purchasing options — On-Demand, Reserved, Spot, Savings Plans',
+          'Auto Scaling Groups — scaling policies, launch templates',
+          'Elastic Load Balancing — ALB, NLB, CLB differences',
+          'Amazon EBS — volume types, snapshots, encryption',
+          'Amazon EFS — shared file storage for Linux',
+          'Amazon S3 Advanced — lifecycle policies, replication, S3 Select',
+          'Amazon RDS — Multi-AZ, Read Replicas, supported engines',
+          'Amazon Aurora — serverless, global database, performance',
+          'Amazon DynamoDB — partition keys, GSI, DAX, streams',
+          'Amazon ElastiCache — Redis vs Memcached use cases',
+          'AWS Lambda — functions, triggers, layers, cold starts',
+        ],
+        services:[
+          {name:'EC2 Auto Scaling',desc:'Automatic scaling groups',tag:'aws autoscaling',icon:'📈'},
+          {name:'ELB / ALB',desc:'Load balancing services',tag:'aws elbv2',icon:'⚖️'},
+          {name:'EBS',desc:'Block storage for EC2',tag:'aws ebs',icon:'💾'},
+          {name:'RDS',desc:'Managed relational DB',tag:'aws rds',icon:'🗃️'},
+          {name:'DynamoDB',desc:'NoSQL serverless DB',tag:'aws dynamodb',icon:'⚡'},
+          {name:'Lambda',desc:'Serverless functions',tag:'aws lambda',icon:'λ'},
+          {name:'Aurora',desc:'Cloud-native MySQL/Postgres',tag:'aws rds create-db-cluster',icon:'🌌'},
+          {name:'ElastiCache',desc:'In-memory caching',tag:'aws elasticache',icon:'🔴'},
+        ],
+        resources:[
+          {name:'AWS Solutions Architect Associate — Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=Ia-UEYYR44s',label:'youtube.com — fCC AWS SAA',free:true},
+          {name:'DynamoDB Deep Dive',who:'AWS re:Invent — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=6yqfmXiZTlM',label:'youtube.com — DynamoDB Deep Dive',free:true},
+          {name:'AWS Lambda Getting Started',who:'AWS Docs',type:'td',url:'https://docs.aws.amazon.com/lambda/latest/dg/getting-started.html',label:'docs.aws.amazon.com/lambda',free:true},
+          {name:'AWS Skill Builder — Compute & Storage Labs',who:'AWS',type:'tpr',url:'https://explore.skillbuilder.aws',label:'skillbuilder.aws — Labs',free:true},
+        ],
+        certs:[
+          {name:'AWS Certified Solutions Architect – Associate (SAA-C03)',provider:'Amazon Web Services',url:'https://aws.amazon.com/certification/certified-solutions-architect-associate',label:'aws.amazon.com — SAA-C03',free:false,note:'Most valued AWS cert — exam ~$150. Free prep on Skill Builder'},
+          {name:'AWS Certified Developer – Associate (DVA-C02)',provider:'Amazon Web Services',url:'https://aws.amazon.com/certification/certified-developer-associate',label:'aws.amazon.com — DVA-C02',free:false,note:'Best cert for dev-focused roles — exam ~$150'},
+        ]
+      },
+      {
+        id:'aws-networking', num:'PHASE 03', title:'Networking, Security & Monitoring', months:'Month 4–6', emoji:'🌐',
+        topics:[
+          'VPC architecture — subnets, route tables, internet/NAT gateways',
+          'VPC Peering and AWS Transit Gateway',
+          'AWS Direct Connect and VPN connectivity',
+          'Route 53 — DNS routing policies, health checks, failover',
+          'AWS CloudFront — CDN, origins, behaviors, cache policies',
+          'AWS WAF and Shield — DDoS protection and web security',
+          'AWS Secrets Manager and Parameter Store',
+          'AWS KMS — key management, encryption at rest and in transit',
+          'AWS CloudTrail — audit logging and governance',
+          'CloudWatch Metrics, Logs, Alarms and Dashboards',
+          'AWS Config — resource compliance and change tracking',
+          'AWS GuardDuty — threat intelligence and anomaly detection',
+        ],
+        services:[
+          {name:'VPC',desc:'Isolated cloud networking',tag:'aws ec2 describe-vpcs',icon:'🌐'},
+          {name:'Route 53',desc:'DNS and traffic routing',tag:'aws route53',icon:'🗺️'},
+          {name:'CloudFront',desc:'Global CDN service',tag:'aws cloudfront',icon:'⚡'},
+          {name:'WAF & Shield',desc:'Web app firewall + DDoS',tag:'aws wafv2',icon:'🛡️'},
+          {name:'KMS',desc:'Key Management Service',tag:'aws kms',icon:'🔑'},
+          {name:'CloudTrail',desc:'API call audit logging',tag:'aws cloudtrail',icon:'📋'},
+          {name:'GuardDuty',desc:'Intelligent threat detection',tag:'aws guardduty',icon:'🔍'},
+          {name:'Secrets Manager',desc:'Manage secrets securely',tag:'aws secretsmanager',icon:'🔐'},
+        ],
+        resources:[
+          {name:'AWS Networking Fundamentals',who:'AWS re:Invent — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=hiKPPy584Mg',label:'youtube.com — AWS Networking',free:true},
+          {name:'VPC Masterclass',who:'AWS YouTube Channel',type:'tv',url:'https://www.youtube.com/watch?v=fnxXNZdf6ew',label:'youtube.com — AWS VPC Masterclass',free:true},
+          {name:'AWS Security Best Practices',who:'AWS Docs',type:'td',url:'https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html',label:'docs.aws.amazon.com — Security Pillar',free:true},
+        ],
+        certs:[
+          {name:'AWS Certified Security – Specialty (SCS-C02)',provider:'Amazon Web Services',url:'https://aws.amazon.com/certification/certified-security-specialty',label:'aws.amazon.com — SCS-C02',free:false,note:'Top security cert — exam ~$300'},
+          {name:'AWS Certified Advanced Networking – Specialty',provider:'Amazon Web Services',url:'https://aws.amazon.com/certification/certified-advanced-networking-specialty',label:'aws.amazon.com — ANS-C01',free:false,note:'Expert-level networking — exam ~$300'},
+        ]
+      },
+      {
+        id:'aws-devops', num:'PHASE 04', title:'DevOps, Containers & IaC on AWS', months:'Month 6–9', emoji:'🚀',
+        topics:[
+          'AWS CloudFormation — stacks, templates, nested stacks, drift detection',
+          'AWS CDK — defining infrastructure in Python/TypeScript',
+          'Amazon ECR — container registry, image lifecycle policies',
+          'Amazon ECS — task definitions, services, Fargate vs EC2 launch types',
+          'Amazon EKS — managed Kubernetes, node groups, Fargate profiles',
+          'AWS CodePipeline — CI/CD pipeline automation end-to-end',
+          'AWS CodeBuild — managed build service and buildspec.yml',
+          'AWS CodeDeploy — blue/green deployments, rolling updates',
+          'AWS Systems Manager — patch manager, session manager, run command',
+          'AWS Step Functions — serverless workflow orchestration',
+          'AWS EventBridge — event-driven architecture patterns',
+          'Elastic Beanstalk — PaaS for rapid application deployment',
+        ],
+        services:[
+          {name:'CloudFormation',desc:'Infrastructure as Code',tag:'aws cloudformation',icon:'📄'},
+          {name:'ECS / Fargate',desc:'Container orchestration',tag:'aws ecs',icon:'🐳'},
+          {name:'EKS',desc:'Managed Kubernetes',tag:'aws eks',icon:'⚙️'},
+          {name:'CodePipeline',desc:'CI/CD orchestration',tag:'aws codepipeline',icon:'🔄'},
+          {name:'CDK',desc:'Cloud Development Kit',tag:'npm install aws-cdk',icon:'🏗️'},
+          {name:'EventBridge',desc:'Serverless event bus',tag:'aws events',icon:'📨'},
+          {name:'Step Functions',desc:'Workflow orchestration',tag:'aws stepfunctions',icon:'🪜'},
+          {name:'Elastic Beanstalk',desc:'Easy app deployment',tag:'aws elasticbeanstalk',icon:'🌱'},
+        ],
+        resources:[
+          {name:'AWS EKS Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=boa0_LBuRaA',label:'youtube.com — fCC EKS Course',free:true},
+          {name:'AWS CloudFormation User Guide',who:'AWS Docs',type:'td',url:'https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html',label:'docs.aws.amazon.com/cloudformation',free:true},
+          {name:'AWS CDK Workshop',who:'AWS',type:'tpr',url:'https://cdkworkshop.com',label:'cdkworkshop.com',free:true},
+          {name:'AWS DevOps Blog',who:'AWS',type:'tb2',url:'https://aws.amazon.com/blogs/devops',label:'aws.amazon.com/blogs/devops',free:true},
+        ],
+        certs:[
+          {name:'AWS Certified DevOps Engineer – Professional (DOP-C02)',provider:'Amazon Web Services',url:'https://aws.amazon.com/certification/certified-devops-engineer-professional',label:'aws.amazon.com — DOP-C02',free:false,note:'Top DevOps cert for AWS — exam ~$300'},
+          {name:'AWS Certified SysOps Administrator – Associate',provider:'Amazon Web Services',url:'https://aws.amazon.com/certification/certified-sysops-admin-associate',label:'aws.amazon.com — SOA-C02',free:false,note:'Operations-focused — exam ~$150'},
+          {name:'Cantrill.io — Free AWS Fundamentals',provider:'Adrian Cantrill',url:'https://learn.cantrill.io/p/aws-certified-cloud-practitioner',label:'learn.cantrill.io',free:true,note:'Free tier available — best deep-dive AWS content'},
+        ]
+      },
+    ]
+  },
+
+  // ─────────────────────────────────────
+  //  AZURE
+  // ─────────────────────────────────────
+  {
+    id:'azure', name:'Microsoft Azure', icon:'⬡', color:'#0078d4',
+    desc:'Azure VMs · App Service · AKS · Azure SQL · Entra ID · ARM · Bicep · Cosmos DB',
+    phases:[
+      {
+        id:'azure-foundations', num:'PHASE 01', title:'Azure Fundamentals', months:'Month 1–2', emoji:'⬡',
+        topics:[
+          'Azure global infrastructure — Regions, Availability Zones, Edge zones',
+          'Azure portal, Azure CLI, PowerShell and Cloud Shell',
+          'Azure Resource Manager (ARM) — resource groups, subscriptions, management groups',
+          'Microsoft Entra ID (Azure AD) — users, groups, roles, tenants',
+          'Azure RBAC — built-in roles, custom roles, scope levels',
+          'Azure Pricing Calculator and Cost Management + Billing',
+          'Azure Virtual Machines — sizes, images, availability sets and zones',
+          'Azure Virtual Networks — subnets, NSGs, service endpoints',
+          'Azure Blob Storage — containers, access tiers, lifecycle management',
+          'Azure SLA concepts and Shared Responsibility Model',
+        ],
+        services:[
+          {name:'Entra ID',desc:'Identity & Access (Azure AD)',tag:'az ad user list',icon:'👤'},
+          {name:'Azure VMs',desc:'Virtual machines',tag:'az vm create',icon:'🖥️'},
+          {name:'VNet',desc:'Virtual networking',tag:'az network vnet create',icon:'🌐'},
+          {name:'Blob Storage',desc:'Object storage service',tag:'az storage blob',icon:'📦'},
+          {name:'Azure Monitor',desc:'Monitoring & insights',tag:'az monitor',icon:'📊'},
+          {name:'Azure CLI',desc:'Command line interface',tag:'az --version',icon:'⌨️'},
+        ],
+        resources:[
+          {name:'Microsoft Azure Fundamentals (AZ-900) Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=NKEFWyqJ5XA',label:'youtube.com — fCC AZ-900',free:true},
+          {name:'Microsoft Learn — Azure Fundamentals Path',who:'Microsoft',type:'tc',url:'https://learn.microsoft.com/en-us/training/paths/az-900-describe-cloud-concepts',label:'learn.microsoft.com — AZ-900 path',free:true},
+          {name:'Azure Free Account — $200 credit',who:'Microsoft Azure',type:'tto',url:'https://azure.microsoft.com/free',label:'azure.microsoft.com/free',free:true},
+          {name:'Azure Architecture Center',who:'Microsoft',type:'td',url:'https://learn.microsoft.com/en-us/azure/architecture',label:'learn.microsoft.com/azure/architecture',free:true},
+        ],
+        certs:[
+          {name:'Microsoft AZ-900: Azure Fundamentals',provider:'Microsoft',url:'https://learn.microsoft.com/en-us/certifications/azure-fundamentals',label:'learn.microsoft.com — AZ-900',free:false,note:'Best starting cert — exam ~$165. Free prep on Microsoft Learn'},
+          {name:'Microsoft Learn Trophies & Badges',provider:'Microsoft Learn',url:'https://learn.microsoft.com/en-us/training/azure',label:'learn.microsoft.com/training/azure',free:true,note:'100% free digital badges on every learning path'},
+          {name:'Azure Free Learning Paths — Microsoft Learn',provider:'Microsoft',url:'https://learn.microsoft.com/training',label:'learn.microsoft.com/training',free:true,note:'All learning paths and modules are 100% free'},
+        ]
+      },
+      {
+        id:'azure-compute', num:'PHASE 02', title:'Compute, App Services & Databases', months:'Month 2–4', emoji:'💻',
+        topics:[
+          'Azure App Service — web apps, deployment slots, scaling, custom domains',
+          'Azure Functions — triggers, bindings, durable functions, cold start',
+          'Azure Container Instances (ACI) — quick container deployment',
+          'Azure Container Apps — serverless containers with Dapr support',
+          'Azure SQL Database — DTU vs vCore, elastic pools, geo-replication',
+          'Azure Cosmos DB — multi-model API, consistency levels, global distribution',
+          'Azure Database for PostgreSQL and MySQL — flexible server',
+          'Azure Cache for Redis — tiers, eviction policies, sessions',
+          'Azure Storage Accounts — queues, tables, files, blobs in depth',
+          'Azure CDN — profiles, endpoints, caching rules, custom domains',
+          'Azure Service Bus — queues, topics, subscriptions, message sessions',
+          'Azure Event Grid and Event Hubs — event-driven architectures',
+        ],
+        services:[
+          {name:'App Service',desc:'PaaS for web apps',tag:'az webapp create',icon:'🌐'},
+          {name:'Azure Functions',desc:'Serverless compute',tag:'func new',icon:'λ'},
+          {name:'Cosmos DB',desc:'Global multi-model DB',tag:'az cosmosdb create',icon:'🌌'},
+          {name:'Azure SQL',desc:'Managed SQL database',tag:'az sql db create',icon:'🗃️'},
+          {name:'Service Bus',desc:'Enterprise messaging',tag:'az servicebus',icon:'📨'},
+          {name:'Container Apps',desc:'Serverless containers',tag:'az containerapp create',icon:'🐳'},
+          {name:'Event Grid',desc:'Event routing service',tag:'az eventgrid',icon:'⚡'},
+          {name:'Azure Redis',desc:'In-memory caching',tag:'az redis create',icon:'🔴'},
+        ],
+        resources:[
+          {name:'AZ-204 Azure Developer Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=jZx8PMQjobk',label:'youtube.com — fCC AZ-204',free:true},
+          {name:'Azure App Service Documentation',who:'Microsoft Docs',type:'td',url:'https://learn.microsoft.com/en-us/azure/app-service',label:'learn.microsoft.com/azure/app-service',free:true},
+          {name:'Azure Cosmos DB Workshop',who:'Microsoft',type:'tpr',url:'https://learn.microsoft.com/en-us/shows/cosmos-db-conf',label:'learn.microsoft.com — Cosmos DB Conf',free:true},
+          {name:'Microsoft Azure — Azure Functions Deep Dive',who:'Microsoft — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=Vxf-rOEO1q4',label:'youtube.com — Azure Functions',free:true},
+        ],
+        certs:[
+          {name:'AZ-204: Azure Developer Associate',provider:'Microsoft',url:'https://learn.microsoft.com/en-us/certifications/azure-developer',label:'learn.microsoft.com — AZ-204',free:false,note:'Most valued cert for .NET/Azure devs — exam ~$165'},
+          {name:'AZ-305: Azure Solutions Architect Expert',provider:'Microsoft',url:'https://learn.microsoft.com/en-us/certifications/azure-solutions-architect',label:'learn.microsoft.com — AZ-305',free:false,note:'Top architecture cert — requires AZ-104 first; exam ~$165'},
+        ]
+      },
+      {
+        id:'azure-networking', num:'PHASE 03', title:'Networking, Security & Identity', months:'Month 4–6', emoji:'🔒',
+        topics:[
+          'Azure Virtual Network advanced — peering, VPN gateway, ExpressRoute',
+          'Azure Load Balancer (L4) vs Application Gateway (L7) vs Front Door',
+          'Azure Firewall — policies, rules, DNAT, SNAT, threat intelligence',
+          'Azure DDoS Protection — Basic vs Standard plans',
+          'Network Security Groups and Application Security Groups',
+          'Azure Private Link and Private Endpoints — secure service access',
+          'Microsoft Entra ID advanced — Conditional Access, PIM, MFA, SSO',
+          'Azure Key Vault — secrets, keys, certificates, access policies',
+          'Microsoft Defender for Cloud — security posture, compliance',
+          'Azure Policy — built-in policies, custom policies, initiatives',
+          'Azure Blueprints for governance at scale',
+          'Azure Sentinel — SIEM, incident response, playbooks',
+        ],
+        services:[
+          {name:'Azure Firewall',desc:'Managed network firewall',tag:'az network firewall',icon:'🔥'},
+          {name:'App Gateway',desc:'L7 load balancer + WAF',tag:'az network application-gateway',icon:'⚖️'},
+          {name:'Private Link',desc:'Private endpoint access',tag:'az network private-link-service',icon:'🔗'},
+          {name:'Key Vault',desc:'Secrets management',tag:'az keyvault create',icon:'🔑'},
+          {name:'Defender for Cloud',desc:'Security posture mgmt',tag:'az security',icon:'🛡️'},
+          {name:'Sentinel',desc:'Cloud-native SIEM',tag:'az sentinel',icon:'🔍'},
+          {name:'Azure Policy',desc:'Compliance enforcement',tag:'az policy assignment',icon:'📋'},
+          {name:'Entra PIM',desc:'Privileged Identity Mgmt',tag:'az ad pim',icon:'👑'},
+        ],
+        resources:[
+          {name:'AZ-500 Azure Security Technologies Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=6vISR9pe7f0',label:'youtube.com — fCC AZ-500',free:true},
+          {name:'Azure Networking Documentation',who:'Microsoft Docs',type:'td',url:'https://learn.microsoft.com/en-us/azure/networking',label:'learn.microsoft.com/azure/networking',free:true},
+          {name:'Microsoft Entra ID Documentation',who:'Microsoft',type:'td',url:'https://learn.microsoft.com/en-us/azure/active-directory',label:'learn.microsoft.com/azure/active-directory',free:true},
+        ],
+        certs:[
+          {name:'AZ-500: Azure Security Engineer Associate',provider:'Microsoft',url:'https://learn.microsoft.com/en-us/certifications/azure-security-engineer',label:'learn.microsoft.com — AZ-500',free:false,note:'Top security cert — exam ~$165'},
+          {name:'AZ-104: Azure Administrator Associate',provider:'Microsoft',url:'https://learn.microsoft.com/en-us/certifications/azure-administrator',label:'learn.microsoft.com — AZ-104',free:false,note:'Foundation for all senior Azure certs — exam ~$165'},
+        ]
+      },
+      {
+        id:'azure-devops', num:'PHASE 04', title:'Azure DevOps, AKS & Infrastructure as Code', months:'Month 6–9', emoji:'🚀',
+        topics:[
+          'Azure DevOps — Boards, Repos, Pipelines, Artifacts, Test Plans',
+          'Azure Pipelines — YAML pipelines, stages, jobs, steps, templates',
+          'Azure Container Registry (ACR) — image builds, geo-replication, webhooks',
+          'Azure Kubernetes Service (AKS) — node pools, autoscaler, AGIC',
+          'AKS advanced — Workload Identity, KEDA, Azure Policy for Kubernetes',
+          'ARM Templates — resource definitions, parameters, functions',
+          'Bicep — Azure-native IaC, modules, scopes, what-if deployments',
+          'Terraform on Azure — azurerm provider, state in blob storage',
+          'Azure Managed Identities — system-assigned vs user-assigned',
+          'GitHub Actions with Azure — OIDC federation, deployment environments',
+          'Azure Monitor — Log Analytics workspace, KQL queries, workbooks',
+          'Azure Application Insights — distributed tracing, metrics, alerts',
+        ],
+        services:[
+          {name:'Azure DevOps',desc:'Full ALM platform',tag:'az devops configure',icon:'🔄'},
+          {name:'AKS',desc:'Managed Kubernetes',tag:'az aks create',icon:'⚙️'},
+          {name:'ACR',desc:'Container registry',tag:'az acr create',icon:'📦'},
+          {name:'Bicep / ARM',desc:'Infrastructure as Code',tag:'az deployment group create',icon:'🏗️'},
+          {name:'App Insights',desc:'APM & distributed tracing',tag:'az monitor app-insights',icon:'🔭'},
+          {name:'Log Analytics',desc:'Log management & KQL',tag:'az monitor log-analytics',icon:'📊'},
+          {name:'Managed Identity',desc:'Passwordless auth',tag:'az identity create',icon:'🆔'},
+          {name:'Azure Arc',desc:'Hybrid & multi-cloud',tag:'az connectedmachine',icon:'🌐'},
+        ],
+        resources:[
+          {name:'AKS Workshop — Microsoft',who:'Microsoft Learn',type:'tpr',url:'https://learn.microsoft.com/en-us/samples/azure/aks-labs/aks-labs',label:'learn.microsoft.com — AKS Workshop',free:true},
+          {name:'Bicep Documentation & Tutorials',who:'Microsoft Docs',type:'td',url:'https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep',label:'learn.microsoft.com/bicep',free:true},
+          {name:'Azure DevOps Labs',who:'Microsoft',type:'tpr',url:'https://www.azuredevopslabs.com',label:'azuredevopslabs.com',free:true},
+          {name:'John Savill Azure Master Class',who:'John Savill — YouTube',type:'tv',url:'https://www.youtube.com/c/NTFAQGuy',label:'youtube.com/c/NTFAQGuy',free:true},
+        ],
+        certs:[
+          {name:'AZ-400: Azure DevOps Engineer Expert',provider:'Microsoft',url:'https://learn.microsoft.com/en-us/certifications/devops-engineer',label:'learn.microsoft.com — AZ-400',free:false,note:'Requires AZ-104 or AZ-204 — expert-level; exam ~$165'},
+          {name:'CKAD: Certified Kubernetes Application Developer',provider:'Linux Foundation / CNCF',url:'https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad',label:'linuxfoundation.org — CKAD',free:false,note:'Most valued Kubernetes cert — exam ~$395'},
+          {name:'AZ-305: Azure Solutions Architect Expert',provider:'Microsoft',url:'https://learn.microsoft.com/en-us/certifications/azure-solutions-architect',label:'learn.microsoft.com — AZ-305',free:false,note:'Architect-level mastery — exam ~$165'},
+        ]
+      },
+    ]
+  },
+
+  // ─────────────────────────────────────
+  //  GCP
+  // ─────────────────────────────────────
+  {
+    id:'gcp', name:'Google Cloud Platform', icon:'◈', color:'#4285f4',
+    desc:'GCE · GCS · BigQuery · GKE · Cloud Run · Pub/Sub · Firestore · IAM',
+    phases:[
+      {
+        id:'gcp-foundations', num:'PHASE 01', title:'GCP Foundations & Core Services', months:'Month 1–2', emoji:'◈',
+        topics:[
+          'GCP global infrastructure — Regions, Zones, Points of Presence',
+          'GCP Resource Hierarchy — Organization, Folders, Projects, Resources',
+          'Cloud Identity and IAM — service accounts, roles, bindings, conditions',
+          'GCP Console, Cloud Shell, gcloud CLI and client libraries',
+          'Google Cloud Billing — billing accounts, budgets, cost optimization',
+          'Compute Engine (GCE) — machine types, custom VMs, persistent disks, snapshots',
+          'Cloud Storage (GCS) — buckets, storage classes, lifecycle rules, signed URLs',
+          'VPC Networking — subnets, firewall rules, routes, shared VPC',
+          'Google Kubernetes Engine (GKE) — Autopilot vs Standard mode',
+          'Cloud Run — fully managed serverless containers on GCP',
+        ],
+        services:[
+          {name:'Cloud IAM',desc:'Identity & access control',tag:'gcloud projects get-iam-policy',icon:'🔐'},
+          {name:'Compute Engine',desc:'Virtual machines (GCE)',tag:'gcloud compute instances create',icon:'🖥️'},
+          {name:'Cloud Storage',desc:'Object storage (GCS)',tag:'gcloud storage buckets create',icon:'🪣'},
+          {name:'VPC',desc:'Virtual Private Cloud',tag:'gcloud compute networks create',icon:'🌐'},
+          {name:'Cloud Run',desc:'Serverless containers',tag:'gcloud run deploy',icon:'🏃'},
+          {name:'gcloud CLI',desc:'GCP command-line tool',tag:'gcloud init',icon:'⌨️'},
+        ],
+        resources:[
+          {name:'Google Cloud Digital Leader Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=UGRDM86MBIQ',label:'youtube.com — fCC GCP Digital Leader',free:true},
+          {name:'Google Cloud Skills Boost — Free Tier',who:'Google Cloud',type:'tpr',url:'https://www.cloudskillsboost.google',label:'cloudskillsboost.google',free:true},
+          {name:'GCP Free Tier — Always Free Products',who:'Google Cloud',type:'tto',url:'https://cloud.google.com/free',label:'cloud.google.com/free',free:true},
+          {name:'Google Cloud Architecture Framework',who:'Google Cloud Docs',type:'td',url:'https://cloud.google.com/architecture/framework',label:'cloud.google.com/architecture/framework',free:true},
+        ],
+        certs:[
+          {name:'Google Cloud Digital Leader Certification',provider:'Google Cloud',url:'https://cloud.google.com/learn/certification/cloud-digital-leader',label:'cloud.google.com — Digital Leader',free:false,note:'Business-focused entry cert — exam ~$200. Free prep on Skills Boost'},
+          {name:'Cloud Skills Boost — Free Learning Paths',provider:'Google Cloud',url:'https://www.cloudskillsboost.google/paths',label:'cloudskillsboost.google/paths',free:true,note:'Free labs, quests and skill badges from Google'},
+          {name:'GCP Skill Badge — Cloud Fundamentals',provider:'Google Cloud Skills Boost',url:'https://www.cloudskillsboost.google/course_templates/153',label:'cloudskillsboost.google',free:true,note:'Free shareable skill badge from Google'},
+        ]
+      },
+      {
+        id:'gcp-data', num:'PHASE 02', title:'Data, Analytics & Databases', months:'Month 2–4', emoji:'📊',
+        topics:[
+          'BigQuery — datasets, tables, partitioning, clustering, slots, BI Engine',
+          'BigQuery ML — creating models with SQL in BigQuery',
+          'Cloud SQL — managed MySQL, PostgreSQL, SQL Server instances',
+          'Cloud Spanner — globally distributed, horizontally scalable relational DB',
+          'Firestore — serverless NoSQL document database, real-time listeners',
+          'Bigtable — petabyte-scale NoSQL for time-series and wide-column data',
+          'Memorystore — managed Redis and Memcached on GCP',
+          'Cloud Pub/Sub — async messaging, push vs pull subscriptions',
+          'Dataflow — Apache Beam pipelines for batch and streaming ETL',
+          'Looker Studio (Data Studio) — dashboards connected to BigQuery',
+          'Cloud Data Catalog — data discovery and metadata management',
+          'Vertex AI — managed ML platform overview and AutoML',
+        ],
+        services:[
+          {name:'BigQuery',desc:'Serverless data warehouse',tag:'bq query --use_legacy_sql=false',icon:'📊'},
+          {name:'Cloud SQL',desc:'Managed relational DB',tag:'gcloud sql instances create',icon:'🗃️'},
+          {name:'Firestore',desc:'NoSQL document database',tag:'gcloud firestore',icon:'🔥'},
+          {name:'Pub/Sub',desc:'Async event messaging',tag:'gcloud pubsub topics create',icon:'📨'},
+          {name:'Bigtable',desc:'Wide-column NoSQL DB',tag:'cbt listinstances',icon:'📋'},
+          {name:'Dataflow',desc:'Managed Apache Beam',tag:'gcloud dataflow jobs',icon:'🌊'},
+          {name:'Vertex AI',desc:'ML platform',tag:'gcloud ai endpoints',icon:'🤖'},
+          {name:'Memorystore',desc:'Managed Redis',tag:'gcloud redis instances create',icon:'🔴'},
+        ],
+        resources:[
+          {name:'BigQuery for Data Analysts',who:'Google Cloud Skills Boost',type:'tc',url:'https://www.cloudskillsboost.google/course_templates/83',label:'cloudskillsboost.google — BigQuery',free:true},
+          {name:'BigQuery Official Documentation',who:'Google Cloud',type:'td',url:'https://cloud.google.com/bigquery/docs',label:'cloud.google.com/bigquery/docs',free:true},
+          {name:'GCP Data Engineering Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=a3713oGB6Zk',label:'youtube.com — fCC GCP Data Eng',free:true},
+          {name:'Cloud Pub/Sub Quickstart',who:'Google Cloud Docs',type:'td',url:'https://cloud.google.com/pubsub/docs/publish-receive-messages-console',label:'cloud.google.com/pubsub/docs',free:true},
+        ],
+        certs:[
+          {name:'Google Professional Data Engineer',provider:'Google Cloud',url:'https://cloud.google.com/learn/certification/data-engineer',label:'cloud.google.com — Data Engineer',free:false,note:'Highly valued data cert — exam ~$200. Free prep on Skills Boost'},
+          {name:'Associate Cloud Engineer (ACE)',provider:'Google Cloud',url:'https://cloud.google.com/learn/certification/cloud-engineer',label:'cloud.google.com — ACE',free:false,note:'Core engineer cert — exam ~$200. Best second cert after Digital Leader'},
+        ]
+      },
+      {
+        id:'gcp-containers', num:'PHASE 03', title:'GKE, Containers & Networking', months:'Month 4–6', emoji:'🐳',
+        topics:[
+          'GKE Standard vs Autopilot — when to use each',
+          'GKE node pools, cluster autoscaler, Vertical Pod Autoscaler',
+          'Workload Identity for GKE — binding K8s service accounts to GCP IAM',
+          'Artifact Registry — container images, Maven, npm, Python packages',
+          'Cloud Build — serverless CI/CD, build triggers, build steps',
+          'Cloud Deploy — managed continuous delivery to GKE and Cloud Run',
+          'Cloud Endpoints and API Gateway — managed API services',
+          'Cloud Load Balancing — global external, internal, regional L7/L4',
+          'VPC advanced — Private Google Access, VPC peering, Cloud NAT',
+          'Cloud DNS — private and public zones, DNS forwarding policies',
+          'Cloud Armor — WAF and DDoS protection, security policies',
+          'Cloud CDN — cache modes, cache keys, invalidation',
+        ],
+        services:[
+          {name:'GKE',desc:'Managed Kubernetes Engine',tag:'gcloud container clusters create',icon:'⚙️'},
+          {name:'Artifact Registry',desc:'Container & package registry',tag:'gcloud artifacts repos create',icon:'📦'},
+          {name:'Cloud Build',desc:'Serverless CI/CD',tag:'gcloud builds submit',icon:'🏗️'},
+          {name:'Cloud Deploy',desc:'Managed CD for GKE',tag:'gcloud deploy releases create',icon:'🚀'},
+          {name:'Cloud Load Balancing',desc:'Global L7/L4 load balancer',tag:'gcloud compute url-maps create',icon:'⚖️'},
+          {name:'Cloud Armor',desc:'WAF and DDoS protection',tag:'gcloud compute security-policies',icon:'🛡️'},
+          {name:'Cloud DNS',desc:'Managed DNS service',tag:'gcloud dns managed-zones create',icon:'🗺️'},
+          {name:'API Gateway',desc:'Managed API service',tag:'gcloud api-gateway apis create',icon:'🔌'},
+        ],
+        resources:[
+          {name:'GKE Autopilot and Standard Deep Dive',who:'Google Cloud — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=JvUCFmBIjdE',label:'youtube.com — GKE Deep Dive',free:true},
+          {name:'Google Cloud Networking Documentation',who:'Google Cloud Docs',type:'td',url:'https://cloud.google.com/docs/networking',label:'cloud.google.com/docs/networking',free:true},
+          {name:'Cloud Build Documentation',who:'Google Cloud',type:'td',url:'https://cloud.google.com/build/docs',label:'cloud.google.com/build/docs',free:true},
+          {name:'Kubernetes on GCP — Skills Boost Quest',who:'Google Cloud Skills Boost',type:'tpr',url:'https://www.cloudskillsboost.google/quests/29',label:'cloudskillsboost.google — K8s on GCP',free:true},
+        ],
+        certs:[
+          {name:'Google Professional Cloud Architect',provider:'Google Cloud',url:'https://cloud.google.com/learn/certification/cloud-architect',label:'cloud.google.com — Cloud Architect',free:false,note:'Most prestigious GCP cert — exam ~$200'},
+          {name:'Google Professional Cloud DevOps Engineer',provider:'Google Cloud',url:'https://cloud.google.com/learn/certification/cloud-devops-engineer',label:'cloud.google.com — DevOps Engineer',free:false,note:'Top DevOps cert for GCP — exam ~$200'},
+          {name:'CKAD: Certified Kubernetes Application Developer',provider:'CNCF / Linux Foundation',url:'https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad',label:'linuxfoundation.org — CKAD',free:false,note:'Exam ~$395 — vendor-neutral Kubernetes mastery'},
+        ]
+      },
+      {
+        id:'gcp-devops', num:'PHASE 04', title:'DevOps, Security & Multi-Cloud', months:'Month 6–8', emoji:'🌐',
+        topics:[
+          'Deployment Manager — GCP-native IaC with YAML templates',
+          'Terraform on GCP — google provider, remote state in GCS, modules',
+          'Cloud Monitoring — metrics explorer, alerting policies, uptime checks',
+          'Cloud Logging — log-based metrics, log sinks to BigQuery/GCS',
+          'Cloud Trace and Cloud Profiler — distributed tracing and performance',
+          'Error Reporting and Cloud Debugger — debugging production apps',
+          'Cloud Security Command Center — threat detection, findings, assets',
+          'Binary Authorization — container image signing and admission control',
+          'Organization policies — constraints, custom policies, tags',
+          'Google Cloud Identity — SAML, OIDC federation, SSO integration',
+          'Anthos — GKE on-prem, multi-cloud management, Config Management',
+          'GCP cost optimization — committed use discounts, sustained use, rightsizing',
+        ],
+        services:[
+          {name:'Cloud Monitoring',desc:'Metrics and alerting',tag:'gcloud monitoring dashboards',icon:'📊'},
+          {name:'Cloud Logging',desc:'Log management & analysis',tag:'gcloud logging logs list',icon:'📋'},
+          {name:'Security Cmd Center',desc:'Security posture mgmt',tag:'gcloud scc findings list',icon:'🔍'},
+          {name:'Binary Authorization',desc:'Container image signing',tag:'gcloud container binauthz',icon:'✍️'},
+          {name:'Terraform GCP',desc:'IaC with google provider',tag:'terraform init',icon:'🏗️'},
+          {name:'Anthos',desc:'Hybrid & multi-cloud',tag:'gcloud container hub memberships',icon:'🌐'},
+          {name:'Cloud Trace',desc:'Distributed tracing',tag:'gcloud trace traces list',icon:'🔭'},
+          {name:'Cloud Profiler',desc:'Performance profiling',tag:'gcloud profiler',icon:'⚡'},
+        ],
+        resources:[
+          {name:'Google Professional Cloud Architect Prep',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=aGthe-W5C9s',label:'youtube.com — GCP Architect Prep',free:true},
+          {name:'Cloud Operations Suite Documentation',who:'Google Cloud',type:'td',url:'https://cloud.google.com/products/operations',label:'cloud.google.com/products/operations',free:true},
+          {name:'Terraform on GCP — Qwiklabs',who:'Google Cloud Skills Boost',type:'tpr',url:'https://www.cloudskillsboost.google/quests/44',label:'cloudskillsboost.google — Terraform on GCP',free:true},
+          {name:'Google Cloud Blog',who:'Google Cloud',type:'tb2',url:'https://cloud.google.com/blog',label:'cloud.google.com/blog',free:true},
+        ],
+        certs:[
+          {name:'Google Professional Cloud Network Engineer',provider:'Google Cloud',url:'https://cloud.google.com/learn/certification/cloud-network-engineer',label:'cloud.google.com — Network Engineer',free:false,note:'Specialist networking cert — exam ~$200'},
+          {name:'Google Professional Cloud Security Engineer',provider:'Google Cloud',url:'https://cloud.google.com/learn/certification/cloud-security-engineer',label:'cloud.google.com — Security Engineer',free:false,note:'Specialist security cert — exam ~$200'},
+          {name:'Google Cloud Skills Boost Skill Badges',provider:'Google Cloud',url:'https://www.cloudskillsboost.google/catalog?keywords=skill+badge',label:'cloudskillsboost.google — Skill Badges',free:true,note:'Free shareable badges for every completed quest'},
+        ]
+      },
+    ]
+  },
+
+  // ─────────────────────────────────────
+  //  CLOUD DEVOPS
+  // ─────────────────────────────────────
+  {
+    id:'devops', name:'Cloud DevOps', icon:'⚙️', color:'#00d4aa',
+    desc:'Docker · Kubernetes · Terraform · CI/CD · Monitoring · GitOps · Security',
+    phases:[
+      {
+        id:'devops-containers', num:'PHASE 01', title:'Docker & Containers', months:'Month 1–3', emoji:'🐳',
+        topics:[
+          'Container vs VM — why containers, isolation, namespaces, cgroups',
+          'Docker architecture — daemon, client, registry, objects',
+          'Writing Dockerfiles — FROM, RUN, COPY, EXPOSE, CMD, ENTRYPOINT',
+          'Docker multi-stage builds — minimize image size',
+          'Docker image layers, caching, and best practices',
+          'docker-compose — defining multi-container apps in YAML',
+          'Docker networking — bridge, host, overlay, none',
+          'Docker volumes and bind mounts — persistent data',
+          'Docker registry — Docker Hub, private registries, image tagging',
+          'Container security — non-root users, read-only filesystems, secrets',
+          'Docker Compose for local dev environments — databases, services',
+          'Introduction to OCI standards and containerd',
+        ],
+        services:[
+          {name:'Docker Engine',desc:'Container runtime',tag:'docker --version',icon:'🐳'},
+          {name:'Docker Compose',desc:'Multi-container apps',tag:'docker compose up',icon:'📋'},
+          {name:'Docker Hub',desc:'Public container registry',tag:'docker pull',icon:'📦'},
+          {name:'Dockerfile',desc:'Image build instructions',tag:'docker build -t app .',icon:'📄'},
+          {name:'containerd',desc:'OCI container runtime',tag:'ctr --version',icon:'⚙️'},
+          {name:'Buildkit',desc:'Advanced image builds',tag:'DOCKER_BUILDKIT=1',icon:'🏗️'},
+        ],
+        resources:[
+          {name:'Docker Full Course for Beginners',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=fqMOX6JJhGo',label:'youtube.com — fCC Docker Course',free:true},
+          {name:'Docker Official Documentation',who:'Docker',type:'td',url:'https://docs.docker.com',label:'docs.docker.com',free:true},
+          {name:'Play with Docker — Free Browser Labs',who:'Docker',type:'tpr',url:'https://labs.play-with-docker.com',label:'labs.play-with-docker.com',free:true},
+          {name:'Docker Curriculum — Ivan Krizsan',who:'Ivan Krizsan',type:'tb2',url:'https://docker-curriculum.com',label:'docker-curriculum.com',free:true},
+        ],
+        certs:[
+          {name:'Docker Certified Associate (DCA)',provider:'Docker',url:'https://training.mirantis.com/certification/dca-certification-exam',label:'training.mirantis.com — DCA',free:false,note:'Industry-recognized Docker cert — exam ~$195'},
+          {name:'Kodekloud Docker Certification',provider:'KodeKloud',url:'https://kodekloud.com/courses/docker-for-the-absolute-beginner',label:'kodekloud.com — Docker',free:false,note:'Free tier; paid cert ~$15/mo subscription'},
+          {name:'Docker + Kubernetes — Udemy (A Cloud Guru)',provider:'A Cloud Guru',url:'https://acloudguru.com/course/docker-and-kubernetes-the-complete-guide',label:'acloudguru.com — Docker & K8s',free:false,note:'Paid course ~$30-50; frequently discounted'},
+        ]
+      },
+      {
+        id:'devops-kubernetes', num:'PHASE 02', title:'Kubernetes in Depth', months:'Month 3–5', emoji:'⚙️',
+        topics:[
+          'Kubernetes architecture — control plane, worker nodes, etcd, scheduler',
+          'kubectl commands — get, describe, apply, delete, exec, logs, port-forward',
+          'Pods, ReplicaSets, Deployments — rolling updates and rollbacks',
+          'Services — ClusterIP, NodePort, LoadBalancer, ExternalName',
+          'ConfigMaps and Secrets — environment variables and volume mounts',
+          'Namespaces, Resource Quotas, Limit Ranges',
+          'Persistent Volumes, PVCs and Storage Classes',
+          'Ingress controllers — NGINX ingress, path-based routing, TLS',
+          'RBAC — ClusterRole, RoleBinding, ServiceAccount permissions',
+          'Horizontal Pod Autoscaler (HPA) and Cluster Autoscaler',
+          'StatefulSets for databases — ordered deployment and stable identities',
+          'Helm — package manager for Kubernetes, chart creation, values',
+          'Kustomize — overlay-based config management',
+          'Network Policies — pod-to-pod communication rules',
+        ],
+        services:[
+          {name:'kubectl',desc:'Kubernetes CLI',tag:'kubectl get pods --all-namespaces',icon:'⌨️'},
+          {name:'Helm',desc:'K8s package manager',tag:'helm install my-app ./chart',icon:'⛵'},
+          {name:'NGINX Ingress',desc:'Ingress controller',tag:'kubectl apply -f ingress.yaml',icon:'🔀'},
+          {name:'Kustomize',desc:'Config overlays',tag:'kubectl apply -k ./overlays/prod',icon:'🎨'},
+          {name:'kind / k3s',desc:'Local Kubernetes clusters',tag:'kind create cluster',icon:'🏡'},
+          {name:'Lens / k9s',desc:'Kubernetes IDEs',tag:'k9s',icon:'🔭'},
+          {name:'Metrics Server',desc:'Resource metrics API',tag:'kubectl top pods',icon:'📊'},
+          {name:'cert-manager',desc:'TLS certificate automation',tag:'kubectl apply -f cert-manager.yaml',icon:'🔐'},
+        ],
+        resources:[
+          {name:'Kubernetes Full Course for Beginners',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=d6WC5n9G_sM',label:'youtube.com — fCC Kubernetes',free:true},
+          {name:'Kubernetes Documentation — Interactive Tutorial',who:'kubernetes.io',type:'td',url:'https://kubernetes.io/docs/tutorials/kubernetes-basics',label:'kubernetes.io/docs/tutorials',free:true},
+          {name:'Play with Kubernetes — Free Labs',who:'CNCF',type:'tpr',url:'https://labs.play-with-k8s.com',label:'labs.play-with-k8s.com',free:true},
+          {name:'KodeKloud — Kubernetes for Beginners',who:'KodeKloud',type:'tc',url:'https://kodekloud.com/courses/kubernetes-for-the-absolute-beginner-hands-on',label:'kodekloud.com — K8s Beginners',free:true},
+          {name:'The Kubernetes Book — Nigel Poulton',who:'Nigel Poulton',type:'tb2',url:'https://nigelpoulton.com/books/the-kubernetes-book',label:'nigelpoulton.com/books',free:false},
+        ],
+        certs:[
+          {name:'CKA: Certified Kubernetes Administrator',provider:'Linux Foundation / CNCF',url:'https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka',label:'linuxfoundation.org — CKA',free:false,note:'Most respected K8s ops cert — exam ~$395 (hands-on lab)'},
+          {name:'CKAD: Certified Kubernetes Application Developer',provider:'Linux Foundation / CNCF',url:'https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad',label:'linuxfoundation.org — CKAD',free:false,note:'Dev-focused K8s cert — exam ~$395 (hands-on lab)'},
+          {name:'CKS: Certified Kubernetes Security Specialist',provider:'Linux Foundation / CNCF',url:'https://training.linuxfoundation.org/certification/certified-kubernetes-security-specialist',label:'linuxfoundation.org — CKS',free:false,note:'Requires CKA — advanced security; exam ~$395'},
+          {name:'Kubernetes & Cloud Native Associate (KCNA)',provider:'Linux Foundation',url:'https://training.linuxfoundation.org/certification/kubernetes-cloud-native-associate',label:'linuxfoundation.org — KCNA',free:false,note:'Entry-level K8s cert — exam ~$250. Good starting point'},
+        ]
+      },
+      {
+        id:'devops-iac', num:'PHASE 03', title:'Infrastructure as Code & GitOps', months:'Month 5–7', emoji:'🏗️',
+        topics:[
+          'Infrastructure as Code — why IaC, idempotency, desired state',
+          'Terraform fundamentals — providers, resources, data sources, outputs',
+          'Terraform state — local, remote (S3/GCS/Azure Blob), locking',
+          'Terraform modules — creating reusable modules, Terraform Registry',
+          'Terraform workspaces and environments — dev/staging/prod',
+          'Ansible — inventory, playbooks, roles, tasks, handlers, vars',
+          'Ansible for cloud provisioning and app config management',
+          'GitOps principles — declarative config, Git as single source of truth',
+          'ArgoCD — GitOps continuous delivery for Kubernetes',
+          'Flux CD — alternative GitOps controller with Helm integration',
+          'Packer — building immutable machine images for clouds',
+          'Pulumi — IaC with real programming languages (Python, TypeScript)',
+        ],
+        services:[
+          {name:'Terraform',desc:'Multi-cloud IaC',tag:'terraform init && terraform apply',icon:'🏗️'},
+          {name:'Ansible',desc:'Config management',tag:'ansible-playbook site.yml',icon:'🤖'},
+          {name:'ArgoCD',desc:'GitOps for Kubernetes',tag:'argocd app sync',icon:'⚓'},
+          {name:'Flux CD',desc:'GitOps K8s operator',tag:'flux bootstrap github',icon:'🌊'},
+          {name:'Packer',desc:'Machine image builder',tag:'packer build template.pkr.hcl',icon:'📦'},
+          {name:'Pulumi',desc:'IaC in code',tag:'pulumi up',icon:'💜'},
+          {name:'Terragrunt',desc:'Terraform wrapper DRY',tag:'terragrunt apply',icon:'🌿'},
+          {name:'Crossplane',desc:'K8s-native IaC',tag:'kubectl apply -f composition.yaml',icon:'✂️'},
+        ],
+        resources:[
+          {name:'Terraform Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=SLB_c_ayRMo',label:'youtube.com — fCC Terraform',free:true},
+          {name:'HashiCorp Learn — Terraform Tutorials',who:'HashiCorp',type:'tpr',url:'https://developer.hashicorp.com/terraform/tutorials',label:'developer.hashicorp.com/terraform',free:true},
+          {name:'Ansible Documentation',who:'Red Hat',type:'td',url:'https://docs.ansible.com',label:'docs.ansible.com',free:true},
+          {name:'ArgoCD Getting Started',who:'ArgoCD',type:'td',url:'https://argo-cd.readthedocs.io/en/stable/getting_started',label:'argo-cd.readthedocs.io',free:true},
+          {name:'GitOps with ArgoCD — Full Course',who:'TechWorld with Nana — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=MeU5_k9ssrs',label:'youtube.com — TechWorld ArgoCD',free:true},
+        ],
+        certs:[
+          {name:'HashiCorp Certified: Terraform Associate (003)',provider:'HashiCorp',url:'https://www.hashicorp.com/certification/terraform-associate',label:'hashicorp.com/certification/terraform',free:false,note:'Most valued IaC cert — exam ~$70. Free prep on HashiCorp Learn'},
+          {name:'Red Hat Certified Specialist in Ansible (EX407)',provider:'Red Hat',url:'https://www.redhat.com/en/services/certification/rhcs-ansible-automation',label:'redhat.com — EX407',free:false,note:'Performance-based exam — ~$400. Highly valued in enterprise'},
+          {name:'HashiCorp Certified: Vault Associate',provider:'HashiCorp',url:'https://www.hashicorp.com/certification/vault-associate',label:'hashicorp.com/certification/vault',free:false,note:'Secrets management cert — exam ~$70'},
+        ]
+      },
+      {
+        id:'devops-cicd', num:'PHASE 04', title:'CI/CD, Monitoring & DevSecOps', months:'Month 7–10', emoji:'🔄',
+        topics:[
+          'CI/CD fundamentals — build, test, deploy pipeline stages',
+          'GitHub Actions — workflows, jobs, steps, actions, secrets, environments',
+          'GitLab CI/CD — .gitlab-ci.yml, runners, stages, artifacts, cache',
+          'Jenkins — declarative pipelines, Jenkinsfile, shared libraries',
+          'Tekton — cloud-native CI/CD on Kubernetes',
+          'Prometheus — metrics collection, PromQL queries, scrape configs',
+          'Grafana — dashboards, data sources, alerts, Loki for logs',
+          'ELK Stack — Elasticsearch, Logstash, Kibana for log aggregation',
+          'OpenTelemetry — unified observability: traces, metrics, logs',
+          'DevSecOps — shifting security left in CI/CD pipelines',
+          'Trivy and Snyk — container image and code vulnerability scanning',
+          'SAST/DAST — static/dynamic application security testing in pipelines',
+          'SRE principles — SLIs, SLOs, SLAs, error budgets, toil',
+          'Chaos Engineering — chaos monkey, LitmusChaos principles',
+        ],
+        services:[
+          {name:'GitHub Actions',desc:'CI/CD automation',tag:'gh workflow run',icon:'🐙'},
+          {name:'GitLab CI/CD',desc:'Integrated CI/CD pipelines',tag:'gitlab-runner exec',icon:'🦊'},
+          {name:'Prometheus',desc:'Metrics & alerting',tag:'promtool check rules',icon:'🔥'},
+          {name:'Grafana',desc:'Observability dashboards',tag:'grafana-cli plugins install',icon:'📊'},
+          {name:'Trivy',desc:'Vuln scanner',tag:'trivy image myapp:latest',icon:'🔍'},
+          {name:'ArgoCD',desc:'GitOps continuous delivery',tag:'argocd app list',icon:'⚓'},
+          {name:'OpenTelemetry',desc:'Unified observability',tag:'otel-contrib',icon:'🔭'},
+          {name:'Jenkins',desc:'Extensible CI/CD server',tag:'jenkinsfile',icon:'👷'},
+        ],
+        resources:[
+          {name:'GitHub Actions Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=R8_veQiYBjI',label:'youtube.com — fCC GitHub Actions',free:true},
+          {name:'Prometheus & Grafana Full Course',who:'TechWorld with Nana — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=QoDqxm7ybLc',label:'youtube.com — TechWorld Prometheus',free:true},
+          {name:'DevSecOps with GitHub Actions',who:'GitHub Docs',type:'td',url:'https://docs.github.com/actions/security-guides',label:'docs.github.com/actions/security',free:true},
+          {name:'Prometheus Documentation',who:'Prometheus',type:'td',url:'https://prometheus.io/docs/introduction/overview',label:'prometheus.io/docs',free:true},
+          {name:'Google SRE Book — Free Online',who:'Google',type:'tb2',url:'https://sre.google/sre-book/table-of-contents',label:'sre.google/sre-book',free:true},
+        ],
+        certs:[
+          {name:'GitHub Actions Certification',provider:'GitHub',url:'https://resources.github.com/learn/certifications',label:'github.com/certifications',free:false,note:'New GitHub cert — exam ~$99. Free prep materials on GitHub'},
+          {name:'GitLab Certified Associate',provider:'GitLab',url:'https://about.gitlab.com/services/education/gitlab-certified-associate',label:'about.gitlab.com/education',free:false,note:'~$299; covers the full DevOps platform'},
+          {name:'Linux Foundation — LFCS (Linux Foundation Certified SysAdmin)',provider:'Linux Foundation',url:'https://training.linuxfoundation.org/certification/linux-foundation-certified-sysadmin-lfcs',label:'linuxfoundation.org — LFCS',free:false,note:'Exam ~$395; foundational for cloud engineers'},
+          {name:'DataDog Fundamentals Certificate',provider:'DataDog',url:'https://learn.datadoghq.com/courses/dd-201',label:'learn.datadoghq.com',free:true,note:'100% free — highly practical monitoring cert'},
+        ]
+      },
+    ]
+  },
+];
+
+// ═══════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════
+function load(){try{return JSON.parse(localStorage.getItem('cloud_roadmap_v1')||'{}');}catch{return{};}}
+function save(s){localStorage.setItem('cloud_roadmap_v1',JSON.stringify(s));}
+let S = load();
+const gc=(id,t,i)=>!!(S[id]?.[t]?.[i]);
+function sc(id,t,i,v){if(!S[id])S[id]={};if(!S[id][t])S[id][t]={};S[id][t][i]=v;save(S);}
+const gn=(id)=>S[id]?.notes||'';
+function sn(id,v){if(!S[id])S[id]={};S[id].notes=v;save(S);}
+
+let currentFilter = 'aws';
+
+// ═══════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════
+function render(){
+  const root = document.getElementById('roadmap-root');
+  root.innerHTML = '';
+
+  PROVIDERS.forEach(prov => {
+    const sec = document.createElement('div');
+    sec.className = 'prov-section';
+    sec.id = 'prov-' + prov.id;
+    if(currentFilter !== 'all' && currentFilter !== prov.id) sec.classList.add('hidden');
+
+    let stot=0, sdone=0;
+    prov.phases.forEach(ph=>{
+      const td=ph.topics.filter((_,i)=>gc(ph.id,'topics',i)).length;
+      const sd=ph.services.filter((_,i)=>gc(ph.id,'services',i)).length;
+      stot += ph.topics.length + ph.services.length;
+      sdone += td + sd;
+    });
+    const spct = stot ? Math.round(sdone/stot*100) : 0;
+
+    sec.innerHTML = `
+      <div class="prov-hdr" style="--ph-color:${prov.color};--ph-border:${prov.color}22;--ph-bg:${prov.color}06;">
+        <span class="prov-icon">${prov.icon}</span>
+        <div class="prov-info">
+          <div class="prov-name" style="color:${prov.color}">${prov.name}</div>
+          <div class="prov-sub">${prov.desc}</div>
+        </div>
+        <div class="prov-stat" style="color:${prov.color};border-color:${prov.color}30;background:${prov.color}0a">${spct}% · ${sdone}/${stot}</div>
+      </div>
+    `;
+
+    prov.phases.forEach((ph, pi) => {
+      const td = ph.topics.filter((_,i)=>gc(ph.id,'topics',i)).length;
+      const sd = ph.services.filter((_,i)=>gc(ph.id,'services',i)).length;
+      const tot = ph.topics.length + ph.services.length;
+      const done = td + sd;
+      const pct = tot ? Math.round(done/tot*100) : 0;
+      const pc = pct===100 ? '#00d4aa' : pct>0 ? prov.color : '#375a7a';
+
+      const phEl = document.createElement('div');
+      phEl.className = 'phase';
+      phEl.id = 'ph-' + ph.id;
+      phEl.style.animationDelay = pi * 0.04 + 's';
+
+      phEl.innerHTML = `
+<div class="phd" style="background:linear-gradient(135deg,${prov.color}1a,${prov.color}07)" onclick="tog('${ph.id}')">
+  <span style="font-size:1rem">${ph.emoji}</span>
+  <span class="phnum" style="color:${prov.color}">${ph.num}</span>
+  <span class="phtitle">${ph.title}</span>
+  <span class="phmons">${ph.months}</span>
+  <span class="phpill" style="color:${pc}">
+    <span class="phdot" style="background:${pc}"></span>${pct}% · ${done}/${tot}
+  </span>
+  <span class="chev">▾</span>
+</div>
+<div class="phpbar"><div class="phpbfill" style="width:${pct}%;background:${prov.color}"></div></div>
+<div class="phb">
+  <div class="tabs">
+    <button class="tb on" style="--tc:${prov.color}" onclick="stab(event,'${ph.id}','t')">✅ Topics (${td}/${ph.topics.length})</button>
+    <button class="tb" style="--tc:${prov.color}" onclick="stab(event,'${ph.id}','s')">☁ Services (${sd}/${ph.services.length})</button>
+    <button class="tb" style="--tc:${prov.color}" onclick="stab(event,'${ph.id}','r')">🔗 Resources</button>
+    <button class="tb" style="--tc:${prov.color}" onclick="stab(event,'${ph.id}','c')">🏆 Certifications</button>
+    <button class="tb" style="--tc:${prov.color}" onclick="stab(event,'${ph.id}','n')">📝 Notes</button>
+  </div>
+
+  <div class="tcw on" id="t-${ph.id}-t">
+    <div class="cklist">
+      ${ph.topics.map((t,i)=>`
+      <div class="ci ${gc(ph.id,'topics',i)?'done':''}" onclick="chk('${ph.id}','topics',${i},this)">
+        <div class="cbox">${gc(ph.id,'topics',i)?'✓':''}</div>
+        <span class="clbl">${t}</span>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-s">
+    <div class="sgrid">
+      ${ph.services.map((sv,i)=>`
+      <div class="sc ${gc(ph.id,'services',i)?'done':''}" onclick="chk('${ph.id}','services',${i},this)">
+        <div class="svc-icon">${sv.icon}</div>
+        <div class="svc-info">
+          <div class="svc-name">${sv.name}</div>
+          <div class="svc-desc">${sv.desc}</div>
+          <div class="svc-tag">${sv.tag}</div>
+        </div>
+        <div class="svc-chk">${gc(ph.id,'services',i)?'✓':''}</div>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-r">
+    <div class="res-note">Click any card to open the resource in a new tab</div>
+    <div class="rgrid">
+      ${ph.resources.map(r=>`
+      <a href="${r.url}" target="_blank" rel="noopener noreferrer" class="rc">
+        <span class="rtype ${r.type}">${{tv:'VIDEO',tc:'COURSE',tb2:'BOOK/BLOG',td:'DOCS',tpr:'LAB/PRACTICE',tto:'TOOL',tpa:'PAPER'}[r.type]||r.type}</span>
+        <div class="rinfo">
+          <div class="rname">${r.name}</div>
+          <div class="rurl">🔗 ${r.label}</div>
+          <div class="rwho">${r.who}</div>
+        </div>
+        <div class="rright">
+          ${r.free?'<span class="ftag">FREE</span>':''}
+          <span class="rarr">→</span>
+        </div>
+      </a>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-c">
+    <div class="cert-note">Certifications to validate your cloud expertise</div>
+    <div class="cgrid">
+      ${(ph.certs||[]).map(c=>`
+      <a href="${c.url}" target="_blank" rel="noopener noreferrer" class="cc">
+        <span class="cprov">${c.provider.split(' ').slice(0,2).join(' ')}</span>
+        <div class="cinfo">
+          <div class="cname">${c.name}</div>
+          <div class="curl">🏆 ${c.label}</div>
+          <div class="cnote">${c.note}</div>
+        </div>
+        <div class="rright">
+          <span class="${c.free?'ctag-free':'ctag-paid'}">${c.free?'FREE':'PAID'}</span>
+          <span class="carr">→</span>
+        </div>
+      </a>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-n">
+    <label class="nlbl">Notes for ${ph.title}</label>
+    <textarea class="nta" placeholder="Architecture diagrams, commands to remember, project ideas, gotchas..." oninput="sn('${ph.id}',this.value)">${gn(ph.id)}</textarea>
+  </div>
+</div>`;
+      sec.appendChild(phEl);
+    });
+    root.appendChild(sec);
+  });
+
+  updash();
+}
+
+// ═══════════════════════════════════════
+//  INTERACTIONS
+// ═══════════════════════════════════════
+function tog(id){ document.getElementById('ph-'+id).classList.toggle('closed'); }
+
+function stab(e, pid, k){
+  e.stopPropagation();
+  const b = e.target.closest('.phb');
+  b.querySelectorAll('.tb').forEach(x=>x.classList.remove('on'));
+  b.querySelectorAll('.tcw').forEach(x=>x.classList.remove('on'));
+  e.target.classList.add('on');
+  b.querySelector(`#t-${pid}-${k}`).classList.add('on');
+}
+
+function chk(phid, type, idx, el){
+  const done = !el.classList.contains('done');
+  sc(phid, type, idx, done);
+  el.classList.toggle('done', done);
+  const bx = el.querySelector('.cbox,.svc-chk');
+  if(bx) bx.textContent = done ? '✓' : '';
+  updphase(phid);
+  updash();
+}
+
+function updphase(phid){
+  const prov = PROVIDERS.find(p=>p.phases.some(ph=>ph.id===phid));
+  if(!prov) return;
+  const ph = prov.phases.find(ph=>ph.id===phid);
+  const td = ph.topics.filter((_,i)=>gc(ph.id,'topics',i)).length;
+  const sd = ph.services.filter((_,i)=>gc(ph.id,'services',i)).length;
+  const tot = ph.topics.length + ph.services.length;
+  const done = td + sd;
+  const pct = tot ? Math.round(done/tot*100) : 0;
+  const pc = pct===100 ? '#00d4aa' : pct>0 ? prov.color : '#375a7a';
+  const el = document.getElementById('ph-'+ph.id);
+  if(!el) return;
+  el.querySelector('.phpill').innerHTML = `<span class="phdot" style="background:${pc}"></span>${pct}% · ${done}/${tot}`;
+  el.querySelector('.phpill').style.color = pc;
+  el.querySelector('.phpbfill').style.width = pct+'%';
+  const tbs = el.querySelectorAll('.tb');
+  tbs[0].textContent = `✅ Topics (${td}/${ph.topics.length})`;
+  tbs[1].textContent = `☁ Services (${sd}/${ph.services.length})`;
+}
+
+function updash(){
+  let gtot=0, gdone=0;
+  const msgs = ['Boot up! ☁','Signal acquired! 📡','Scaling up! 📈','Halfway deployed! ⚡','Nearly cloud native! 🚀','Cloud Master! 🎉'];
+
+  PROVIDERS.forEach(prov=>{
+    let stot=0, sdone=0;
+    prov.phases.forEach(ph=>{
+      const td=ph.topics.filter((_,i)=>gc(ph.id,'topics',i)).length;
+      const sd=ph.services.filter((_,i)=>gc(ph.id,'services',i)).length;
+      stot += ph.topics.length + ph.services.length;
+      sdone += td + sd;
+    });
+    gtot += stot; gdone += sdone;
+    const spct = stot ? Math.round(sdone/stot*100) : 0;
+    const dv = document.getElementById('d-'+prov.id);
+    const ds = document.getElementById('d-'+prov.id+'-sub');
+    if(dv) dv.innerHTML = `${spct}<small>%</small>`;
+    if(ds) ds.textContent = `${sdone} / ${stot} items`;
+    const sh = document.querySelector(`#prov-${prov.id} .prov-stat`);
+    if(sh) sh.textContent = `${spct}% · ${sdone}/${stot}`;
+  });
+
+  const pct = gtot ? Math.round(gdone/gtot*100) : 0;
+  document.getElementById('d-overall').innerHTML = `${pct}<small>%</small>`;
+  document.getElementById('d-msg').textContent = msgs[Math.min(Math.floor(pct/20),5)];
+  document.getElementById('ring-pct').textContent = pct+'%';
+  const C=138.23, off = C-(pct/100)*C;
+  document.getElementById('main-ring').style.strokeDashoffset = off;
+  document.getElementById('nav-fill').style.width = pct+'%';
+  document.getElementById('nav-pct').textContent = pct;
+  document.getElementById('banner').classList.toggle('show', pct===100);
+}
+
+function filterProv(id){
+  currentFilter = id;
+  document.querySelectorAll('.np').forEach(b=>{
+    b.classList.remove('act');
+    const bid = b.getAttribute('onclick').match(/'(\w+)'/)[1];
+    if(bid===id) b.classList.add('act');
+  });
+  document.querySelectorAll('.fb').forEach(b=>{
+    b.classList.remove('act');
+    const bid = b.getAttribute('onclick').match(/'(\w+)'/)[1];
+    if(bid===id) b.classList.add('act');
+  });
+  document.querySelectorAll('.prov-section').forEach(sec=>{
+    const sid = sec.id.replace('prov-','');
+    sec.classList.toggle('hidden', id!=='all' && sid!==id);
+  });
+}
+
+function resetAll(){
+  if(confirm('Reset ALL cloud learning progress? This cannot be undone.')){
+    localStorage.removeItem('cloud_roadmap_v1');
+    S={};
+    render();
+  }
+}
+
+render();
+</script>
+</body>
+</html>

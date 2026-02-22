@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Roadmap — Analyst · Scientist</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #f5f2ec;
+  --bg2:      #edeae2;
+  --card:     #ffffff;
+  --border:   rgba(0,0,0,0.08);
+  --border2:  rgba(0,0,0,0.15);
+  --text:     #1a1a2e;
+  --muted:    #7a7a8c;
+  --dim:      #4a4a5e;
+
+  /* Track colors */
+  --analyst:  #e05c3a;
+  --scientist:#0f6b7a;
+
+  /* Accent palette */
+  --coral:    #e05c3a;
+  --teal:     #0f6b7a;
+  --amber:    #d4860b;
+  --sage:     #3a7d4a;
+  --rose:     #b5435a;
+  --indigo:   #3d5bd9;
+  --plum:     #7c3d9e;
+
+  --nav-h: 58px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── Subtle grid texture ── */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ── Decorative blobs ── */
+.blob1,.blob2,.blob3{
+  position:fixed;border-radius:50%;pointer-events:none;z-index:0;
+  filter:blur(80px);opacity:0.12;
+}
+.blob1{width:600px;height:600px;top:-200px;right:-150px;background:var(--coral);}
+.blob2{width:500px;height:500px;bottom:-150px;left:-100px;background:var(--teal);}
+.blob3{width:400px;height:400px;top:50%;left:40%;background:var(--amber);}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);
+  background:rgba(245,242,236,0.94);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 2rem;gap:1.4rem;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;
+  color:var(--text);letter-spacing:-0.01em;white-space:nowrap;
+}
+.nav-logo em{font-style:italic;color:var(--coral);}
+.nav-tracks{display:flex;gap:.4rem;flex:1;}
+.nt{
+  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.06em;
+  text-transform:uppercase;padding:.24rem .75rem;border-radius:3px;
+  border:1.5px solid;cursor:pointer;transition:all .2s;
+}
+.nt-analyst{color:var(--coral);border-color:rgba(224,92,58,.25);background:rgba(224,92,58,.06);}
+.nt-analyst.act{background:var(--coral);color:#fff;border-color:var(--coral);}
+.nt-scientist{color:var(--teal);border-color:rgba(15,107,122,.25);background:rgba(15,107,122,.06);}
+.nt-scientist.act{background:var(--teal);color:#fff;border-color:var(--teal);}
+.nt-all{color:var(--dim);border-color:var(--border2);background:transparent;}
+.nt-all.act{background:var(--text);color:var(--bg);border-color:var(--text);}
+.nav-right{display:flex;align-items:center;gap:1rem;margin-left:auto;}
+.npct{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted);}
+.npct b{color:var(--text);}
+.nbar{width:88px;height:3px;background:var(--bg2);border-radius:99px;overflow:hidden;}
+.nfill{height:100%;background:linear-gradient(90deg,var(--coral),var(--teal));border-radius:99px;transition:width .5s;}
+.rbtn{
+  font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.05em;
+  text-transform:uppercase;background:transparent;border:1.5px solid var(--border2);
+  color:var(--muted);padding:.28rem .65rem;border-radius:3px;cursor:pointer;transition:all .2s;
+}
+.rbtn:hover{border-color:var(--rose);color:var(--rose);}
+@media(max-width:768px){.nav-tracks{display:none;}.nav-right{display:none;}}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  padding:calc(var(--nav-h) + 60px) 2rem 56px;
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
+}
+@media(max-width:768px){.hero{grid-template-columns:1fr;gap:2rem;}}
+.hero-left{animation:fadeUp .6s ease both;}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--coral);
+  margin-bottom:1.2rem;
+}
+.hero-tag::before{content:'';width:24px;height:2px;background:var(--coral);}
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,5vw,4rem);
+  font-weight:900;line-height:1.05;
+  letter-spacing:-0.03em;color:var(--text);
+}
+h1 em{font-style:italic;color:var(--coral);}
+h1 span{color:var(--teal);}
+.hero-sub{
+  margin-top:1rem;color:var(--muted);font-size:.93rem;line-height:1.75;
+  max-width:420px;font-weight:400;
+}
+.hero-badges{display:flex;gap:.5rem;margin-top:1.4rem;flex-wrap:wrap;}
+.hb{
+  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.06em;
+  text-transform:uppercase;padding:.3rem .8rem;border-radius:2px;
+  font-weight:500;border:1.5px solid;
+}
+.hb-a{color:var(--coral);border-color:rgba(224,92,58,.3);background:rgba(224,92,58,.06);}
+.hb-s{color:var(--teal);border-color:rgba(15,107,122,.3);background:rgba(15,107,122,.06);}
+
+.hero-right{animation:fadeUp .6s .1s ease both;}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
+.hs{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:1rem 1.1rem;position:relative;overflow:hidden;
+}
+.hs::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:3px;background:var(--hc,var(--coral));
+}
+.hs-lbl{font-family:'DM Mono',monospace;font-size:.52rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;}
+.hs-val{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:800;color:var(--text);line-height:1;}
+.hs-sub{font-size:.68rem;color:var(--muted);margin-top:.2rem;}
+
+/* Ring for overall */
+.hs-ring{display:flex;align-items:center;gap:.75rem;margin-top:.3rem;}
+.ring{position:relative;width:52px;height:52px;flex-shrink:0;}
+.ring svg{transform:rotate(-90deg);}
+.rbg2{fill:none;stroke:rgba(0,0,0,.06);stroke-width:5;}
+.rfg2{fill:none;stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .9s ease;}
+.rtxt2{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:'DM Mono',monospace;font-size:.58rem;font-weight:500;color:var(--text);
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── FILTER BAR ── */
+.filter-bar{
+  position:relative;z-index:1;max-width:1100px;
+  margin:0 auto 2rem;padding:0 2rem;
+  animation:fadeUp .4s .2s ease both;
+}
+.filter-wrap{
+  display:flex;gap:.35rem;padding:.5rem;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:6px;flex-wrap:wrap;
+}
+.fb{
+  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.07em;
+  text-transform:uppercase;padding:.4rem .95rem;border-radius:3px;
+  border:1.5px solid transparent;cursor:pointer;transition:all .2s;
+  color:var(--muted);background:transparent;font-weight:500;
+}
+.fb:hover{color:var(--text);background:var(--bg2);}
+.fb.act{color:var(--text);background:var(--bg2);border-color:var(--border2);}
+.fb-analyst.act{color:var(--coral);border-color:rgba(224,92,58,.3);background:rgba(224,92,58,.07);}
+.fb-scientist.act{color:var(--teal);border-color:rgba(15,107,122,.3);background:rgba(15,107,122,.07);}
+.fb-sep{width:1px;background:var(--border);margin:.1rem 0;flex-shrink:0;}
+
+/* ── MAIN ── */
+main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 2rem 6rem;}
+
+/* ── TRACK SECTION ── */
+.track-section{margin-bottom:4rem;}
+.track-section.hidden{display:none;}
+.track-hdr{
+  display:flex;align-items:flex-start;gap:1.2rem;
+  padding:1.2rem 1.5rem;border-radius:8px;
+  margin-bottom:1.2rem;border:1px solid;position:relative;overflow:hidden;
+}
+.track-hdr::before{
+  content:'';position:absolute;inset:0;background:var(--th-bg);
+}
+.track-hdr::after{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:4px;
+  background:var(--th-color);
+}
+.track-icon{font-size:2rem;position:relative;}
+.track-info{flex:1;position:relative;}
+.track-name{
+  font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:800;
+  letter-spacing:-0.02em;margin-bottom:.2rem;
+}
+.track-desc{font-size:.82rem;color:var(--muted);line-height:1.6;max-width:600px;}
+.track-stat{
+  position:relative;margin-left:auto;align-self:center;
+  font-family:'DM Mono',monospace;font-size:.62rem;
+  padding:.3rem .75rem;border-radius:3px;border:1.5px solid;
+  white-space:nowrap;
+}
+
+/* Sec head */
+.sec-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;}
+.sec-line{flex:1;height:1px;background:var(--border);}
+.sec-lbl{
+  font-family:'DM Mono',monospace;font-size:.54rem;
+  color:var(--muted);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
+}
+
+/* ── PHASE ── */
+.phase{margin-bottom:1.1rem;animation:fadeUp .4s ease both;}
+.phd{
+  display:flex;align-items:center;gap:.8rem;padding:.85rem 1.15rem;
+  border-radius:6px 6px 0 0;cursor:pointer;user-select:none;
+  transition:filter .2s;
+}
+.phd:hover{filter:brightness(0.97);}
+.phnum{
+  font-family:'DM Mono',monospace;font-size:.52rem;
+  letter-spacing:.1em;opacity:.6;text-transform:uppercase;
+}
+.phtitle{
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.92rem;
+  font-weight:700;flex:1;color:var(--text);
+}
+.phmons{font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);}
+.phpill{
+  font-family:'DM Mono',monospace;font-size:.58rem;
+  display:flex;align-items:center;gap:.3rem;white-space:nowrap;
+  background:rgba(255,255,255,.6);border:1px solid var(--border);
+  border-radius:99px;padding:.16rem .55rem;
+}
+.phdot{width:5px;height:5px;border-radius:50%;}
+.chev{opacity:.45;font-size:.68rem;transition:transform .3s;color:var(--muted);}
+.phase.closed .chev{transform:rotate(-90deg);}
+.phb{
+  background:var(--card);border:1px solid var(--border);border-top:none;
+  border-radius:0 0 8px 8px;overflow:hidden;
+  transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s;
+  max-height:6000px;opacity:1;
+}
+.phase.closed .phb{max-height:0;opacity:0;}
+.phpbar{height:2px;background:var(--bg2);}
+.phpbfill{height:100%;transition:width .5s ease;}
+
+/* ── TABS ── */
+.tabs{
+  display:flex;border-bottom:1px solid var(--border);
+  padding:0 1rem;gap:.02rem;overflow-x:auto;
+  background:rgba(245,242,236,.5);
+}
+.tabs::-webkit-scrollbar{display:none;}
+.tb{
+  font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted);background:none;border:none;
+  border-bottom:2px solid transparent;padding:.62rem .62rem;cursor:pointer;
+  transition:color .2s,border-color .2s;margin-bottom:-1px;white-space:nowrap;
+  font-weight:500;
+}
+.tb.on{color:var(--tc,var(--coral));border-bottom-color:var(--tc,var(--coral));}
+.tcw{display:none;padding:.95rem 1.1rem;}
+.tcw.on{display:block;}
+
+/* ── TOPICS ── */
+.cklist{display:flex;flex-direction:column;gap:.36rem;}
+.ci{
+  display:flex;align-items:flex-start;gap:.65rem;padding:.58rem .78rem;
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:5px;cursor:pointer;transition:all .15s;user-select:none;
+}
+.ci:hover{background:var(--bg2);border-color:var(--border2);}
+.ci.done{background:rgba(58,125,74,.05);border-color:rgba(58,125,74,.18);}
+.cbox{
+  width:15px;height:15px;border:1.5px solid var(--border2);border-radius:3px;
+  flex-shrink:0;margin-top:2px;display:flex;align-items:center;
+  justify-content:center;font-size:.58rem;transition:all .2s;color:#fff;
+}
+.ci.done .cbox{background:var(--sage);border-color:var(--sage);}
+.clbl{font-size:.83rem;color:var(--dim);line-height:1.5;}
+.ci.done .clbl{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(122,122,140,.35);}
+
+/* ── TOOLS (libraries/tools) ── */
+.tgrid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(192px,1fr));gap:.5rem;}
+.tc2{
+  background:var(--bg);border:1px solid var(--border);border-radius:6px;
+  padding:.72rem;cursor:pointer;transition:all .15s;
+  display:flex;align-items:flex-start;gap:.58rem;user-select:none;
+}
+.tc2:hover{background:var(--bg2);border-color:var(--border2);}
+.tc2.done{background:rgba(58,125,74,.05);border-color:rgba(58,125,74,.2);}
+.tl-icon{
+  width:28px;height:28px;border-radius:5px;background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;
+}
+.tl-info{flex:1;min-width:0;}
+.tl-name{font-family:'DM Mono',monospace;font-size:.67rem;color:var(--text);font-weight:500;margin-bottom:.08rem;}
+.tl-desc{font-size:.68rem;color:var(--muted);line-height:1.3;}
+.tl-cmd{font-family:'DM Mono',monospace;font-size:.54rem;color:var(--indigo);margin-top:.22rem;opacity:.8;}
+.tl-chk{
+  width:13px;height:13px;border:1.5px solid var(--border2);border-radius:3px;
+  display:flex;align-items:center;justify-content:center;font-size:.5rem;
+  flex-shrink:0;margin-top:1px;transition:all .2s;color:#fff;
+}
+.tc2.done .tl-chk{background:var(--sage);border-color:var(--sage);}
+
+/* ── RESOURCES ── */
+.res-note{
+  font-size:.7rem;color:var(--muted);margin-bottom:.75rem;
+  display:flex;align-items:center;gap:.45rem;font-family:'DM Mono',monospace;
+  letter-spacing:.04em;
+}
+.res-note::before{content:'';width:12px;height:1.5px;background:var(--indigo);flex-shrink:0;}
+.rgrid{display:flex;flex-direction:column;gap:.44rem;}
+.rc{
+  display:flex;align-items:center;gap:.72rem;padding:.78rem .92rem;
+  background:var(--bg);border:1px solid var(--border);border-radius:6px;
+  text-decoration:none;transition:all .15s;
+}
+.rc:hover{background:var(--bg2);border-color:var(--border2);transform:translateX(4px);}
+.rtype{
+  font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.07em;
+  text-transform:uppercase;padding:.14rem .42rem;border-radius:2px;
+  white-space:nowrap;flex-shrink:0;font-weight:500;
+}
+.tv{background:rgba(181,67,90,.12);color:var(--rose);}
+.tco{background:rgba(61,91,217,.12);color:var(--indigo);}
+.tb2{background:rgba(212,134,11,.12);color:var(--amber);}
+.td{background:rgba(122,122,140,.12);color:var(--muted);}
+.tpr{background:rgba(58,125,74,.12);color:var(--sage);}
+.tto{background:rgba(124,61,158,.12);color:var(--plum);}
+.tpa{background:rgba(15,107,122,.12);color:var(--teal);}
+.rinfo{flex:1;min-width:0;}
+.rname{font-size:.82rem;color:var(--text);font-weight:600;line-height:1.3;margin-bottom:.14rem;}
+.rurl{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--indigo);opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rwho{font-size:.67rem;color:var(--muted);margin-top:.1rem;}
+.rright{display:flex;align-items:center;gap:.4rem;flex-shrink:0;}
+.ftag{
+  font-family:'DM Mono',monospace;font-size:.52rem;color:var(--sage);
+  background:rgba(58,125,74,.1);padding:.1rem .38rem;border-radius:2px;border:1px solid rgba(58,125,74,.2);
+}
+.rarr{color:var(--muted);font-size:.75rem;opacity:.4;transition:opacity .2s,transform .2s;}
+.rc:hover .rarr{opacity:1;transform:translateX(3px);}
+
+/* ── CERTS ── */
+.cert-note{
+  font-size:.7rem;color:var(--muted);margin-bottom:.75rem;
+  display:flex;align-items:center;gap:.45rem;font-family:'DM Mono',monospace;
+  letter-spacing:.04em;
+}
+.cert-note::before{content:'';width:12px;height:1.5px;background:var(--amber);flex-shrink:0;}
+.cgrid{display:flex;flex-direction:column;gap:.44rem;}
+.cc{
+  display:flex;align-items:center;gap:.72rem;padding:.78rem .92rem;
+  background:var(--bg);border:1px solid var(--border);border-radius:6px;
+  text-decoration:none;transition:all .15s;
+}
+.cc:hover{background:rgba(212,134,11,.04);border-color:rgba(212,134,11,.25);transform:translateX(4px);}
+.cprov{
+  font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.06em;
+  text-transform:uppercase;padding:.14rem .42rem;border-radius:2px;
+  white-space:nowrap;flex-shrink:0;font-weight:500;
+  background:rgba(212,134,11,.1);color:var(--amber);
+}
+.cinfo{flex:1;min-width:0;}
+.cname{font-size:.82rem;color:var(--text);font-weight:600;line-height:1.3;margin-bottom:.14rem;}
+.curl{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--amber);opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cnote{font-size:.67rem;color:var(--muted);margin-top:.1rem;}
+.ctag-free{
+  font-family:'DM Mono',monospace;font-size:.52rem;color:var(--sage);
+  background:rgba(58,125,74,.1);padding:.1rem .38rem;border-radius:2px;border:1px solid rgba(58,125,74,.2);white-space:nowrap;
+}
+.ctag-paid{
+  font-family:'DM Mono',monospace;font-size:.52rem;color:var(--amber);
+  background:rgba(212,134,11,.1);padding:.1rem .38rem;border-radius:2px;border:1px solid rgba(212,134,11,.2);white-space:nowrap;
+}
+.carr{color:var(--muted);font-size:.75rem;opacity:.4;transition:opacity .2s,transform .2s;}
+.cc:hover .carr{opacity:1;transform:translateX(3px);}
+
+/* ── PROJECTS (DS-specific tab) ── */
+.proj-note{
+  font-size:.7rem;color:var(--muted);margin-bottom:.75rem;
+  display:flex;align-items:center;gap:.45rem;font-family:'DM Mono',monospace;letter-spacing:.04em;
+}
+.proj-note::before{content:'';width:12px;height:1.5px;background:var(--plum);}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.6rem;}
+.pc{
+  background:var(--bg);border:1px solid var(--border);border-radius:6px;
+  padding:.9rem;transition:all .15s;
+}
+.pc:hover{background:var(--bg2);border-color:var(--border2);}
+.pc-tag{
+  font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.08em;
+  text-transform:uppercase;padding:.1rem .38rem;border-radius:2px;
+  display:inline-block;margin-bottom:.5rem;font-weight:500;
+}
+.pc-title{font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.3rem;line-height:1.4;}
+.pc-desc{font-size:.72rem;color:var(--muted);line-height:1.5;}
+.diff-beginner{color:var(--sage);background:rgba(58,125,74,.1);}
+.diff-intermediate{color:var(--indigo);background:rgba(61,91,217,.1);}
+.diff-advanced{color:var(--rose);background:rgba(181,67,90,.1);}
+
+/* ── NOTES ── */
+.nlbl{
+  font-family:'DM Mono',monospace;font-size:.54rem;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:.5rem;
+}
+.nta{
+  width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;
+  padding:.8rem;color:var(--dim);font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:.83rem;line-height:1.7;resize:vertical;min-height:100px;
+  outline:none;transition:border-color .2s;
+}
+.nta:focus{border-color:var(--border2);}
+.nta::placeholder{color:var(--muted);}
+
+/* ── BOTTOM TOOLS ── */
+.bottom-tools{margin-top:3rem;}
+.ttgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.55rem;}
+.tool{
+  background:var(--card);border:1px solid var(--border);border-radius:6px;
+  padding:.8rem;text-decoration:none;display:flex;align-items:center;gap:.65rem;
+  transition:all .15s;
+}
+.tool:hover{border-color:var(--border2);transform:translateY(-2px);background:var(--bg2);}
+.te{font-size:1.05rem;}
+.tnm{font-size:.78rem;font-weight:700;color:var(--text);}
+.tds{font-size:.67rem;color:var(--muted);margin-top:.04rem;}
+
+/* ── BANNER ── */
+.banner{
+  display:none;
+  background:linear-gradient(135deg,rgba(224,92,58,.07),rgba(15,107,122,.07));
+  border:1.5px solid rgba(224,92,58,.2);border-radius:8px;
+  padding:1.3rem 1.8rem;text-align:center;margin-bottom:1.6rem;
+}
+.banner.show{display:block;animation:fadeUp .4s ease;}
+.banner h3{
+  font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:800;
+  color:var(--coral);margin-bottom:.3rem;
+}
+.banner p{font-size:.83rem;color:var(--muted);}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:99px;}
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 12px;
+  /* background-color: #ffffff; */
+  /* border-bottom: 2px solid #e5e7eb; */
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #374151;
+  font-size: 15px;
+  font-weight: 500;
+  position: relative;
+  padding: 6px 0;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -4px;
+  background-color: #2563eb;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #2563eb;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+</style>
+</head>
+<body>
+<div class="blob1"></div>
+<div class="blob2"></div>
+<div class="blob3"></div>
+
+<nav>
+  <div class="nav-logo"><em>Data</em> Roadmap</div>
+  <div class="nav-tracks">
+    <button class="nt nt-analyst act" onclick="filterTrack('analyst')">Data Analyst</button>
+    <button class="nt nt-scientist" onclick="filterTrack('scientist')">Data Scientist</button>
+    <button class="nt nt-all" onclick="filterTrack('all')">Both Tracks</button>
+  </div>
+  <div class="nav-links">
+    <a href="/index.html">AIML</a>
+    <a href="/FullStack_Roadmap_Tracker.html">Full Stack</a>
+    <a href="/Cloud_Computing_Roadmap.html">Cloud</a>
+    <a href="/">Data</a>
+  </div>
+  <div class="nav-right">
+    <span class="npct">Progress: <b id="nav-pct">0</b>%</span>
+    <div class="nbar"><div class="nfill" id="nav-fill" style="width:0%"></div></div>
+    <button class="rbtn" onclick="resetAll()">↺ Reset</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Interactive Progress Tracker · Auto-Saved</div>
+    <h1>Master <em>Data</em><br>& <span>Science</span></h1>
+    <p class="hero-sub">Two complete learning paths — one for Data Analysts, one for Data Scientists. Check off topics and tools, follow curated resources, and earn the industry's top certifications.</p>
+    <div class="hero-badges">
+      <span class="hb hb-a">📊 Data Analyst Path</span>
+      <span class="hb hb-s">🔬 Data Scientist Path</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div class="hs" style="--hc:var(--coral);grid-column:1/-1;">
+        <div class="hs-lbl">Overall Progress</div>
+        <div class="hs-ring">
+          <div class="ring">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <circle class="rbg2" cx="26" cy="26" r="20"/>
+              <circle class="rfg2" id="main-ring" cx="26" cy="26" r="20" stroke="var(--coral)" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
+            </svg>
+            <div class="rtxt2" id="ring-pct">0%</div>
+          </div>
+          <div>
+            <div class="hs-val" id="d-overall">0<small style="font-size:.8rem;font-family:'Plus Jakarta Sans';font-weight:400;color:var(--muted)">%</small></div>
+            <div class="hs-sub" id="d-msg">Start your data journey 📊</div>
+          </div>
+        </div>
+      </div>
+      <div class="hs" style="--hc:var(--coral);">
+        <div class="hs-lbl">Analyst Track</div>
+        <div class="hs-val" id="d-analyst">0<small style="font-size:.8rem;font-family:'Plus Jakarta Sans';font-weight:400;color:var(--muted)">%</small></div>
+        <div class="hs-sub" id="d-analyst-sub">0 / 0 items</div>
+      </div>
+      <div class="hs" style="--hc:var(--teal);">
+        <div class="hs-lbl">Scientist Track</div>
+        <div class="hs-val" id="d-scientist">0<small style="font-size:.8rem;font-family:'Plus Jakarta Sans';font-weight:400;color:var(--muted)">%</small></div>
+        <div class="hs-sub" id="d-scientist-sub">0 / 0 items</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-wrap">
+    <button class="fb act" onclick="filterTrack('all')">All Tracks</button>
+    <div class="fb-sep"></div>
+    <button class="fb fb-analyst" onclick="filterTrack('analyst')">📊 Data Analyst</button>
+    <button class="fb fb-scientist" onclick="filterTrack('scientist')">🔬 Data Scientist</button>
+  </div>
+</div>
+
+<main>
+  <div class="banner" id="banner">
+    <h3>🎉 Data Master Achieved!</h3>
+    <p>You've completed both tracks. You're ready to analyze, model, and extract insights from any dataset.</p>
+  </div>
+  <div id="roadmap-root"></div>
+
+  <div class="bottom-tools">
+    <div class="sec-head"><div class="sec-line"></div><div class="sec-lbl">Essential Tools to Bookmark</div><div class="sec-line"></div></div>
+    <div class="ttgrid">
+      <a href="https://jupyter.org" target="_blank" class="tool"><span class="te">📓</span><div><div class="tnm">Jupyter Notebook</div><div class="tds">Interactive notebooks</div></div></a>
+      <a href="https://colab.research.google.com" target="_blank" class="tool"><span class="te">🖥️</span><div><div class="tnm">Google Colab</div><div class="tds">Free GPU notebooks</div></div></a>
+      <a href="https://www.kaggle.com" target="_blank" class="tool"><span class="te">🏆</span><div><div class="tnm">Kaggle</div><div class="tds">Datasets + competitions</div></div></a>
+      <a href="https://public.tableau.com" target="_blank" class="tool"><span class="te">📊</span><div><div class="tnm">Tableau Public</div><div class="tds">Free data visualization</div></div></a>
+      <a href="https://app.powerbi.com" target="_blank" class="tool"><span class="te">📈</span><div><div class="tnm">Power BI Desktop</div><div class="tds">Free BI tool</div></div></a>
+      <a href="https://dbeaver.io" target="_blank" class="tool"><span class="te">🗃️</span><div><div class="tnm">DBeaver</div><div class="tds">Free SQL client</div></div></a>
+      <a href="https://www.sqlitetutorial.net/tryit" target="_blank" class="tool"><span class="te">⚡</span><div><div class="tnm">SQLite Online</div><div class="tds">Practice SQL in browser</div></div></a>
+      <a href="https://huggingface.co/datasets" target="_blank" class="tool"><span class="te">🤗</span><div><div class="tnm">HuggingFace Datasets</div><div class="tds">Open dataset hub</div></div></a>
+      <a href="https://github.com" target="_blank" class="tool"><span class="te">🐙</span><div><div class="tnm">GitHub</div><div class="tds">Portfolio & version control</div></div></a>
+      <a href="https://www.mongodb.com/atlas" target="_blank" class="tool"><span class="te">🍃</span><div><div class="tnm">MongoDB Atlas</div><div class="tds">Free cloud NoSQL DB</div></div></a>
+    </div>
+  </div>
+</main>
+
+<script>
+// ════════════════════════════════════════════════════
+//  DATA
+// ════════════════════════════════════════════════════
+const TRACKS = [
+
+  // ──────────────────────────────────────────────────
+  //  TRACK 1 : DATA ANALYST
+  // ──────────────────────────────────────────────────
+  {
+    id:'analyst', name:'Data Analyst', icon:'📊', color:'#e05c3a',
+    desc:'From raw data to actionable insights — Excel, SQL, Python for analysis, Tableau/Power BI, Statistics, and storytelling with data.',
+    phases:[
+
+      // Phase 1
+      {
+        id:'da-excel', num:'PHASE 01', title:'Excel & Spreadsheet Mastery', months:'Month 1–2', emoji:'📋',
+        topics:[
+          'Excel fundamentals — navigation, formatting, data entry best practices',
+          'Formulas — SUM, IF, VLOOKUP, HLOOKUP, INDEX+MATCH, IFERROR',
+          'Advanced formulas — XLOOKUP, SUMIFS, COUNTIFS, AVERAGEIFS, TEXTJOIN',
+          'PivotTables — grouping, filtering, calculated fields and items',
+          'PivotCharts and dynamic dashboards with slicers and timelines',
+          'Data validation — dropdowns, input messages, error alerts',
+          'Conditional formatting — color scales, data bars, icon sets, custom rules',
+          'What-If Analysis — Goal Seek, Scenario Manager, Data Tables',
+          'Power Query — import, transform, merge, append data sources',
+          'Power Pivot and DAX basics — relationships, calculated columns, measures',
+          'Named ranges and dynamic arrays — FILTER, SORT, UNIQUE, SEQUENCE',
+          'Macros and VBA basics — recording macros, simple automation',
+        ],
+        tools:[
+          {name:'Microsoft Excel',desc:'Industry standard spreadsheet',cmd:'microsoft365.com/excel',icon:'📊'},
+          {name:'Google Sheets',desc:'Free cloud alternative',cmd:'sheets.google.com',icon:'📄'},
+          {name:'Power Query',desc:'ETL inside Excel',cmd:'Data → Get & Transform',icon:'🔄'},
+          {name:'Power Pivot',desc:'Data modeling in Excel',cmd:'Data → Manage Data Model',icon:'💡'},
+        ],
+        resources:[
+          {name:'Excel for Beginners Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=Vl0H-qTclOg',label:'youtube.com — fCC Excel Full Course',free:true},
+          {name:'Excel Advanced Formulas and Functions',who:'ExcelJet',type:'tb2',url:'https://exceljet.net/formulas',label:'exceljet.net/formulas',free:true},
+          {name:'Google Sheets Tutorial — Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=N2opj8XzYBY',label:'youtube.com — fCC Google Sheets',free:true},
+          {name:'Power Query Official Documentation',who:'Microsoft',type:'td',url:'https://learn.microsoft.com/en-us/power-query/power-query-what-is-power-query',label:'learn.microsoft.com — Power Query',free:true},
+          {name:'Excel Skills for Business — Macquarie Uni',who:'Coursera — Macquarie University',type:'tco',url:'https://www.coursera.org/specializations/excel',label:'coursera.org — Excel Skills for Business',free:true},
+        ],
+        certs:[
+          {name:'Microsoft Office Specialist: Excel Associate (MO-200)',provider:'Microsoft',url:'https://learn.microsoft.com/en-us/certifications/mos-excel-microsoft-365-apps',label:'learn.microsoft.com — MO-200',free:false,note:'Exam ~$100 — industry-recognized Excel cert'},
+          {name:'Excel Skills for Business Specialization',provider:'Macquarie Uni — Coursera',url:'https://www.coursera.org/specializations/excel',label:'coursera.org — Excel Skills',free:true,note:'Free audit; financial aid for certificate'},
+          {name:'Google Data Analytics Certificate',provider:'Google — Coursera',url:'https://www.coursera.org/professional-certificates/google-data-analytics',label:'coursera.org — Google Data Analytics',free:true,note:'Includes Sheets; free audit available'},
+        ],
+        projects:[
+          {title:'Sales Dashboard',desc:'Build an interactive Excel sales dashboard with PivotTables, slicers, and conditional formatting.',diff:'beginner'},
+          {title:'Budget Tracker',desc:'Personal or business budget tracker with automated categories and charts.',diff:'beginner'},
+          {title:'HR Analytics Report',desc:'Analyze employee data — turnover, headcount, salary bands using Power Query.',diff:'intermediate'},
+        ]
+      },
+
+      // Phase 2
+      {
+        id:'da-sql', num:'PHASE 02', title:'SQL & Database Fundamentals', months:'Month 2–4', emoji:'🗃️',
+        topics:[
+          'What is a relational database — tables, rows, columns, primary/foreign keys',
+          'Basic SQL — SELECT, FROM, WHERE, ORDER BY, LIMIT',
+          'Filtering — AND, OR, NOT, IN, BETWEEN, LIKE, IS NULL',
+          'Aggregate functions — COUNT, SUM, AVG, MIN, MAX with GROUP BY and HAVING',
+          'JOINs — INNER, LEFT, RIGHT, FULL OUTER, CROSS, SELF JOIN',
+          'Subqueries — correlated and non-correlated, in SELECT/FROM/WHERE',
+          'Common Table Expressions (CTEs) — WITH clause for readable queries',
+          'Window functions — ROW_NUMBER, RANK, DENSE_RANK, LAG, LEAD, NTILE',
+          'String functions — CONCAT, SUBSTRING, TRIM, UPPER, LOWER, REPLACE',
+          'Date functions — DATEPART, DATEDIFF, DATE_ADD, strftime',
+          'CASE WHEN statements — conditional logic in SQL',
+          'Views, indexes and query optimization basics',
+          'Stored procedures and basic database design — normalization',
+        ],
+        tools:[
+          {name:'PostgreSQL',desc:'Best open-source SQL DB',cmd:'postgresql.org/download',icon:'🐘'},
+          {name:'MySQL',desc:'Most popular SQL DB',cmd:'mysql.com/downloads',icon:'🐬'},
+          {name:'SQLite',desc:'Lightweight local DB',cmd:'sqlite.org/download',icon:'💾'},
+          {name:'DBeaver',desc:'Free SQL client GUI',cmd:'dbeaver.io/download',icon:'🖥️'},
+          {name:'BigQuery',desc:'Cloud SQL at scale',cmd:'console.cloud.google.com',icon:'📊'},
+          {name:'SQL Server',desc:'Microsoft SQL platform',cmd:'microsoft.com/sql-server',icon:'🔷'},
+        ],
+        resources:[
+          {name:'SQL Full Course for Beginners',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=HXV3zeQKqGY',label:'youtube.com — fCC SQL Full Course',free:true},
+          {name:'SQLZoo — Interactive SQL Practice',who:'SQLZoo',type:'tpr',url:'https://sqlzoo.net',label:'sqlzoo.net',free:true},
+          {name:'Mode SQL Tutorial',who:'Mode Analytics',type:'tpr',url:'https://mode.com/sql-tutorial',label:'mode.com/sql-tutorial',free:true},
+          {name:'LeetCode SQL Practice',who:'LeetCode',type:'tpr',url:'https://leetcode.com/study-plan/sql-50',label:'leetcode.com/study-plan/sql-50',free:true},
+          {name:'Kaggle SQL Course — Free',who:'Kaggle',type:'tco',url:'https://www.kaggle.com/learn/intro-to-sql',label:'kaggle.com/learn/intro-to-sql',free:true},
+        ],
+        certs:[
+          {name:'Kaggle Intro to SQL Certificate',provider:'Kaggle',url:'https://www.kaggle.com/learn/intro-to-sql',label:'kaggle.com/learn/intro-to-sql',free:true,note:'100% free Kaggle certificate'},
+          {name:'Kaggle Advanced SQL Certificate',provider:'Kaggle',url:'https://www.kaggle.com/learn/advanced-sql',label:'kaggle.com/learn/advanced-sql',free:true,note:'100% free Kaggle certificate'},
+          {name:'IBM Data Analyst Professional Certificate',provider:'IBM — Coursera',url:'https://www.coursera.org/professional-certificates/ibm-data-analyst',label:'coursera.org — IBM Data Analyst',free:true,note:'Includes SQL; free audit; fin. aid for cert'},
+          {name:'Google Data Analytics Certificate',provider:'Google — Coursera',url:'https://www.coursera.org/professional-certificates/google-data-analytics',label:'coursera.org — Google Data Analytics',free:true,note:'Includes SQL; free audit available'},
+        ],
+        projects:[
+          {title:'E-Commerce Analysis',desc:'Analyze orders, revenue, and customer behavior using SQL JOINs and window functions.',diff:'intermediate'},
+          {title:'Employee Database Queries',desc:'Write complex queries on an HR database — retention, salary analysis, department metrics.',diff:'beginner'},
+          {title:'COVID-19 Data Exploration',desc:'Use real COVID dataset to run CTEs, window functions, and generate insights.',diff:'intermediate'},
+        ]
+      },
+
+      // Phase 3
+      {
+        id:'da-python', num:'PHASE 03', title:'Python for Data Analysis', months:'Month 3–5', emoji:'🐍',
+        topics:[
+          'Python basics — variables, data types, loops, functions, list comprehensions',
+          'NumPy — arrays, vectorized operations, broadcasting, linear algebra basics',
+          'Pandas — Series, DataFrame, read_csv, head, info, describe',
+          'Pandas — loc, iloc, boolean indexing, conditional selection',
+          'Pandas — groupby, agg, pivot_table, merge, concat, melt',
+          'Handling missing data — isna, fillna, dropna, interpolate',
+          'Data cleaning — duplicates, type conversion, string ops, regex',
+          'Matplotlib — line, bar, scatter, histogram, subplots, customization',
+          'Seaborn — heatmaps, pairplot, boxplot, violinplot, catplot',
+          'Plotly — interactive charts, px.scatter, px.bar, choropleth maps',
+          'Exploratory Data Analysis (EDA) workflow on real datasets',
+          'Automating reports and exporting to Excel/CSV with pandas',
+        ],
+        tools:[
+          {name:'Python 3',desc:'Programming language',cmd:'python.org/downloads',icon:'🐍'},
+          {name:'NumPy',desc:'Numerical computing',cmd:'pip install numpy',icon:'🔢'},
+          {name:'Pandas',desc:'Data manipulation',cmd:'pip install pandas',icon:'🐼'},
+          {name:'Matplotlib',desc:'Static plotting',cmd:'pip install matplotlib',icon:'📈'},
+          {name:'Seaborn',desc:'Statistical viz',cmd:'pip install seaborn',icon:'🎨'},
+          {name:'Plotly',desc:'Interactive charts',cmd:'pip install plotly',icon:'✨'},
+          {name:'Jupyter',desc:'Notebook interface',cmd:'pip install jupyterlab',icon:'📓'},
+          {name:'OpenPyXL',desc:'Excel with Python',cmd:'pip install openpyxl',icon:'📊'},
+        ],
+        resources:[
+          {name:'Python for Data Analysis — Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=r-uOLxNrNk8',label:'youtube.com — fCC Python Data Analysis',free:true},
+          {name:'Pandas Official Getting Started',who:'Pandas Docs',type:'td',url:'https://pandas.pydata.org/docs/getting_started',label:'pandas.pydata.org/docs/getting_started',free:true},
+          {name:'Kaggle Pandas Course',who:'Kaggle',type:'tco',url:'https://www.kaggle.com/learn/pandas',label:'kaggle.com/learn/pandas',free:true},
+          {name:'Kaggle Data Visualization Course',who:'Kaggle',type:'tco',url:'https://www.kaggle.com/learn/data-visualization',label:'kaggle.com/learn/data-visualization',free:true},
+          {name:'Real Python — Pandas Tutorials',who:'Real Python',type:'tb2',url:'https://realpython.com/learning-paths/pandas-data-science',label:'realpython.com — Pandas',free:true},
+        ],
+        certs:[
+          {name:'Kaggle Python Certificate',provider:'Kaggle',url:'https://www.kaggle.com/learn/python',label:'kaggle.com/learn/python',free:true,note:'100% free Kaggle certificate'},
+          {name:'Kaggle Pandas Certificate',provider:'Kaggle',url:'https://www.kaggle.com/learn/pandas',label:'kaggle.com/learn/pandas',free:true,note:'100% free Kaggle certificate'},
+          {name:'IBM Data Analyst Certificate',provider:'IBM — Coursera',url:'https://www.coursera.org/professional-certificates/ibm-data-analyst',label:'coursera.org — IBM Data Analyst',free:true,note:'Covers Python + Pandas; free audit'},
+          {name:'HarvardX Data Analysis with Python',provider:'edX — Harvard',url:'https://www.edx.org/learn/data-analysis/harvard-university-data-analysis-for-life-sciences-1',label:'edx.org — HarvardX Data Analysis',free:true,note:'Free to audit'},
+        ],
+        projects:[
+          {title:'Netflix Content Analysis',desc:'Clean and explore Netflix dataset — genre trends, ratings distributions, release patterns.',diff:'beginner'},
+          {title:'Financial Stock EDA',desc:'Analyze historical stock prices, compute moving averages, visualize correlations.',diff:'intermediate'},
+          {title:'Automated Excel Reporting',desc:'Build a Python script that reads raw CSVs and outputs formatted Excel reports with charts.',diff:'intermediate'},
+        ]
+      },
+
+      // Phase 4
+      {
+        id:'da-stats', num:'PHASE 04', title:'Statistics for Data Analysts', months:'Month 4–6', emoji:'📐',
+        topics:[
+          'Descriptive statistics — mean, median, mode, variance, standard deviation',
+          'Distributions — normal, skewed, uniform, Poisson, binomial',
+          'Percentiles, quartiles, IQR and identifying outliers',
+          'Correlation — Pearson, Spearman, Kendall — and when to use each',
+          'Probability fundamentals — events, sample space, conditional probability',
+          'Bayes theorem and its business applications',
+          'Hypothesis testing — null/alternative hypotheses, p-values, significance',
+          'Common tests — t-test, chi-square, ANOVA, Mann-Whitney U',
+          'Confidence intervals — interpretation and calculation',
+          'A/B testing — designing experiments, analyzing results',
+          'Sampling methods — random, stratified, systematic, cluster',
+          'Regression basics — simple and multiple linear regression',
+        ],
+        tools:[
+          {name:'SciPy',desc:'Scientific computing & stats',cmd:'pip install scipy',icon:'🔬'},
+          {name:'Statsmodels',desc:'Statistical models',cmd:'pip install statsmodels',icon:'📊'},
+          {name:'Pingouin',desc:'Easy stats in Python',cmd:'pip install pingouin',icon:'🐧'},
+          {name:'Khan Academy',desc:'Free statistics course',cmd:'khanacademy.org/math/statistics-probability',icon:'📚'},
+        ],
+        resources:[
+          {name:'Statistics for Data Science — Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=xxpc-HPKN28',label:'youtube.com — fCC Statistics',free:true},
+          {name:'StatQuest — Statistics Clearly Explained',who:'Josh Starmer — YouTube',type:'tv',url:'https://www.youtube.com/c/joshstarmer',label:'youtube.com/@statquest',free:true},
+          {name:'Think Stats — Free Book',who:'Allen B. Downey',type:'tb2',url:'https://greenteapress.com/wp/think-stats-2e',label:'greenteapress.com — Think Stats',free:true},
+          {name:'Khan Academy Statistics & Probability',who:'Khan Academy',type:'tco',url:'https://www.khanacademy.org/math/statistics-probability',label:'khanacademy.org/math/statistics-probability',free:true},
+          {name:'Inferential Statistics — Duke University',who:'Coursera — Duke',type:'tco',url:'https://www.coursera.org/learn/inferential-statistics-intro',label:'coursera.org — Inferential Stats',free:true},
+        ],
+        certs:[
+          {name:'Google Data Analytics Professional Certificate',provider:'Google — Coursera',url:'https://www.coursera.org/professional-certificates/google-data-analytics',label:'coursera.org — Google Data Analytics',free:true,note:'Covers stats; free audit; top employer-recognized cert'},
+          {name:'Statistics with Python Specialization',provider:'University of Michigan — Coursera',url:'https://www.coursera.org/specializations/statistics-with-python',label:'coursera.org — Stats with Python',free:true,note:'Free audit available'},
+        ],
+        projects:[
+          {title:'A/B Test Analysis',desc:'Analyze a simulated A/B test — compute significance, effect size, and make a recommendation.',diff:'intermediate'},
+          {title:'Survey Data Analysis',desc:'Clean and statistically analyze survey data — distributions, correlations, hypothesis tests.',diff:'beginner'},
+        ]
+      },
+
+      // Phase 5
+      {
+        id:'da-bi', num:'PHASE 05', title:'Data Visualization & Business Intelligence', months:'Month 6–9', emoji:'📊',
+        topics:[
+          'Data visualization principles — Gestalt, pre-attentive attributes, chart choice',
+          'Tableau Desktop — connecting data, building views, calculated fields, LOD exprs',
+          'Tableau — dashboards, stories, filters, actions, parameters, sets',
+          'Tableau Public — publishing and sharing dashboards online',
+          'Power BI Desktop — connecting sources, data modeling, relationships',
+          'Power BI DAX — basic measures, CALCULATE, FILTER, ALL, DATEADD',
+          'Power BI — report design, slicers, drill-through, bookmarks, Q&A',
+          'Power BI Service — publishing, sharing, row-level security',
+          'Looker Studio (Google Data Studio) — reports connected to BigQuery/Sheets',
+          'Dashboard design best practices — layout, color theory, audience-first thinking',
+          'KPIs and metrics frameworks — North Star metrics, AARRR, OKRs',
+          'Storytelling with data — narrative, context, insights-driven reports',
+        ],
+        tools:[
+          {name:'Tableau Public',desc:'Free data viz platform',cmd:'public.tableau.com',icon:'📊'},
+          {name:'Power BI Desktop',desc:'Free Microsoft BI tool',cmd:'powerbi.microsoft.com',icon:'📈'},
+          {name:'Looker Studio',desc:'Free Google BI tool',cmd:'lookerstudio.google.com',icon:'🔎'},
+          {name:'Plotly Dash',desc:'Python BI dashboards',cmd:'pip install dash',icon:'✨'},
+          {name:'Streamlit',desc:'Quick data apps',cmd:'pip install streamlit',icon:'⚡'},
+          {name:'Metabase',desc:'Open-source BI tool',cmd:'metabase.com/start/oss',icon:'📋'},
+        ],
+        resources:[
+          {name:'Tableau Full Course for Beginners',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=TPMlZxRRaBQ',label:'youtube.com — fCC Tableau',free:true},
+          {name:'Power BI Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=c7j0J8TUXP8',label:'youtube.com — fCC Power BI',free:true},
+          {name:'Storytelling with Data — Free Resources',who:'Cole N. Knaflic',type:'tb2',url:'https://www.storytellingwithdata.com/blog',label:'storytellingwithdata.com/blog',free:true},
+          {name:'Tableau eLearning — Free Path',who:'Tableau / Salesforce',type:'tco',url:'https://www.tableau.com/learn/training',label:'tableau.com/learn/training',free:true},
+          {name:'Microsoft Power BI Learning Path',who:'Microsoft Learn',type:'tco',url:'https://learn.microsoft.com/en-us/training/powerplatform/power-bi',label:'learn.microsoft.com/power-bi',free:true},
+        ],
+        certs:[
+          {name:'Tableau Desktop Specialist',provider:'Salesforce / Tableau',url:'https://www.tableau.com/learn/certification/desktop-specialist',label:'tableau.com/learn/certification',free:false,note:'Exam ~$250 — entry Tableau cert. Free prep on Tableau eLearning'},
+          {name:'Microsoft PL-300: Power BI Data Analyst',provider:'Microsoft',url:'https://learn.microsoft.com/en-us/certifications/power-bi-data-analyst-associate',label:'learn.microsoft.com — PL-300',free:false,note:'Top Power BI cert — exam ~$165. Free prep on MS Learn'},
+          {name:'Google Looker Studio — Skill Badge',provider:'Google Cloud Skills Boost',url:'https://www.cloudskillsboost.google/focuses/28341',label:'cloudskillsboost.google — Looker Studio',free:true,note:'100% free Google skill badge'},
+          {name:'IBM Data Analyst Professional Certificate',provider:'IBM — Coursera',url:'https://www.coursera.org/professional-certificates/ibm-data-analyst',label:'coursera.org — IBM Data Analyst',free:true,note:'Covers Cognos/Tableau; free audit'},
+        ],
+        projects:[
+          {title:'Sales Performance Dashboard',desc:'Build a Tableau/Power BI dashboard showing sales KPIs, trends, and regional breakdowns.',diff:'intermediate'},
+          {title:'Marketing Analytics Dashboard',desc:'Visualize campaign performance — CTR, conversion, cost per acquisition, ROI.',diff:'intermediate'},
+          {title:'Executive Report Automation',desc:'Connect Power BI to a live database and build an auto-refreshing executive report.',diff:'advanced'},
+        ]
+      },
+
+      // Phase 6
+      {
+        id:'da-portfolio', num:'PHASE 06', title:'Portfolio, Communication & Job Readiness', months:'Month 9–12', emoji:'💼',
+        topics:[
+          'Building a data portfolio — selecting the right 3-5 projects',
+          'Writing case study READMEs — problem, approach, findings, impact',
+          'GitHub for data analysts — organizing notebooks, datasets, dashboards',
+          'Tableau Public portfolio — publishing polished, interactive dashboards',
+          'Resume for data analysts — metrics-driven bullet points, skills section',
+          'LinkedIn optimization — headline, about, featured section with Tableau links',
+          'Business communication — presenting findings to non-technical stakeholders',
+          'Common data analyst interview questions and case studies',
+          'SQL take-home challenges — platforms like StrataScratch, DataLemur',
+          'Excel/Python take-home test strategies',
+          'Networking — data communities, meetups, conferences (DataCouncil, Analytics Summit)',
+          'Freelance data analytics on Upwork, Fiverr — building your first clients',
+        ],
+        tools:[
+          {name:'GitHub Pages',desc:'Host portfolio site free',cmd:'pages.github.com',icon:'🐙'},
+          {name:'Notion',desc:'Case study documentation',cmd:'notion.so',icon:'📝'},
+          {name:'StrataScratch',desc:'SQL interview practice',cmd:'stratascratch.com',icon:'🎯'},
+          {name:'DataLemur',desc:'SQL & stats interview',cmd:'datalemur.com',icon:'🐆'},
+          {name:'LinkedIn',desc:'Professional presence',cmd:'linkedin.com',icon:'💼'},
+          {name:'Canva',desc:'Resume & presentation design',cmd:'canva.com',icon:'🎨'},
+        ],
+        resources:[
+          {name:'How to Build a Data Portfolio — Guide',who:'Ken Jee — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=oOk3V06cu1g',label:'youtube.com — Ken Jee Portfolio Guide',free:true},
+          {name:'StrataScratch — SQL Interview Questions',who:'StrataScratch',type:'tpr',url:'https://www.stratascratch.com',label:'stratascratch.com',free:true},
+          {name:'DataLemur SQL Interview Questions',who:'DataLemur',type:'tpr',url:'https://datalemur.com',label:'datalemur.com',free:true},
+          {name:'365 Data Science — Career Tips',who:'365 Data Science',type:'tv',url:'https://www.youtube.com/c/365DataScience',label:'youtube.com/c/365DataScience',free:true},
+        ],
+        certs:[
+          {name:'Google Data Analytics Professional Certificate',provider:'Google — Coursera',url:'https://www.coursera.org/professional-certificates/google-data-analytics',label:'coursera.org — Google Data Analytics',free:true,note:'Most employer-recognized entry cert for analysts'},
+          {name:'IBM Data Analyst Professional Certificate',provider:'IBM — Coursera',url:'https://www.coursera.org/professional-certificates/ibm-data-analyst',label:'coursera.org — IBM Data Analyst',free:true,note:'Comprehensive 9-course cert; free audit'},
+          {name:'DataCamp Data Analyst with Python Track',provider:'DataCamp',url:'https://www.datacamp.com/tracks/data-analyst-with-python',label:'datacamp.com — Data Analyst Python',free:false,note:'~$25/mo subscription; high quality, practical'},
+        ],
+        projects:[
+          {title:'Full EDA Portfolio Project',desc:'End-to-end EDA on a real public dataset — cleaning, analysis, insights, and a published Tableau dashboard.',diff:'advanced'},
+          {title:'SQL Portfolio on StrataScratch',desc:'Solve and document 20+ SQL challenges and publish solutions on GitHub.',diff:'intermediate'},
+        ]
+      },
+    ]
+  },
+
+  // ──────────────────────────────────────────────────
+  //  TRACK 2 : DATA SCIENTIST
+  // ──────────────────────────────────────────────────
+  {
+    id:'scientist', name:'Data Scientist', icon:'🔬', color:'#0f6b7a',
+    desc:'From statistics and ML to deep learning, NLP, and production deployment — the full data science stack with hands-on projects.',
+    phases:[
+
+      // Phase 1
+      {
+        id:'ds-python', num:'PHASE 01', title:'Python & Data Science Stack', months:'Month 1–2', emoji:'🐍',
+        topics:[
+          'Python OOP — classes, inheritance, dunder methods, decorators',
+          'Functional programming — map, filter, reduce, lambda, closures',
+          'Type hints and writing clean, documented data science code',
+          'Virtual environments, Poetry, requirements.txt best practices',
+          'NumPy advanced — broadcasting, fancy indexing, linear algebra, einsum',
+          'Pandas advanced — MultiIndex, apply/applymap, pipe, chaining',
+          'Pandas performance — using categorical dtypes, chunking large files',
+          'Matplotlib advanced — OOP interface, custom styles, animation',
+          'Seaborn & Plotly for publication-quality and interactive visualizations',
+          'Exploratory Data Analysis (EDA) with Pandas Profiling / ydata-profiling',
+          'Handling large datasets — Dask, Vaex, Polars introduction',
+          'Python for data pipelines — automation, scheduling, logging',
+        ],
+        tools:[
+          {name:'Python 3.11+',desc:'Core language',cmd:'python.org/downloads',icon:'🐍'},
+          {name:'NumPy',desc:'Array computing',cmd:'pip install numpy',icon:'🔢'},
+          {name:'Pandas',desc:'Data manipulation',cmd:'pip install pandas',icon:'🐼'},
+          {name:'Polars',desc:'Fast DataFrame library',cmd:'pip install polars',icon:'⚡'},
+          {name:'ydata-profiling',desc:'Auto EDA reports',cmd:'pip install ydata-profiling',icon:'📋'},
+          {name:'JupyterLab',desc:'IDE for data science',cmd:'pip install jupyterlab',icon:'📓'},
+          {name:'Dask',desc:'Parallel/big data',cmd:'pip install dask',icon:'⚙️'},
+          {name:'uv / Poetry',desc:'Env management',cmd:'pip install poetry',icon:'🌿'},
+        ],
+        resources:[
+          {name:'Python for Data Science Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=LHBE6Q9oYEs',label:'youtube.com — fCC Python Data Science',free:true},
+          {name:'Python Data Science Handbook — Free Online',who:'Jake VanderPlas',type:'tb2',url:'https://jakevdp.github.io/PythonDataScienceHandbook',label:'jakevdp.github.io/PythonDataScienceHandbook',free:true},
+          {name:'Kaggle Python Course',who:'Kaggle',type:'tco',url:'https://www.kaggle.com/learn/python',label:'kaggle.com/learn/python',free:true},
+          {name:'Real Python — Data Science Tutorials',who:'Real Python',type:'tb2',url:'https://realpython.com/tutorials/data-science',label:'realpython.com/tutorials/data-science',free:true},
+        ],
+        certs:[
+          {name:'Kaggle Python + Pandas Certificates',provider:'Kaggle',url:'https://www.kaggle.com/learn',label:'kaggle.com/learn',free:true,note:'Multiple 100% free certificates'},
+          {name:'CS50P — Harvard Python Certificate',provider:'Harvard / edX',url:'https://cs50.harvard.edu/python',label:'cs50.harvard.edu/python',free:true,note:'Free course; verified cert ~$149 optional'},
+          {name:'IBM Data Science Professional Certificate',provider:'IBM — Coursera',url:'https://www.coursera.org/professional-certificates/ibm-data-science',label:'coursera.org — IBM Data Science',free:true,note:'10-course cert; free audit; includes Python'},
+        ],
+        projects:[
+          {title:'EDA Automation Tool',desc:'Build a Python script that takes any CSV and generates an automatic EDA report.',diff:'intermediate'},
+          {title:'Data Pipeline CLI',desc:'Create a command-line data cleaning pipeline using Pandas, logging, and argparse.',diff:'intermediate'},
+          {title:'Interactive Dashboard',desc:'Build a Plotly Dash app that lets users filter and explore a public dataset dynamically.',diff:'advanced'},
+        ]
+      },
+
+      // Phase 2
+      {
+        id:'ds-math', num:'PHASE 02', title:'Math & Statistics Foundations', months:'Month 2–4', emoji:'∑',
+        topics:[
+          'Linear algebra — vectors, matrices, dot product, matrix multiplication',
+          'Eigenvalues, eigenvectors — intuition and use in PCA',
+          'Calculus — derivatives, partial derivatives, chain rule, gradient',
+          'Multivariable calculus — gradient descent intuition',
+          'Probability — random variables, PMF, PDF, CDF, joint distributions',
+          'Expectation, variance, covariance, and correlation',
+          'Key distributions — Normal, Bernoulli, Binomial, Poisson, Exponential',
+          'Bayesian probability — Bayes theorem, prior/posterior, likelihood',
+          'Hypothesis testing — t-test, chi-square, ANOVA, Kolmogorov-Smirnov',
+          'Confidence intervals, p-values, statistical power, Type I/II errors',
+          'Maximum Likelihood Estimation (MLE) — theory and calculation',
+          'Information theory basics — entropy, cross-entropy, KL divergence',
+        ],
+        tools:[
+          {name:'NumPy',desc:'Matrix & linear algebra',cmd:'pip install numpy',icon:'🔢'},
+          {name:'SciPy',desc:'Statistical testing',cmd:'pip install scipy',icon:'🔬'},
+          {name:'Statsmodels',desc:'Statistical models',cmd:'pip install statsmodels',icon:'📊'},
+          {name:'SymPy',desc:'Symbolic math',cmd:'pip install sympy',icon:'➗'},
+          {name:'Khan Academy',desc:'Math fundamentals',cmd:'khanacademy.org',icon:'📚'},
+          {name:'3Blue1Brown',desc:'Visual math intuition',cmd:'youtube.com/3blue1brown',icon:'🎬'},
+        ],
+        resources:[
+          {name:'Essence of Linear Algebra',who:'3Blue1Brown — YouTube',type:'tv',url:'https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab',label:'youtube.com — 3B1B Linear Algebra',free:true},
+          {name:'Statistics for Data Scientists',who:'StatQuest — YouTube',type:'tv',url:'https://www.youtube.com/@statquest',label:'youtube.com/@statquest',free:true},
+          {name:'Mathematics for Machine Learning — Free Book',who:'Deisenroth, Faisal, Ong',type:'tb2',url:'https://mml-book.github.io',label:'mml-book.github.io',free:true},
+          {name:'Think Stats 2 — Free Book',who:'Allen Downey',type:'tb2',url:'https://greenteapress.com/wp/think-stats-2e',label:'greenteapress.com',free:true},
+          {name:'Probability & Statistics — MIT OpenCourseWare',who:'MIT OCW',type:'tco',url:'https://ocw.mit.edu/courses/18-650-statistics-for-applications-fall-2016',label:'ocw.mit.edu — MIT Statistics',free:true},
+        ],
+        certs:[
+          {name:'Mathematics for Machine Learning Specialization',provider:'Imperial College — Coursera',url:'https://www.coursera.org/specializations/mathematics-machine-learning',label:'coursera.org — Math for ML',free:true,note:'Free audit; financial aid for cert'},
+          {name:'Statistics with Python Specialization',provider:'University of Michigan — Coursera',url:'https://www.coursera.org/specializations/statistics-with-python',label:'coursera.org — Stats with Python',free:true,note:'Free audit available'},
+          {name:'Khan Academy — Statistics Mastery',provider:'Khan Academy',url:'https://www.khanacademy.org/math/statistics-probability',label:'khanacademy.org/math/statistics-probability',free:true,note:'100% free with mastery certificates'},
+        ],
+        projects:[
+          {title:'Bayesian A/B Test',desc:'Implement a Bayesian approach to A/B testing and compare with frequentist methods.',diff:'advanced'},
+          {title:'Statistical Analysis from Scratch',desc:'Implement t-test, chi-square, and ANOVA from scratch using NumPy — no SciPy allowed.',diff:'advanced'},
+        ]
+      },
+
+      // Phase 3
+      {
+        id:'ds-ml', num:'PHASE 03', title:'Machine Learning', months:'Month 4–8', emoji:'🤖',
+        topics:[
+          'ML taxonomy — supervised, unsupervised, semi-supervised, reinforcement',
+          'Linear Regression — OLS, assumptions, multicollinearity, regularization (Ridge/Lasso)',
+          'Logistic Regression — sigmoid, decision boundary, ROC-AUC',
+          'Decision Trees — splitting criteria (Gini, entropy), depth, pruning',
+          'Ensemble Methods — Random Forest, Gradient Boosting, XGBoost, LightGBM, CatBoost',
+          'Support Vector Machines — kernels, margin, soft vs hard margin',
+          'K-Nearest Neighbors — distance metrics, curse of dimensionality',
+          'Naive Bayes — conditional independence, Gaussian, Multinomial, Bernoulli variants',
+          'Unsupervised — K-Means, DBSCAN, Hierarchical Clustering',
+          'Dimensionality Reduction — PCA, t-SNE, UMAP',
+          'Model evaluation — cross-validation, bias-variance tradeoff, learning curves',
+          'Metrics — accuracy, precision, recall, F1, AUC-ROC, MAE, RMSE, R²',
+          'Feature engineering — encoding, scaling, imputation, feature selection',
+          'Hyperparameter tuning — GridSearchCV, RandomSearchCV, Optuna',
+          'Pipelines — sklearn Pipeline, ColumnTransformer, custom transformers',
+          'Imbalanced datasets — SMOTE, class weights, threshold tuning',
+        ],
+        tools:[
+          {name:'Scikit-learn',desc:'ML standard library',cmd:'pip install scikit-learn',icon:'🧠'},
+          {name:'XGBoost',desc:'Gradient boosting',cmd:'pip install xgboost',icon:'⚡'},
+          {name:'LightGBM',desc:'Fast boosting',cmd:'pip install lightgbm',icon:'💡'},
+          {name:'CatBoost',desc:'Categorical boosting',cmd:'pip install catboost',icon:'🐈'},
+          {name:'Optuna',desc:'Hyperparameter tuning',cmd:'pip install optuna',icon:'🎛️'},
+          {name:'SHAP',desc:'Model explainability',cmd:'pip install shap',icon:'🔍'},
+          {name:'Imbalanced-learn',desc:'Handle class imbalance',cmd:'pip install imbalanced-learn',icon:'⚖️'},
+          {name:'Joblib',desc:'Model serialization',cmd:'pip install joblib',icon:'💾'},
+        ],
+        resources:[
+          {name:'Machine Learning Specialization — Andrew Ng',who:'deeplearning.ai — Coursera',type:'tco',url:'https://www.coursera.org/specializations/machine-learning-introduction',label:'coursera.org — Andrew Ng ML',free:true},
+          {name:'StatQuest — Machine Learning Playlist',who:'Josh Starmer — YouTube',type:'tv',url:'https://www.youtube.com/playlist?list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF',label:'youtube.com — StatQuest ML',free:true},
+          {name:'Scikit-learn User Guide',who:'Scikit-learn',type:'td',url:'https://scikit-learn.org/stable/user_guide.html',label:'scikit-learn.org/stable/user_guide',free:true},
+          {name:'Hands-On ML with Scikit-Learn, Keras — Free Preview',who:'Aurélien Géron',type:'tb2',url:'https://github.com/ageron/handson-ml3',label:'github.com/ageron/handson-ml3',free:true},
+          {name:'Google ML Crash Course',who:'Google Developers',type:'tco',url:'https://developers.google.com/machine-learning/crash-course',label:'developers.google.com/ml/crash-course',free:true},
+          {name:'Kaggle Intro + Intermediate ML Courses',who:'Kaggle',type:'tco',url:'https://www.kaggle.com/learn/intro-to-machine-learning',label:'kaggle.com/learn/intro-to-machine-learning',free:true},
+        ],
+        certs:[
+          {name:'Kaggle Intro to ML Certificate',provider:'Kaggle',url:'https://www.kaggle.com/learn/intro-to-machine-learning',label:'kaggle.com/learn/intro-to-machine-learning',free:true,note:'100% free Kaggle certificate'},
+          {name:'Kaggle Intermediate ML Certificate',provider:'Kaggle',url:'https://www.kaggle.com/learn/intermediate-machine-learning',label:'kaggle.com/learn/intermediate-machine-learning',free:true,note:'100% free Kaggle certificate'},
+          {name:'IBM Machine Learning Professional Certificate',provider:'IBM — Coursera',url:'https://www.coursera.org/professional-certificates/ibm-machine-learning',label:'coursera.org — IBM ML',free:true,note:'Free audit; financial aid for cert'},
+          {name:'Google Machine Learning Engineer (PMLE)',provider:'Google Cloud',url:'https://cloud.google.com/learn/certification/machine-learning-engineer',label:'cloud.google.com — ML Engineer',free:false,note:'Professional cert — exam ~$200'},
+        ],
+        projects:[
+          {title:'House Price Prediction',desc:'End-to-end regression — feature engineering, model comparison, hyperparameter tuning, and evaluation.',diff:'beginner'},
+          {title:'Churn Prediction Model',desc:'Binary classification with imbalanced data — SMOTE, ROC-AUC, threshold optimization, SHAP explanations.',diff:'intermediate'},
+          {title:'Customer Segmentation',desc:'Unsupervised clustering — K-Means, silhouette score, PCA visualization, business interpretation.',diff:'intermediate'},
+          {title:'Kaggle Competition',desc:'Participate in a real Kaggle ML competition — ensemble models, feature engineering, leaderboard submission.',diff:'advanced'},
+        ]
+      },
+
+      // Phase 4
+      {
+        id:'ds-dl', num:'PHASE 04', title:'Deep Learning & Neural Networks', months:'Month 8–12', emoji:'🧬',
+        topics:[
+          'Neural network fundamentals — neurons, layers, weights, biases, activations',
+          'Activation functions — ReLU, Sigmoid, Tanh, GELU, Swish — when to use each',
+          'Loss functions — MSE, CrossEntropy, Huber, Focal Loss',
+          'Backpropagation — computing gradients with chain rule',
+          'Optimizers — SGD with momentum, Adam, AdaGrad, RMSprop, AdamW',
+          'Regularization — Dropout, L1/L2, Batch Normalization, Layer Norm',
+          'Convolutional Neural Networks (CNNs) — conv layers, pooling, receptive field',
+          'Transfer Learning — fine-tuning pretrained models (ResNet, EfficientNet, VGG)',
+          'Recurrent Networks — LSTM, GRU, vanishing gradient problem',
+          'Attention mechanism and Transformer architecture overview',
+          'Training on GPU — Google Colab, managing OOM errors, mixed precision',
+          'Model deployment basics — ONNX, TorchScript, model serving',
+        ],
+        tools:[
+          {name:'PyTorch',desc:'Primary DL framework',cmd:'pip install torch torchvision',icon:'🔥'},
+          {name:'TensorFlow / Keras',desc:'Google DL framework',cmd:'pip install tensorflow',icon:'🌊'},
+          {name:'TorchVision',desc:'Vision datasets/models',cmd:'pip install torchvision',icon:'👁️'},
+          {name:'Hugging Face',desc:'Pretrained model hub',cmd:'pip install transformers',icon:'🤗'},
+          {name:'Weights & Biases',desc:'Experiment tracking',cmd:'pip install wandb',icon:'📊'},
+          {name:'ONNX',desc:'Model interoperability',cmd:'pip install onnx',icon:'🔄'},
+          {name:'Google Colab',desc:'Free GPU notebooks',cmd:'colab.research.google.com',icon:'🖥️'},
+          {name:'Lightning',desc:'PyTorch wrapper',cmd:'pip install lightning',icon:'⚡'},
+        ],
+        resources:[
+          {name:'Practical Deep Learning for Coders',who:'fast.ai — Free',type:'tco',url:'https://course.fast.ai',label:'course.fast.ai',free:true},
+          {name:'MIT Introduction to Deep Learning',who:'MIT OpenCourseWare',type:'tco',url:'https://introtodeeplearning.com',label:'introtodeeplearning.com',free:true},
+          {name:'PyTorch Official Tutorials',who:'PyTorch',type:'td',url:'https://pytorch.org/tutorials',label:'pytorch.org/tutorials',free:true},
+          {name:'Dive into Deep Learning — Interactive Book',who:'d2l.ai',type:'tb2',url:'https://d2l.ai',label:'d2l.ai',free:true},
+          {name:'Deep Learning Specialization — Andrew Ng',who:'deeplearning.ai — Coursera',type:'tco',url:'https://www.coursera.org/specializations/deep-learning',label:'coursera.org — Deep Learning',free:true},
+          {name:'Neural Networks: Zero to Hero — Karpathy',who:'Andrej Karpathy — YouTube',type:'tv',url:'https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ',label:'youtube.com — Karpathy Zero to Hero',free:true},
+        ],
+        certs:[
+          {name:'Deep Learning Specialization (5 courses)',provider:'deeplearning.ai — Coursera',url:'https://www.coursera.org/specializations/deep-learning',label:'coursera.org — Deep Learning',free:true,note:'Free audit; fin. aid for certificate'},
+          {name:'TensorFlow Developer Certificate',provider:'Google / TensorFlow',url:'https://www.tensorflow.org/certificate',label:'tensorflow.org/certificate',free:false,note:'Exam ~$100 — practical hands-on cert'},
+          {name:'Kaggle Intro to Deep Learning Certificate',provider:'Kaggle',url:'https://www.kaggle.com/learn/intro-to-deep-learning',label:'kaggle.com/learn/intro-to-deep-learning',free:true,note:'100% free Kaggle certificate'},
+          {name:'fast.ai Practical DL — Free Certificate',provider:'fast.ai',url:'https://course.fast.ai',label:'course.fast.ai',free:true,note:'Free globally recognized course'},
+        ],
+        projects:[
+          {title:'Image Classifier (CNN)',desc:'Build and train a CNN on CIFAR-10 or custom dataset; fine-tune a ResNet for your own classes.',diff:'intermediate'},
+          {title:'Transfer Learning App',desc:'Fine-tune EfficientNet on a domain-specific image dataset, deploy as a Gradio web app.',diff:'advanced'},
+          {title:'Time Series Forecasting LSTM',desc:'Predict stock prices or energy consumption using LSTM with PyTorch on real data.',diff:'advanced'},
+        ]
+      },
+
+      // Phase 5
+      {
+        id:'ds-nlp', num:'PHASE 05', title:'NLP & Large Language Models', months:'Month 12–16', emoji:'📝',
+        topics:[
+          'Text preprocessing — tokenization, lowercasing, stop words, regex, lemmatization',
+          'Text features — Bag of Words, TF-IDF, n-grams',
+          'Word embeddings — Word2Vec, GloVe, FastText — theory and usage',
+          'Sequence models for NLP — RNN, LSTM, GRU, seq2seq',
+          'Attention mechanism — keys, queries, values, scaled dot-product',
+          'Transformer architecture — encoder, decoder, multi-head attention, positional encoding',
+          'BERT — masked language modeling, fine-tuning for classification, NER, QA',
+          'GPT family — autoregressive generation, few-shot prompting',
+          'Hugging Face Transformers — AutoModel, AutoTokenizer, pipelines, Trainer API',
+          'Fine-tuning LLMs — LoRA, QLoRA, SFT on custom datasets',
+          'RAG — Retrieval Augmented Generation with vector databases',
+          'Prompt engineering — zero-shot, few-shot, chain-of-thought, structured output',
+          'LangChain and LlamaIndex for building LLM applications',
+          'Evaluating LLMs — BLEU, ROUGE, BERTScore, RAGAS for RAG evaluation',
+        ],
+        tools:[
+          {name:'Hugging Face Transformers',desc:'Pretrained NLP models',cmd:'pip install transformers',icon:'🤗'},
+          {name:'Datasets',desc:'HF dataset library',cmd:'pip install datasets',icon:'📦'},
+          {name:'NLTK',desc:'Classic NLP toolkit',cmd:'pip install nltk',icon:'📚'},
+          {name:'spaCy',desc:'Industrial NLP pipeline',cmd:'pip install spacy',icon:'🚀'},
+          {name:'LangChain',desc:'LLM app framework',cmd:'pip install langchain',icon:'⛓️'},
+          {name:'FAISS / ChromaDB',desc:'Vector databases',cmd:'pip install faiss-cpu chromadb',icon:'🗃️'},
+          {name:'Sentence Transformers',desc:'Text embeddings',cmd:'pip install sentence-transformers',icon:'🔤'},
+          {name:'PEFT',desc:'Efficient fine-tuning',cmd:'pip install peft',icon:'🔧'},
+        ],
+        resources:[
+          {name:'Hugging Face NLP Course — Free',who:'Hugging Face',type:'tco',url:'https://huggingface.co/learn/nlp-course/chapter1/1',label:'huggingface.co/learn/nlp-course',free:true},
+          {name:'The Illustrated Transformer',who:'Jay Alammar — Blog',type:'tb2',url:'https://jalammar.github.io/illustrated-transformer',label:'jalammar.github.io/illustrated-transformer',free:true},
+          {name:'Neural Nets: Zero to Hero — Karpathy',who:'Andrej Karpathy — YouTube',type:'tv',url:'https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ',label:'youtube.com — Karpathy',free:true},
+          {name:'LLM Course — Free GitHub Resource',who:'mlabonne',type:'tb2',url:'https://github.com/mlabonne/llm-course',label:'github.com/mlabonne/llm-course',free:true},
+          {name:'deeplearning.ai Short Courses — Free',who:'deeplearning.ai',type:'tco',url:'https://www.deeplearning.ai/short-courses',label:'deeplearning.ai/short-courses',free:true},
+        ],
+        certs:[
+          {name:'Hugging Face NLP Course Certificate',provider:'Hugging Face',url:'https://huggingface.co/learn/nlp-course',label:'huggingface.co/learn/nlp-course',free:true,note:'100% free official certificate from HF'},
+          {name:'Kaggle NLP Certificate',provider:'Kaggle',url:'https://www.kaggle.com/learn/natural-language-processing',label:'kaggle.com/learn/nlp',free:true,note:'100% free Kaggle certificate'},
+          {name:'NLP Specialization — deeplearning.ai',provider:'deeplearning.ai — Coursera',url:'https://www.coursera.org/specializations/natural-language-processing',label:'coursera.org — NLP Specialization',free:true,note:'Free audit; financial aid for cert'},
+          {name:'deeplearning.ai — LangChain for LLM Apps',provider:'deeplearning.ai',url:'https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development',label:'deeplearning.ai/short-courses',free:true,note:'100% free short course'},
+        ],
+        projects:[
+          {title:'Sentiment Analyzer',desc:'Fine-tune a BERT model for sentiment analysis on product reviews. Deploy with Gradio.',diff:'intermediate'},
+          {title:'Document Q&A (RAG)',desc:'Build a RAG system — upload PDFs, create embeddings with FAISS, and query with an LLM.',diff:'advanced'},
+          {title:'Text Summarizer API',desc:'Fine-tune a T5/BART model for summarization and serve via FastAPI.',diff:'advanced'},
+          {title:'Chatbot with Memory',desc:'Build a context-aware chatbot using LangChain with conversation memory and tool use.',diff:'advanced'},
+        ]
+      },
+
+      // Phase 6
+      {
+        id:'ds-mlops', num:'PHASE 06', title:'MLOps & Model Deployment', months:'Month 16–20', emoji:'🚀',
+        topics:[
+          'ML project lifecycle — problem definition, data, modeling, deployment, monitoring',
+          'Experiment tracking — MLflow, Weights & Biases, DVC for data versioning',
+          'ML pipelines — Airflow, Prefect, ZenML, Kubeflow basics',
+          'Model packaging — joblib, pickle, ONNX export, Docker containers',
+          'Serving ML models — FastAPI, BentoML, TorchServe',
+          'Deploying to cloud — AWS SageMaker, GCP Vertex AI, Azure ML',
+          'Feature stores — Feast, Tecton, Vertex AI Feature Store concepts',
+          'Model monitoring — data drift, concept drift, Evidently AI, WhyLogs',
+          'CI/CD for ML — GitHub Actions for model training and deployment',
+          'A/B testing models in production — shadow deployment, canary releases',
+          'Responsible AI — bias detection, fairness metrics, Aequitas, Fairlearn',
+          'Data privacy — GDPR for ML, differential privacy, anonymization',
+        ],
+        tools:[
+          {name:'MLflow',desc:'Experiment tracking',cmd:'pip install mlflow',icon:'📊'},
+          {name:'DVC',desc:'Data version control',cmd:'pip install dvc',icon:'🔄'},
+          {name:'FastAPI',desc:'Serve ML models',cmd:'pip install fastapi',icon:'⚡'},
+          {name:'BentoML',desc:'ML model serving',cmd:'pip install bentoml',icon:'🍱'},
+          {name:'Evidently AI',desc:'Model monitoring',cmd:'pip install evidently',icon:'📡'},
+          {name:'Docker',desc:'Containerize pipelines',cmd:'docker.com/get-started',icon:'🐳'},
+          {name:'Weights & Biases',desc:'Experiment tracking',cmd:'pip install wandb',icon:'🏋️'},
+          {name:'Prefect',desc:'Workflow orchestration',cmd:'pip install prefect',icon:'🔀'},
+        ],
+        resources:[
+          {name:'MLOps Specialization — deeplearning.ai',who:'Andrew Ng — Coursera',type:'tco',url:'https://www.coursera.org/specializations/machine-learning-engineering-for-production-mlops',label:'coursera.org — MLOps Specialization',free:true},
+          {name:'MLflow Official Documentation',who:'MLflow',type:'td',url:'https://mlflow.org/docs/latest/index.html',label:'mlflow.org/docs',free:true},
+          {name:'Made with ML — Free MLOps Guide',who:'Goku Mohandas',type:'tb2',url:'https://madewithml.com',label:'madewithml.com',free:true},
+          {name:'Full Stack Deep Learning — Free Course',who:'FSDL',type:'tco',url:'https://fullstackdeeplearning.com/course',label:'fullstackdeeplearning.com/course',free:true},
+          {name:'Evidently AI — Monitoring Tutorials',who:'Evidently AI',type:'td',url:'https://docs.evidentlyai.com/get-started/tutorial',label:'docs.evidentlyai.com',free:true},
+        ],
+        certs:[
+          {name:'AWS Certified Machine Learning — Specialty (MLS-C01)',provider:'Amazon Web Services',url:'https://aws.amazon.com/certification/certified-machine-learning-specialty',label:'aws.amazon.com — ML Specialty',free:false,note:'Top MLOps/production cert — exam ~$300'},
+          {name:'Google Professional ML Engineer (PMLE)',provider:'Google Cloud',url:'https://cloud.google.com/learn/certification/machine-learning-engineer',label:'cloud.google.com — PMLE',free:false,note:'Highly valued ML production cert — exam ~$200'},
+          {name:'MLOps Specialization Certificate',provider:'deeplearning.ai — Coursera',url:'https://www.coursera.org/specializations/machine-learning-engineering-for-production-mlops',label:'coursera.org — MLOps',free:true,note:'Free audit; financial aid for certificate'},
+          {name:'Made with ML — MLOps Certificate',provider:'Made with ML',url:'https://madewithml.com',label:'madewithml.com',free:true,note:'Free — highly regarded in the ML community'},
+        ],
+        projects:[
+          {title:'ML Model API with Monitoring',desc:'Train a model, serve it with FastAPI, track with MLflow, monitor drift with Evidently AI.',diff:'advanced'},
+          {title:'End-to-End ML Pipeline',desc:'Full pipeline: data → features → train → evaluate → deploy to cloud with CI/CD via GitHub Actions.',diff:'advanced'},
+          {title:'Feature Store Implementation',desc:'Implement a simple feature store using Feast, with offline and online serving.',diff:'advanced'},
+        ]
+      },
+
+    ]
+  },
+];
+
+// ════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════
+function load(){try{return JSON.parse(localStorage.getItem('data_roadmap_v1')||'{}');}catch{return{};}}
+function save(s){localStorage.setItem('data_roadmap_v1',JSON.stringify(s));}
+let S = load();
+const gc=(id,t,i)=>!!(S[id]?.[t]?.[i]);
+function sc(id,t,i,v){if(!S[id])S[id]={};if(!S[id][t])S[id][t]={};S[id][t][i]=v;save(S);}
+const gn=(id)=>S[id]?.notes||'';
+function sn(id,v){if(!S[id])S[id]={};S[id].notes=v;save(S);}
+
+let currentFilter='analyst';
+
+// ════════════════════════════════════════════════════
+//  RENDER
+// ════════════════════════════════════════════════════
+const TM = {tv:'VIDEO',tco:'COURSE',tb2:'BOOK/BLOG',td:'DOCS',tpr:'PRACTICE',tto:'TOOL',tpa:'PAPER'};
+
+function render(){
+  const root = document.getElementById('roadmap-root');
+  root.innerHTML='';
+
+  TRACKS.forEach(track=>{
+    const sec = document.createElement('div');
+    sec.className = 'track-section';
+    sec.id = 'track-'+track.id;
+    if(currentFilter!=='all' && currentFilter!==track.id) sec.classList.add('hidden');
+
+    let stot=0, sdone=0;
+    track.phases.forEach(ph=>{
+      const td=ph.topics.filter((_,i)=>gc(ph.id,'topics',i)).length;
+      const sd=ph.tools.filter((_,i)=>gc(ph.id,'tools',i)).length;
+      stot += ph.topics.length + ph.tools.length;
+      sdone += td + sd;
+    });
+    const spct = stot ? Math.round(sdone/stot*100) : 0;
+
+    sec.innerHTML = `
+      <div class="track-hdr" style="--th-color:${track.color};--th-bg:${track.color}06;border-color:${track.color}20;">
+        <span class="track-icon">${track.icon}</span>
+        <div class="track-info">
+          <div class="track-name" style="color:${track.color}">${track.name} Path</div>
+          <div class="track-desc">${track.desc}</div>
+        </div>
+        <div class="track-stat" style="color:${track.color};border-color:${track.color}30;background:${track.color}08">${spct}% · ${sdone}/${stot}</div>
+      </div>
+    `;
+
+    track.phases.forEach((ph,pi)=>{
+      const td=ph.topics.filter((_,i)=>gc(ph.id,'topics',i)).length;
+      const sd=ph.tools.filter((_,i)=>gc(ph.id,'tools',i)).length;
+      const tot = ph.topics.length + ph.tools.length;
+      const done = td + sd;
+      const pct = tot ? Math.round(done/tot*100) : 0;
+      const pc = pct===100 ? '#3a7d4a' : pct>0 ? track.color : '#aaaabc';
+
+      const phEl = document.createElement('div');
+      phEl.className='phase';
+      phEl.id='ph-'+ph.id;
+      phEl.style.animationDelay=pi*0.04+'s';
+
+      const hasProjects = ph.projects && ph.projects.length > 0;
+
+      phEl.innerHTML = `
+<div class="phd" style="background:linear-gradient(135deg,${track.color}12,${track.color}05)" onclick="tog('${ph.id}')">
+  <span style="font-size:.95rem">${ph.emoji}</span>
+  <span class="phnum" style="color:${track.color}">${ph.num}</span>
+  <span class="phtitle">${ph.title}</span>
+  <span class="phmons">${ph.months}</span>
+  <span class="phpill" style="color:${pc}">
+    <span class="phdot" style="background:${pc}"></span>${pct}% · ${done}/${tot}
+  </span>
+  <span class="chev">▾</span>
+</div>
+<div class="phpbar"><div class="phpbfill" style="width:${pct}%;background:${track.color}"></div></div>
+<div class="phb">
+  <div class="tabs">
+    <button class="tb on" style="--tc:${track.color}" onclick="stab(event,'${ph.id}','t')">✅ Topics (${td}/${ph.topics.length})</button>
+    <button class="tb" style="--tc:${track.color}" onclick="stab(event,'${ph.id}','l')">🔧 Tools (${sd}/${ph.tools.length})</button>
+    <button class="tb" style="--tc:${track.color}" onclick="stab(event,'${ph.id}','r')">🔗 Resources</button>
+    <button class="tb" style="--tc:${track.color}" onclick="stab(event,'${ph.id}','c')">🏆 Certifications</button>
+    ${hasProjects?`<button class="tb" style="--tc:${track.color}" onclick="stab(event,'${ph.id}','p')">🚀 Projects</button>`:''}
+    <button class="tb" style="--tc:${track.color}" onclick="stab(event,'${ph.id}','n')">📝 Notes</button>
+  </div>
+
+  <div class="tcw on" id="t-${ph.id}-t">
+    <div class="cklist">
+      ${ph.topics.map((t,i)=>`
+      <div class="ci ${gc(ph.id,'topics',i)?'done':''}" onclick="chk('${ph.id}','topics',${i},this)">
+        <div class="cbox">${gc(ph.id,'topics',i)?'✓':''}</div>
+        <span class="clbl">${t}</span>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-l">
+    <div class="tgrid2">
+      ${ph.tools.map((tl,i)=>`
+      <div class="tc2 ${gc(ph.id,'tools',i)?'done':''}" onclick="chk('${ph.id}','tools',${i},this)">
+        <div class="tl-icon">${tl.icon}</div>
+        <div class="tl-info">
+          <div class="tl-name">${tl.name}</div>
+          <div class="tl-desc">${tl.desc}</div>
+          <div class="tl-cmd">${tl.cmd}</div>
+        </div>
+        <div class="tl-chk">${gc(ph.id,'tools',i)?'✓':''}</div>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-r">
+    <div class="res-note">Click any card to open in a new tab</div>
+    <div class="rgrid">
+      ${ph.resources.map(r=>`
+      <a href="${r.url}" target="_blank" rel="noopener noreferrer" class="rc">
+        <span class="rtype ${r.type}">${TM[r.type]||r.type}</span>
+        <div class="rinfo">
+          <div class="rname">${r.name}</div>
+          <div class="rurl">🔗 ${r.label}</div>
+          <div class="rwho">${r.who}</div>
+        </div>
+        <div class="rright">
+          ${r.free?'<span class="ftag">FREE</span>':''}
+          <span class="rarr">→</span>
+        </div>
+      </a>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-c">
+    <div class="cert-note">Free & recognized certifications for this phase</div>
+    <div class="cgrid">
+      ${(ph.certs||[]).map(c=>`
+      <a href="${c.url}" target="_blank" rel="noopener noreferrer" class="cc">
+        <span class="cprov">${c.provider.split('—')[0].trim()}</span>
+        <div class="cinfo">
+          <div class="cname">${c.name}</div>
+          <div class="curl">🏆 ${c.label}</div>
+          <div class="cnote">${c.note}</div>
+        </div>
+        <div class="rright">
+          <span class="${c.free?'ctag-free':'ctag-paid'}">${c.free?'FREE':'PAID'}</span>
+          <span class="carr">→</span>
+        </div>
+      </a>`).join('')}
+    </div>
+  </div>
+
+  ${hasProjects?`
+  <div class="tcw" id="t-${ph.id}-p">
+    <div class="proj-note">Hands-on projects to build real experience for your portfolio</div>
+    <div class="pgrid">
+      ${ph.projects.map(p=>`
+      <div class="pc">
+        <span class="pc-tag diff-${p.diff}">${p.diff}</span>
+        <div class="pc-title">${p.title}</div>
+        <div class="pc-desc">${p.desc}</div>
+      </div>`).join('')}
+    </div>
+  </div>`:''}
+
+  <div class="tcw" id="t-${ph.id}-n">
+    <label class="nlbl">Notes for ${ph.title}</label>
+    <textarea class="nta" placeholder="Key insights, resources you found, project ideas, blockers..." oninput="sn('${ph.id}',this.value)">${gn(ph.id)}</textarea>
+  </div>
+</div>`;
+      sec.appendChild(phEl);
+    });
+    root.appendChild(sec);
+  });
+
+  updash();
+}
+
+// ════════════════════════════════════════════════════
+//  INTERACTIONS
+// ════════════════════════════════════════════════════
+function tog(id){document.getElementById('ph-'+id).classList.toggle('closed');}
+
+function stab(e,pid,k){
+  e.stopPropagation();
+  const b=e.target.closest('.phb');
+  b.querySelectorAll('.tb').forEach(x=>x.classList.remove('on'));
+  b.querySelectorAll('.tcw').forEach(x=>x.classList.remove('on'));
+  e.target.classList.add('on');
+  const panel=b.querySelector(`#t-${pid}-${k}`);
+  if(panel) panel.classList.add('on');
+}
+
+function chk(phid,type,idx,el){
+  const done=!el.classList.contains('done');
+  sc(phid,type,idx,done);
+  el.classList.toggle('done',done);
+  const bx=el.querySelector('.cbox,.tl-chk');
+  if(bx) bx.textContent=done?'✓':'';
+  updphase(phid);
+  updash();
+}
+
+function updphase(phid){
+  const track=TRACKS.find(t=>t.phases.some(p=>p.id===phid));
+  if(!track) return;
+  const ph=track.phases.find(p=>p.id===phid);
+  const td=ph.topics.filter((_,i)=>gc(ph.id,'topics',i)).length;
+  const sd=ph.tools.filter((_,i)=>gc(ph.id,'tools',i)).length;
+  const tot=ph.topics.length+ph.tools.length;
+  const done=td+sd;
+  const pct=tot?Math.round(done/tot*100):0;
+  const pc=pct===100?'#3a7d4a':pct>0?track.color:'#aaaabc';
+  const el=document.getElementById('ph-'+ph.id);
+  if(!el) return;
+  el.querySelector('.phpill').innerHTML=`<span class="phdot" style="background:${pc}"></span>${pct}% · ${done}/${tot}`;
+  el.querySelector('.phpill').style.color=pc;
+  el.querySelector('.phpbfill').style.width=pct+'%';
+  const tbs=el.querySelectorAll('.tb');
+  tbs[0].textContent=`✅ Topics (${td}/${ph.topics.length})`;
+  tbs[1].textContent=`🔧 Tools (${sd}/${ph.tools.length})`;
+}
+
+function updash(){
+  let gtot=0,gdone=0;
+  const msgs=['Start your data journey 📊','Warming up! 🔥','Gaining momentum! 📈','Halfway there! 🎯','Almost mastered! 🚀','Data Master! 🎉'];
+
+  TRACKS.forEach(track=>{
+    let stot=0,sdone=0;
+    track.phases.forEach(ph=>{
+      const td=ph.topics.filter((_,i)=>gc(ph.id,'topics',i)).length;
+      const sd=ph.tools.filter((_,i)=>gc(ph.id,'tools',i)).length;
+      stot+=ph.topics.length+ph.tools.length;
+      sdone+=td+sd;
+    });
+    gtot+=stot; gdone+=sdone;
+    const spct=stot?Math.round(sdone/stot*100):0;
+    const dv=document.getElementById('d-'+track.id);
+    const ds=document.getElementById('d-'+track.id+'-sub');
+    if(dv) dv.innerHTML=`${spct}<small style="font-size:.8rem;font-family:'Plus Jakarta Sans';font-weight:400;color:var(--muted)">%</small>`;
+    if(ds) ds.textContent=`${sdone} / ${stot} items`;
+    const sh=document.querySelector(`#track-${track.id} .track-stat`);
+    if(sh) sh.textContent=`${spct}% · ${sdone}/${stot}`;
+  });
+
+  const pct=gtot?Math.round(gdone/gtot*100):0;
+  document.getElementById('d-overall').innerHTML=`${pct}<small style="font-size:.8rem;font-family:'Plus Jakarta Sans';font-weight:400;color:var(--muted)">%</small>`;
+  document.getElementById('d-msg').textContent=msgs[Math.min(Math.floor(pct/20),5)];
+  document.getElementById('ring-pct').textContent=pct+'%';
+  const C=125.66,off=C-(pct/100)*C;
+  document.getElementById('main-ring').style.strokeDashoffset=off;
+  document.getElementById('nav-fill').style.width=pct+'%';
+  document.getElementById('nav-pct').textContent=pct;
+  document.getElementById('banner').classList.toggle('show',pct===100);
+}
+
+function filterTrack(id){
+  currentFilter=id;
+  document.querySelectorAll('.nt').forEach(b=>{
+    b.classList.remove('act');
+    const bid=b.getAttribute('onclick').match(/'(\w+)'/)[1];
+    if(bid===id) b.classList.add('act');
+  });
+  document.querySelectorAll('.fb').forEach(b=>{
+    b.classList.remove('act');
+    const bid=b.getAttribute('onclick').match(/'(\w+)'/)[1];
+    if(bid===id) b.classList.add('act');
+  });
+  document.querySelectorAll('.track-section').forEach(sec=>{
+    const sid=sec.id.replace('track-','');
+    sec.classList.toggle('hidden',id!=='all'&&sid!==id);
+  });
+}
+
+function resetAll(){
+  if(confirm('Reset ALL progress across both tracks? Cannot be undone.')){
+    localStorage.removeItem('data_roadmap_v1');
+    S={};render();
+  }
+}
+
+render();
+</script>
+</body>
+</html>

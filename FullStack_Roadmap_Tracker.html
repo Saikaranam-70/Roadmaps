@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Stack Roadmap — MERN · Java · ASP.NET · Python</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080c14;
+  --surface: #0d1220;
+  --surface2: #111827;
+  --border: rgba(148,163,184,0.08);
+  --border2: rgba(148,163,184,0.14);
+  --text: #f1f5f9;
+  --muted: #64748b;
+  --dim: #94a3b8;
+
+  /* Stack colors */
+  --mern: #10b981;
+  --java: #f59e0b;
+  --dotnet: #818cf8;
+  --python: #38bdf8;
+
+  /* Shared */
+  --green: #10b981;
+  --yellow: #f59e0b;
+  --purple: #818cf8;
+  --blue: #38bdf8;
+  --red: #f87171;
+  --orange: #fb923c;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+/* Atmospheric bg */
+body::before{content:'';position:fixed;top:-50%;left:-30%;width:90%;height:90%;background:radial-gradient(ellipse,rgba(16,185,129,0.04) 0%,transparent 65%);pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;bottom:-40%;right:-20%;width:80%;height:80%;background:radial-gradient(ellipse,rgba(56,189,248,0.04) 0%,transparent 65%);pointer-events:none;z-index:0;}
+.bg-blob3{position:fixed;top:40%;left:50%;transform:translateX(-50%);width:60%;height:60%;background:radial-gradient(ellipse,rgba(129,140,248,0.025) 0%,transparent 70%);pointer-events:none;z-index:0;}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(8,12,20,0.94);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;padding:0 1.8rem;gap:1.5rem;}
+.nav-logo{font-family:'Bricolage Grotesque',sans-serif;font-size:0.82rem;font-weight:700;color:var(--text);letter-spacing:0.02em;white-space:nowrap;}
+.nav-logo span{color:var(--green);}
+.nav-stacks{display:flex;gap:.5rem;flex:1;}
+.ns{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.22rem .6rem;border-radius:5px;border:1px solid;cursor:pointer;transition:all .2s;font-weight:500;letter-spacing:.04em;white-space:nowrap;}
+.ns-mern{color:var(--mern);border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.07);}
+.ns-mern.act{background:rgba(16,185,129,.18);border-color:var(--mern);}
+.ns-java{color:var(--java);border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.07);}
+.ns-java.act{background:rgba(245,158,11,.18);border-color:var(--java);}
+.ns-dotnet{color:var(--purple);border-color:rgba(129,140,248,.25);background:rgba(129,140,248,.07);}
+.ns-dotnet.act{background:rgba(129,140,248,.18);border-color:var(--purple);}
+.ns-python{color:var(--blue);border-color:rgba(56,189,248,.25);background:rgba(56,189,248,.07);}
+.ns-python.act{background:rgba(56,189,248,.18);border-color:var(--blue);}
+.nav-right{display:flex;align-items:center;gap:1rem;margin-left:auto;}
+.npct{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--dim);}
+.npct b{color:var(--text);}
+.nbar{width:90px;height:3px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden;}
+.nfill{height:100%;background:linear-gradient(90deg,var(--green),var(--blue));border-radius:99px;transition:width .5s ease;}
+.rbtn{font-family:'JetBrains Mono',monospace;font-size:.58rem;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);color:var(--red);padding:.3rem .65rem;border-radius:6px;cursor:pointer;letter-spacing:.04em;transition:background .2s;}
+.rbtn:hover{background:rgba(248,113,113,.15);}
+@media(max-width:768px){.nav-stacks{display:none;}.nav-right{display:none;}}
+
+/* ─── HERO ─── */
+.hero{position:relative;z-index:1;padding:96px 2rem 40px;text-align:center;max-width:900px;margin:0 auto;}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:99px;padding:.3rem 1rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--green);letter-spacing:.1em;margin-bottom:1.4rem;animation:fadeUp .5s ease both;}
+.pulse{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.5);}}
+h1{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:800;line-height:1.05;letter-spacing:-0.03em;animation:fadeUp .5s .1s ease both;}
+.stack-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin:1.2rem 0 .8rem;animation:fadeUp .5s .2s ease both;}
+.sp{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;padding:.3rem .85rem;border-radius:99px;border:1px solid;letter-spacing:.06em;}
+.sp-mern{color:var(--mern);border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.08);}
+.sp-java{color:var(--java);border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.08);}
+.sp-dotnet{color:var(--purple);border-color:rgba(129,140,248,.3);background:rgba(129,140,248,.08);}
+.sp-python{color:var(--blue);border-color:rgba(56,189,248,.3);background:rgba(56,189,248,.08);}
+.hero p{color:var(--muted);font-size:.93rem;line-height:1.7;max-width:520px;margin:0 auto;animation:fadeUp .5s .3s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* ─── STACK FILTER TABS ─── */
+.filter-bar{position:relative;z-index:1;max-width:1100px;margin:0 auto 2rem;padding:0 2rem;animation:fadeUp .4s .35s ease both;}
+.filter-wrap{display:flex;gap:.45rem;padding:.6rem;background:var(--surface);border:1px solid var(--border);border-radius:14px;flex-wrap:wrap;}
+.fb{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:.45rem 1.1rem;border-radius:8px;border:1px solid transparent;cursor:pointer;transition:all .2s;font-weight:500;letter-spacing:.05em;color:var(--muted);background:transparent;}
+.fb:hover{color:var(--text);background:rgba(255,255,255,.04);}
+.fb.act{color:var(--text);background:var(--surface2);border-color:var(--border2);}
+.fb-mern.act{color:var(--mern);border-color:rgba(16,185,129,.35);background:rgba(16,185,129,.08);}
+.fb-java.act{color:var(--java);border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.08);}
+.fb-dotnet.act{color:var(--purple);border-color:rgba(129,140,248,.35);background:rgba(129,140,248,.08);}
+.fb-python.act{color:var(--blue);border-color:rgba(56,189,248,.35);background:rgba(56,189,248,.08);}
+.fb-sep{width:1px;background:var(--border);margin:.1rem 0;flex-shrink:0;}
+
+/* ─── DASHBOARD ─── */
+.dash{position:relative;z-index:1;max-width:1100px;margin:0 auto 2.4rem;padding:0 2rem;animation:fadeUp .4s .4s ease both;}
+.dgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem;}
+.dc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem;position:relative;overflow:hidden;}
+.dc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dc-color, var(--green));}
+.dlbl{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;}
+.dval{font-family:'Bricolage Grotesque',sans-serif;font-size:1.7rem;font-weight:800;line-height:1;color:var(--text);}
+.dval small{font-size:.8rem;color:var(--muted);font-weight:400;}
+.dsub{font-size:.68rem;color:var(--muted);margin-top:.2rem;}
+.ring-wrap{display:flex;align-items:center;gap:.8rem;margin-top:.3rem;}
+.ring{position:relative;width:52px;height:52px;flex-shrink:0;}
+.ring svg{transform:rotate(-90deg);}
+.rbg2{fill:none;stroke:rgba(255,255,255,.05);stroke-width:5;}
+.rfg2{fill:none;stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .8s ease;}
+.rtxt2{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;}
+@media(max-width:900px){.dgrid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:600px){.dgrid{grid-template-columns:repeat(2,1fr);}}
+
+/* ─── MAIN ─── */
+main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 2rem 6rem;}
+.sec-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.4rem;}
+.sec-line{flex:1;height:1px;background:var(--border);}
+.sec-lbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;}
+
+/* Stack section header */
+.stack-section{margin-bottom:3.5rem;}
+.stack-section.hidden{display:none;}
+.sstack-hdr{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.5rem;border-radius:12px;margin-bottom:1rem;position:relative;overflow:hidden;}
+.sstack-hdr::before{content:'';position:absolute;inset:0;opacity:.06;background:var(--sh-color);}
+.sstack-icon{font-size:1.5rem;}
+.sstack-name{font-family:'Bricolage Grotesque',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:-0.02em;}
+.sstack-sub{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);margin-top:.1rem;}
+.sstack-stat{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:.3rem .75rem;border-radius:8px;border:1px solid;}
+
+/* ─── PHASE ─── */
+.phase{margin-bottom:1.4rem;animation:fadeUp .4s ease both;}
+.phd{display:flex;align-items:center;gap:.8rem;padding:.85rem 1.2rem;border-radius:10px 10px 0 0;cursor:pointer;user-select:none;transition:filter .2s;}
+.phd:hover{filter:brightness(1.07);}
+.phnum{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.1em;opacity:.6;}
+.phtitle{font-family:'Bricolage Grotesque',sans-serif;font-size:.95rem;font-weight:700;flex:1;}
+.phmons{font-family:'JetBrains Mono',monospace;font-size:.58rem;opacity:.55;}
+.phpill{background:rgba(0,0,0,.35);border-radius:99px;padding:.18rem .6rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;display:flex;align-items:center;gap:.35rem;white-space:nowrap;}
+.phdot{width:5px;height:5px;border-radius:50%;}
+.chev{opacity:.55;font-size:.7rem;transition:transform .3s;}
+.phase.closed .chev{transform:rotate(-90deg);}
+.phb{background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s;max-height:5000px;opacity:1;}
+.phase.closed .phb{max-height:0;opacity:0;}
+.phpbar{height:2px;background:rgba(255,255,255,.04);}
+.phpbfill{height:100%;transition:width .5s ease;}
+
+/* ─── TABS ─── */
+.tabs{display:flex;border-bottom:1px solid var(--border);padding:0 1rem;gap:.05rem;overflow-x:auto;}
+.tabs::-webkit-scrollbar{display:none;}
+.tb{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;padding:.65rem .65rem;cursor:pointer;transition:color .2s,border-color .2s;margin-bottom:-1px;white-space:nowrap;}
+.tb.on{color:var(--tc,var(--green));border-bottom-color:var(--tc,var(--green));}
+.tcw{display:none;padding:1rem 1.1rem;}
+.tcw.on{display:block;}
+
+/* ─── TOPICS ─── */
+.cklist{display:flex;flex-direction:column;gap:.4rem;}
+.ci{display:flex;align-items:flex-start;gap:.7rem;padding:.6rem .8rem;background:rgba(255,255,255,.018);border:1px solid rgba(255,255,255,.04);border-radius:7px;cursor:pointer;transition:background .15s;user-select:none;}
+.ci:hover{background:rgba(255,255,255,.035);}
+.ci.done{background:rgba(16,185,129,.05);border-color:rgba(16,185,129,.12);}
+.cbox{width:15px;height:15px;border:1.5px solid var(--muted);border-radius:3px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:.58rem;transition:all .2s;}
+.ci.done .cbox{background:var(--green);border-color:var(--green);}
+.clbl{font-size:.83rem;color:var(--dim);line-height:1.5;}
+.ci.done .clbl{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(100,116,139,.4);}
+
+/* ─── LIBRARIES ─── */
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:.55rem;}
+.lc{background:rgba(255,255,255,.018);border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:.75rem;cursor:pointer;transition:background .15s;display:flex;align-items:flex-start;gap:.6rem;user-select:none;}
+.lc:hover{background:rgba(255,255,255,.035);}
+.lc.done{background:rgba(99,102,241,.05);border-color:rgba(99,102,241,.18);}
+.lic{width:26px;height:26px;border-radius:5px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;}
+.linfo{flex:1;min-width:0;}
+.lname{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text);font-weight:700;margin-bottom:.1rem;}
+.ldesc{font-size:.68rem;color:var(--muted);line-height:1.3;}
+.linst{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--blue);margin-top:.25rem;opacity:.8;}
+.lchk{width:13px;height:13px;border:1.5px solid var(--muted);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.5rem;flex-shrink:0;margin-top:1px;transition:all .2s;}
+.lc.done .lchk{background:var(--purple);border-color:var(--purple);}
+
+/* ─── RESOURCES ─── */
+.res-note{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);margin-bottom:.8rem;display:flex;align-items:center;gap:.4rem;}
+.res-note::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0;}
+.rgrid{display:flex;flex-direction:column;gap:.5rem;}
+.rc{display:flex;align-items:center;gap:.75rem;padding:.8rem .95rem;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:8px;text-decoration:none;transition:background .15s,border-color .2s,transform .15s;}
+.rc:hover{background:rgba(56,189,248,.05);border-color:rgba(56,189,248,.25);transform:translateX(5px);}
+.rtype{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:.07em;text-transform:uppercase;padding:.15rem .45rem;border-radius:4px;white-space:nowrap;flex-shrink:0;font-weight:700;}
+.tv{background:rgba(239,68,68,.14);color:#f87171;}
+.tc{background:rgba(56,189,248,.14);color:var(--blue);}
+.tb2{background:rgba(234,179,8,.14);color:#fcd34d;}
+.td{background:rgba(148,163,184,.1);color:var(--dim);}
+.tpr{background:rgba(16,185,129,.14);color:var(--green);}
+.tto{background:rgba(168,85,247,.14);color:#c084fc;}
+.tpa{background:rgba(249,115,22,.14);color:#fb923c;}
+.rinfo{flex:1;min-width:0;}
+.rname{font-size:.84rem;color:var(--text);font-weight:500;line-height:1.3;margin-bottom:.18rem;}
+.rurl{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--blue);opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rwho{font-size:.68rem;color:var(--muted);margin-top:.12rem;}
+.rright{display:flex;align-items:center;gap:.4rem;flex-shrink:0;}
+.ftag{font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--green);background:rgba(16,185,129,.1);padding:.12rem .4rem;border-radius:4px;}
+.rarr{color:var(--blue);opacity:.4;font-size:.8rem;transition:opacity .2s,transform .2s;}
+.rc:hover .rarr{opacity:1;transform:translateX(3px);}
+
+/* ─── CERTS ─── */
+.cert-note{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);margin-bottom:.8rem;display:flex;align-items:center;gap:.4rem;}
+.cert-note::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--yellow);flex-shrink:0;}
+.cgrid{display:flex;flex-direction:column;gap:.5rem;}
+.cc{display:flex;align-items:center;gap:.75rem;padding:.8rem .95rem;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:8px;text-decoration:none;transition:background .15s,border-color .2s,transform .15s;}
+.cc:hover{background:rgba(245,158,11,.05);border-color:rgba(245,158,11,.28);transform:translateX(5px);}
+.cprov{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:.05em;text-transform:uppercase;padding:.15rem .45rem;border-radius:4px;white-space:nowrap;flex-shrink:0;font-weight:700;background:rgba(245,158,11,.12);color:var(--yellow);}
+.cinfo{flex:1;min-width:0;}
+.cname{font-size:.84rem;color:var(--text);font-weight:500;line-height:1.3;margin-bottom:.18rem;}
+.curl{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--yellow);opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cnote{font-size:.68rem;color:var(--muted);margin-top:.12rem;}
+.ctag-free{font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--green);background:rgba(16,185,129,.1);padding:.12rem .4rem;border-radius:4px;white-space:nowrap;}
+.ctag-paid{font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--orange);background:rgba(249,115,22,.1);padding:.12rem .4rem;border-radius:4px;white-space:nowrap;}
+.carr{color:var(--yellow);opacity:.4;font-size:.8rem;transition:opacity .2s,transform .2s;}
+.cc:hover .carr{opacity:1;transform:translateX(3px);}
+
+/* ─── NOTES ─── */
+.nlbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:.5rem;}
+.nta{width:100%;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:.8rem;color:var(--dim);font-family:'Lato',sans-serif;font-size:.83rem;line-height:1.6;resize:vertical;min-height:100px;outline:none;transition:border-color .2s;}
+.nta:focus{border-color:rgba(99,102,241,.35);}
+.nta::placeholder{color:var(--muted);}
+
+/* ─── TOOLS SECTION ─── */
+.tools-wrap{margin-top:3rem;}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:.6rem;}
+.tool{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:.85rem;text-decoration:none;display:flex;align-items:center;gap:.7rem;transition:border-color .2s,transform .15s;}
+.tool:hover{border-color:var(--border2);transform:translateY(-2px);}
+.te{font-size:1.1rem;}
+.tnm{font-family:'Bricolage Grotesque',sans-serif;font-size:.8rem;font-weight:700;color:var(--text);}
+.tds{font-size:.68rem;color:var(--muted);margin-top:.05rem;}
+
+/* ─── BANNER ─── */
+.banner{display:none;background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(56,189,248,.1));border:1px solid rgba(16,185,129,.25);border-radius:12px;padding:1.2rem 1.6rem;text-align:center;margin-bottom:1.6rem;}
+.banner.show{display:block;animation:fadeUp .4s ease;}
+.banner h3{font-family:'Bricolage Grotesque',sans-serif;font-size:1.2rem;font-weight:800;color:var(--green);margin-bottom:.2rem;}
+.banner p{font-size:.83rem;color:var(--muted);}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:rgba(99,102,241,.25);border-radius:99px;}
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 12px;
+  /* background-color: #ffffff; */
+  /* border-bottom: 2px solid #e5e7eb; */
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #374151;
+  font-size: 15px;
+  font-weight: 500;
+  position: relative;
+  padding: 6px 0;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -4px;
+  background-color: #2563eb;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #2563eb;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+</style>
+</head>
+<body>
+<div class="bg-blob3"></div>
+
+<nav>
+  <div class="nav-logo">// <span>Full Stack</span> Roadmap</div>
+  <div class="nav-stacks">
+    <button class="ns ns-mern act" onclick="filterStack('mern')">MERN</button>
+    <button class="ns ns-java" onclick="filterStack('java')">Java</button>
+    <button class="ns ns-dotnet" onclick="filterStack('dotnet')">ASP.NET</button>
+    <button class="ns ns-python" onclick="filterStack('python')">Python</button>
+    <button class="ns" style="color:var(--dim);border-color:rgba(148,163,184,.2);background:transparent;" onclick="filterStack('all')">ALL</button>
+  </div>
+  <div class="nav-links">
+    <a href="/index.html">AIML</a>
+    <a href="/">Full Stack</a>
+    <a href="/Cloud_Computing_Roadmap.html">Cloud</a>
+    <a href="/Data_Roadmap_Tracker.html">Data</a>
+  </div>
+  <div class="nav-right">
+    <span class="npct">Progress: <b id="nav-pct">0</b>%</span>
+    <div class="nbar"><div class="nfill" id="nav-fill" style="width:0%"></div></div>
+    <button class="rbtn" onclick="resetAll()">↺ Reset</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge"><div class="pulse"></div>INTERACTIVE PROGRESS TRACKER · AUTO-SAVED</div>
+  <h1>Full Stack<br>Development Roadmap</h1>
+  <div class="stack-pills">
+    <span class="sp sp-mern">MERN Stack</span>
+    <span class="sp sp-java">Java Spring Boot</span>
+    <span class="sp sp-dotnet">ASP.NET Core</span>
+    <span class="sp sp-python">Python Django/FastAPI</span>
+  </div>
+  <p>Track your progress across 4 full-stack paths. Each path includes topics, libraries, curated resources, and free certifications. Progress saves automatically.</p>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-wrap">
+    <button class="fb act" onclick="filterStack('all')">🌐 All Stacks</button>
+    <div class="fb-sep"></div>
+    <button class="fb fb-mern" onclick="filterStack('mern')">🟢 MERN Stack</button>
+    <button class="fb fb-java" onclick="filterStack('java')">☕ Java Spring Boot</button>
+    <button class="fb fb-dotnet" onclick="filterStack('dotnet')">💜 ASP.NET Core</button>
+    <button class="fb fb-python" onclick="filterStack('python')">🐍 Python Django/FastAPI</button>
+  </div>
+</div>
+
+<div class="dash">
+  <div class="dgrid">
+    <div class="dc" style="--dc-color:var(--green)">
+      <div class="dlbl">Overall Progress</div>
+      <div class="ring-wrap">
+        <div class="ring">
+          <svg width="52" height="52" viewBox="0 0 52 52">
+            <circle class="rbg2" cx="26" cy="26" r="20"/>
+            <circle class="rfg2" id="main-ring" cx="26" cy="26" r="20" stroke="var(--green)" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
+          </svg>
+          <div class="rtxt2" id="ring-pct">0%</div>
+        </div>
+        <div>
+          <div class="dval" id="d-overall">0<small>%</small></div>
+          <div class="dsub" id="d-msg">Start your journey 🚀</div>
+        </div>
+      </div>
+    </div>
+    <div class="dc" style="--dc-color:var(--mern)">
+      <div class="dlbl">MERN Progress</div>
+      <div class="dval" id="d-mern">0<small>%</small></div>
+      <div class="dsub" id="d-mern-sub">0 / 0 items</div>
+    </div>
+    <div class="dc" style="--dc-color:var(--java)">
+      <div class="dlbl">Java Progress</div>
+      <div class="dval" id="d-java">0<small>%</small></div>
+      <div class="dsub" id="d-java-sub">0 / 0 items</div>
+    </div>
+    <div class="dc" style="--dc-color:var(--purple)">
+      <div class="dlbl">ASP.NET Progress</div>
+      <div class="dval" id="d-dotnet">0<small>%</small></div>
+      <div class="dsub" id="d-dotnet-sub">0 / 0 items</div>
+    </div>
+    <div class="dc" style="--dc-color:var(--blue)">
+      <div class="dlbl">Python Progress</div>
+      <div class="dval" id="d-python">0<small>%</small></div>
+      <div class="dsub" id="d-python-sub">0 / 0 items</div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="banner" id="banner">
+    <h3>🎉 Full Stack Master!</h3>
+    <p>You've completed the entire Full Stack roadmap. You're ready to build and ship production applications.</p>
+  </div>
+  <div id="roadmap-root"></div>
+
+  <div class="tools-wrap">
+    <div class="sec-head"><div class="sec-line"></div><div class="sec-lbl">Essential Tools to Bookmark</div><div class="sec-line"></div></div>
+    <div class="tgrid">
+      <a href="https://code.visualstudio.com" target="_blank" class="tool"><span class="te">💻</span><div><div class="tnm">VS Code</div><div class="tds">Best code editor</div></div></a>
+      <a href="https://www.postman.com" target="_blank" class="tool"><span class="te">📮</span><div><div class="tnm">Postman</div><div class="tds">API testing & docs</div></div></a>
+      <a href="https://github.com" target="_blank" class="tool"><span class="te">🐙</span><div><div class="tnm">GitHub</div><div class="tds">Version control & portfolio</div></div></a>
+      <a href="https://www.mongodb.com/atlas" target="_blank" class="tool"><span class="te">🍃</span><div><div class="tnm">MongoDB Atlas</div><div class="tds">Free cloud MongoDB</div></div></a>
+      <a href="https://vercel.com" target="_blank" class="tool"><span class="te">▲</span><div><div class="tnm">Vercel</div><div class="tds">Free frontend hosting</div></div></a>
+      <a href="https://render.com" target="_blank" class="tool"><span class="te">🚀</span><div><div class="tnm">Render</div><div class="tds">Free backend hosting</div></div></a>
+      <a href="https://www.figma.com" target="_blank" class="tool"><span class="te">🎨</span><div><div class="tnm">Figma</div><div class="tds">UI design & prototyping</div></div></a>
+      <a href="https://tableplus.com" target="_blank" class="tool"><span class="te">🗃️</span><div><div class="tnm">TablePlus</div><div class="tds">DB GUI for SQL/NoSQL</div></div></a>
+      <a href="https://www.docker.com" target="_blank" class="tool"><span class="te">🐳</span><div><div class="tnm">Docker</div><div class="tds">Containerize apps</div></div></a>
+      <a href="https://www.thunderclient.com" target="_blank" class="tool"><span class="te">⚡</span><div><div class="tnm">Thunder Client</div><div class="tds">API client inside VS Code</div></div></a>
+    </div>
+  </div>
+</main>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  DATA
+// ═══════════════════════════════════════════════════
+
+const STACKS = [
+  // ────────────────────────────────────────
+  //  MERN STACK
+  // ────────────────────────────────────────
+  {
+    id:'mern', name:'MERN Stack', icon:'🟢', color:'#10b981',
+    desc:'MongoDB · Express · React · Node.js',
+    phases:[
+      {
+        id:'mern-fundamentals', num:'PHASE 01', title:'Web Fundamentals', months:'Month 1–2', emoji:'🌐',
+        topics:['How the web works — HTTP, DNS, browsers, servers','HTML5 — semantic elements, forms, accessibility','CSS3 — selectors, box model, flexbox, grid','CSS animations, transitions and transforms','JavaScript basics — variables, functions, DOM manipulation','ES6+ — arrow functions, destructuring, spread/rest, modules','Async JS — callbacks, Promises, async/await','Fetch API and working with REST APIs','Git & GitHub — init, commit, branch, merge, pull requests','Terminal / command line basics'],
+        libraries:[{name:'HTML5',desc:'Markup language',install:'Built-in browser',icon:'📄'},{name:'CSS3',desc:'Styling language',install:'Built-in browser',icon:'🎨'},{name:'JavaScript ES6+',desc:'Core scripting language',install:'Built-in browser',icon:'🟨'},{name:'Git',desc:'Version control',install:'git-scm.com',icon:'🌿'}],
+        resources:[
+          {name:'The Odin Project — Full Stack Path',who:'The Odin Project',type:'tc',url:'https://www.theodinproject.com/paths/full-stack-javascript',label:'theodinproject.com',free:true},
+          {name:'HTML & CSS Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=916GWv2Qs08',label:'youtube.com — freeCodeCamp HTML/CSS',free:true},
+          {name:'JavaScript.info — The Modern JS Tutorial',who:'javascript.info',type:'tb2',url:'https://javascript.info',label:'javascript.info',free:true},
+          {name:'MDN Web Docs',who:'Mozilla',type:'td',url:'https://developer.mozilla.org',label:'developer.mozilla.org',free:true},
+          {name:'freeCodeCamp Responsive Web Design',who:'freeCodeCamp',type:'tc',url:'https://www.freecodecamp.org/learn/2022/responsive-web-design',label:'freecodecamp.org — Responsive Web Design',free:true},
+        ],
+        certs:[
+          {name:'freeCodeCamp Responsive Web Design Cert',provider:'freeCodeCamp',url:'https://www.freecodecamp.org/learn/2022/responsive-web-design',label:'freecodecamp.org',free:true,note:'100% free certificate'},
+          {name:'freeCodeCamp JavaScript Algorithms & DS',provider:'freeCodeCamp',url:'https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures',label:'freecodecamp.org',free:true,note:'100% free certificate'},
+          {name:'The Odin Project Foundations Certificate',provider:'The Odin Project',url:'https://www.theodinproject.com',label:'theodinproject.com',free:true,note:'Free completion certificate'},
+        ]
+      },
+      {
+        id:'mern-node', num:'PHASE 02', title:'Node.js & Express', months:'Month 2–4', emoji:'🟩',
+        topics:['Node.js runtime — event loop, modules, npm','Creating HTTP servers with Node core modules','Express.js — routing, middleware, request/response','RESTful API design — GET, POST, PUT, DELETE','Environment variables with dotenv','Error handling middleware in Express','Authentication — JWT tokens and sessions','File uploads with Multer','Rate limiting and security headers with Helmet','Deploying Node apps to Render / Railway'],
+        libraries:[{name:'Node.js',desc:'JS runtime environment',install:'nodejs.org/download',icon:'🟩'},{name:'Express.js',desc:'Web framework for Node',install:'npm install express',icon:'⚡'},{name:'Nodemon',desc:'Auto-restart dev server',install:'npm install -D nodemon',icon:'🔄'},{name:'dotenv',desc:'Environment variables',install:'npm install dotenv',icon:'🔐'},{name:'Helmet',desc:'Security headers',install:'npm install helmet',icon:'🛡️'},{name:'Multer',desc:'File uploads',install:'npm install multer',icon:'📁'},{name:'cors',desc:'Cross-origin requests',install:'npm install cors',icon:'🌍'},{name:'jsonwebtoken',desc:'JWT auth',install:'npm install jsonwebtoken',icon:'🔑'}],
+        resources:[
+          {name:'Node.js and Express.js Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=Oe421EPjeBE',label:'youtube.com — fCC Node & Express',free:true},
+          {name:'Node.js Official Documentation',who:'nodejs.org',type:'td',url:'https://nodejs.org/docs/latest/api',label:'nodejs.org/docs',free:true},
+          {name:'Express.js Official Docs',who:'expressjs.com',type:'td',url:'https://expressjs.com',label:'expressjs.com',free:true},
+          {name:'REST API Design Best Practices',who:'freeCodeCamp Blog',type:'tb2',url:'https://www.freecodecamp.org/news/rest-api-best-practices-rest-endpoint-design-examples',label:'freecodecamp.org — REST best practices',free:true},
+        ],
+        certs:[
+          {name:'freeCodeCamp Back End Development & APIs',provider:'freeCodeCamp',url:'https://www.freecodecamp.org/learn/back-end-development-and-apis',label:'freecodecamp.org',free:true,note:'100% free certificate'},
+          {name:'Node.js Application Developer (LFW211)',provider:'Linux Foundation — edX',url:'https://training.linuxfoundation.org/training/nodejs-application-development-lfw211',label:'linuxfoundation.org',free:false,note:'Free study; exam ~$250'},
+        ]
+      },
+      {
+        id:'mern-mongo', num:'PHASE 03', title:'MongoDB & Mongoose', months:'Month 3–5', emoji:'🍃',
+        topics:['MongoDB concepts — documents, collections, databases','CRUD operations in MongoDB shell and Compass','Mongoose ODM — schemas, models, validation','Relationships — embedded documents vs references','Aggregation pipeline — $match, $group, $lookup','Indexes for performance optimization','MongoDB Atlas — cloud setup and connection','Transactions in MongoDB','Data seeding and migrations','Mongoose virtuals, statics and instance methods'],
+        libraries:[{name:'MongoDB',desc:'NoSQL document database',install:'mongodb.com/download',icon:'🍃'},{name:'Mongoose',desc:'MongoDB ODM for Node',install:'npm install mongoose',icon:'🔷'},{name:'MongoDB Compass',desc:'GUI for MongoDB',install:'mongodb.com/compass',icon:'🖥️'},{name:'Mongo Memory Server',desc:'Testing with in-memory DB',install:'npm install mongodb-memory-server',icon:'🧪'}],
+        resources:[
+          {name:'MongoDB University — Free Courses',who:'MongoDB',type:'tc',url:'https://learn.mongodb.com',label:'learn.mongodb.com',free:true},
+          {name:'Mongoose Official Documentation',who:'mongoosejs.com',type:'td',url:'https://mongoosejs.com/docs',label:'mongoosejs.com/docs',free:true},
+          {name:'MongoDB Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=ExcRbA7fy22',label:'youtube.com — fCC MongoDB',free:true},
+        ],
+        certs:[
+          {name:'MongoDB Associate Developer Certification',provider:'MongoDB University',url:'https://learn.mongodb.com/pages/mongodb-associate-developer-exam',label:'learn.mongodb.com — Associate Developer',free:false,note:'Free course; exam ~$150'},
+          {name:'MongoDB Associate Atlas Administrator',provider:'MongoDB University',url:'https://learn.mongodb.com/pages/mongodb-associate-atlas-administrator-exam',label:'learn.mongodb.com — Atlas Admin',free:false,note:'Free course; exam ~$150'},
+          {name:'MongoDB Node.js Developer Path',provider:'MongoDB University — Free',url:'https://learn.mongodb.com/paths/nodejs-developer-path',label:'learn.mongodb.com/paths/nodejs',free:true,note:'Free path completion badge'},
+        ]
+      },
+      {
+        id:'mern-react', num:'PHASE 04', title:'React.js Frontend', months:'Month 4–7', emoji:'⚛️',
+        topics:['React fundamentals — JSX, components, props','State management with useState and useEffect','Component lifecycle and cleanup in useEffect','Event handling and forms in React','React Router — SPA routing, params, nested routes','Context API for global state','Custom hooks — encapsulating reusable logic','Fetching data — Axios and React Query / TanStack Query','Forms with React Hook Form and validation with Zod','Tailwind CSS with React for rapid styling','React performance — memo, useMemo, useCallback','File/folder structure best practices'],
+        libraries:[{name:'React',desc:'UI component library',install:'npx create-react-app',icon:'⚛️'},{name:'Vite',desc:'Fast build tool for React',install:'npm create vite@latest',icon:'⚡'},{name:'React Router DOM',desc:'Client-side routing',install:'npm install react-router-dom',icon:'🗺️'},{name:'Axios',desc:'HTTP client',install:'npm install axios',icon:'📡'},{name:'TanStack Query',desc:'Data fetching & caching',install:'npm install @tanstack/react-query',icon:'🔄'},{name:'Tailwind CSS',desc:'Utility-first CSS',install:'npm install tailwindcss',icon:'💨'},{name:'React Hook Form',desc:'Performant forms',install:'npm install react-hook-form',icon:'📝'},{name:'Zod',desc:'Schema validation',install:'npm install zod',icon:'✅'}],
+        resources:[
+          {name:'React Official Documentation',who:'react.dev',type:'td',url:'https://react.dev',label:'react.dev',free:true},
+          {name:'Full Stack Open — React & Node',who:'University of Helsinki — FREE',type:'tc',url:'https://fullstackopen.com',label:'fullstackopen.com',free:true},
+          {name:'React Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=bMknfKXIFA8',label:'youtube.com — fCC React',free:true},
+          {name:'Scrimba — Learn React for Free',who:'Scrimba',type:'tc',url:'https://scrimba.com/learn/learnreact',label:'scrimba.com/learn/learnreact',free:true},
+        ],
+        certs:[
+          {name:'freeCodeCamp Front End Development Libraries',provider:'freeCodeCamp',url:'https://www.freecodecamp.org/learn/front-end-development-libraries',label:'freecodecamp.org',free:true,note:'100% free certificate'},
+          {name:'Meta Front-End Developer Certificate',provider:'Meta — Coursera',url:'https://www.coursera.org/professional-certificates/meta-front-end-developer',label:'coursera.org — Meta Front-End',free:true,note:'Free audit; financial aid for cert'},
+          {name:'Full Stack Open Certificate',provider:'University of Helsinki',url:'https://fullstackopen.com/en/faq',label:'fullstackopen.com',free:true,note:'100% free university-issued certificate'},
+        ]
+      },
+      {
+        id:'mern-fullstack', num:'PHASE 05', title:'Full Stack Integration & Deployment', months:'Month 7–9', emoji:'🚀',
+        topics:['Connecting React frontend to Express backend','CORS configuration for different origins','Authentication flow — register, login, JWT, protected routes','Global auth state with Context + useReducer','File uploads from React to Node (images, PDFs)','Environment-specific configs (.env for dev/prod)','Deploying backend to Render or Railway','Deploying frontend to Vercel or Netlify','CI/CD basics with GitHub Actions','Docker basics — Dockerfile, docker-compose for MERN'],
+        libraries:[{name:'dotenv',desc:'Environment variables',install:'npm install dotenv',icon:'🔐'},{name:'bcryptjs',desc:'Password hashing',install:'npm install bcryptjs',icon:'🔒'},{name:'cookie-parser',desc:'Cookie management',install:'npm install cookie-parser',icon:'🍪'},{name:'morgan',desc:'HTTP request logger',install:'npm install morgan',icon:'📋'},{name:'Docker',desc:'Containerization',install:'docker.com/get-started',icon:'🐳'}],
+        resources:[
+          {name:'MERN Stack Full Course — Brad Traversy',who:'Traversy Media — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=7CqJlxBYj-M',label:'youtube.com — Traversy MERN Stack',free:true},
+          {name:'Deploy MERN App to Render',who:'Render Docs',type:'td',url:'https://render.com/docs/deploy-node-express-app',label:'render.com/docs',free:true},
+          {name:'Docker for Node.js — Official Guide',who:'Docker',type:'td',url:'https://docs.docker.com/language/nodejs',label:'docs.docker.com/language/nodejs',free:true},
+        ],
+        certs:[
+          {name:'freeCodeCamp Quality Assurance Cert',provider:'freeCodeCamp',url:'https://www.freecodecamp.org/learn/quality-assurance',label:'freecodecamp.org',free:true,note:'100% free certificate'},
+          {name:'AWS Cloud Practitioner (CLF-C02)',provider:'AWS',url:'https://aws.amazon.com/certification/certified-cloud-practitioner',label:'aws.amazon.com/certification',free:false,note:'Free prep on AWS Skill Builder; exam ~$100'},
+        ]
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────
+  //  JAVA STACK
+  // ────────────────────────────────────────
+  {
+    id:'java', name:'Java Spring Boot', icon:'☕', color:'#f59e0b',
+    desc:'Java · Spring Boot · Spring Security · PostgreSQL · React/Thymeleaf',
+    phases:[
+      {
+        id:'java-core', num:'PHASE 01', title:'Java Core', months:'Month 1–3', emoji:'☕',
+        topics:['Java basics — variables, data types, operators','Control flow — if/else, switch, loops','OOP — classes, objects, inheritance, polymorphism','Interfaces, abstract classes and encapsulation','Collections — List, Map, Set, Queue, Iterator','Generics — type parameters and bounded wildcards','Exception handling — try/catch/finally, custom exceptions','Java 8+ — Lambda expressions, Streams, Optional','Functional interfaces — Predicate, Function, Consumer','Java 11–17 features — records, sealed classes, text blocks','File I/O and NIO','Multithreading and concurrency basics'],
+        libraries:[{name:'JDK 17+',desc:'Java Development Kit',install:'adoptium.net/download',icon:'☕'},{name:'Maven',desc:'Build & dependency mgmt',install:'maven.apache.org',icon:'🏗️'},{name:'IntelliJ IDEA',desc:'Best Java IDE',install:'jetbrains.com/idea',icon:'💡'},{name:'Lombok',desc:'Reduce boilerplate',install:'mvn: org.projectlombok',icon:'🌿'}],
+        resources:[
+          {name:'Java Tutorial for Beginners',who:'Programming with Mosh — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=eIrMbAQSU34',label:'youtube.com — Mosh Java Tutorial',free:true},
+          {name:'Java Full Course — freeCodeCamp',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=A74TOX803D0',label:'youtube.com — fCC Java Full Course',free:true},
+          {name:'Java Documentation & Tutorials',who:'Oracle',type:'td',url:'https://docs.oracle.com/en/java/javase/17/docs/api',label:'docs.oracle.com/java',free:true},
+          {name:'Java Programming MOOC',who:'University of Helsinki — Free',type:'tc',url:'https://java-programming.mooc.fi',label:'java-programming.mooc.fi',free:true},
+        ],
+        certs:[
+          {name:'Oracle Java SE 17 Foundations Associate (1Z0-811)',provider:'Oracle',url:'https://education.oracle.com/java-foundations',label:'education.oracle.com/java-foundations',free:false,note:'Free study; exam ~$150. Most respected Java cert'},
+          {name:'Java Programming MOOC Certificate',provider:'University of Helsinki',url:'https://java-programming.mooc.fi',label:'java-programming.mooc.fi',free:true,note:'100% free university certificate'},
+          {name:'JetBrains Academy — Java Developer Track',provider:'JetBrains Academy',url:'https://www.jetbrains.com/academy/java',label:'jetbrains.com/academy/java',free:false,note:'Free trial; ~$25/mo. High quality projects'},
+        ]
+      },
+      {
+        id:'java-spring', num:'PHASE 02', title:'Spring Boot & REST APIs', months:'Month 3–6', emoji:'🌿',
+        topics:['Spring framework core — IoC container, DI, beans','Spring Boot auto-configuration and starter POMs','Building REST controllers with @RestController','Request mappings — @GetMapping, @PostMapping, etc.','DTOs — Data Transfer Objects and mapping with MapStruct','Validation with @Valid and Bean Validation API','Spring Data JPA — repositories, CRUD, custom queries','JPQL and native queries','Pagination and sorting with Pageable','Exception handling with @ControllerAdvice','Spring Boot Actuator for monitoring','Swagger / OpenAPI documentation with SpringDoc'],
+        libraries:[{name:'Spring Boot',desc:'Rapid app development',install:'start.spring.io',icon:'🌿'},{name:'Spring Web',desc:'REST controllers',install:'start.spring.io → Spring Web',icon:'🌐'},{name:'Spring Data JPA',desc:'JPA repository layer',install:'start.spring.io → JPA',icon:'📊'},{name:'Hibernate',desc:'ORM framework',install:'Included with JPA',icon:'🗃️'},{name:'SpringDoc OpenAPI',desc:'Swagger UI generation',install:'mvn: springdoc-openapi-starter',icon:'📄'},{name:'MapStruct',desc:'Bean mapping',install:'mvn: mapstruct',icon:'🗺️'},{name:'ModelMapper',desc:'Object mapping',install:'mvn: modelmapper',icon:'🔄'},{name:'Lombok',desc:'Reduce boilerplate',install:'mvn: lombok',icon:'🌿'}],
+        resources:[
+          {name:'Spring Boot Full Course',who:'Amigoscode — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=9SGDpanrc8U',label:'youtube.com — Amigoscode Spring Boot',free:true},
+          {name:'Spring Framework Official Documentation',who:'Spring.io',type:'td',url:'https://spring.io/projects/spring-boot',label:'spring.io/projects/spring-boot',free:true},
+          {name:'Building REST Services with Spring',who:'Spring.io Guides',type:'td',url:'https://spring.io/guides/tutorials/rest',label:'spring.io/guides/tutorials/rest',free:true},
+          {name:'Spring Boot Reference Guide',who:'Spring.io',type:'tb2',url:'https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle',label:'docs.spring.io/spring-boot',free:true},
+        ],
+        certs:[
+          {name:'VMware Spring Professional 2024 (EDU-1202)',provider:'VMware / Broadcom',url:'https://www.vmware.com/learning/certification/spring-pro-develop-exam.html',label:'vmware.com — Spring Professional',free:false,note:'Free study; exam ~$250. Top Spring cert'},
+          {name:'Spring Boot on Coursera — Packt',provider:'Packt — Coursera',url:'https://www.coursera.org/learn/spring-boot',label:'coursera.org — Spring Boot',free:true,note:'Free audit available'},
+        ]
+      },
+      {
+        id:'java-security', num:'PHASE 03', title:'Spring Security & Database', months:'Month 6–8', emoji:'🔒',
+        topics:['Spring Security fundamentals — filter chain, AuthManager','Username/password authentication with UserDetailsService','JWT authentication with Spring Security','Role-based access control (RBAC) with @PreAuthorize','OAuth2 and social login integration','PostgreSQL setup and connection with Spring','Database migrations with Flyway','JPA entity relationships — OneToMany, ManyToMany','Transactions with @Transactional','Database connection pooling with HikariCP','Redis for caching and session management','Testing with JUnit 5 and Mockito'],
+        libraries:[{name:'Spring Security',desc:'Auth & authorization',install:'start.spring.io → Security',icon:'🔒'},{name:'PostgreSQL',desc:'Relational database',install:'postgresql.org/download',icon:'🐘'},{name:'Flyway',desc:'DB version control',install:'start.spring.io → Flyway',icon:'✈️'},{name:'HikariCP',desc:'Connection pool',install:'Included in Spring Boot',icon:'🏊'},{name:'Redis',desc:'Caching layer',install:'redis.io/download',icon:'🔴'},{name:'JUnit 5',desc:'Unit testing',install:'start.spring.io → Test',icon:'🧪'},{name:'Mockito',desc:'Mocking for tests',install:'Included with Spring Test',icon:'🎭'},{name:'Testcontainers',desc:'Integration testing',install:'mvn: testcontainers',icon:'📦'}],
+        resources:[
+          {name:'Spring Security Full Course',who:'Amigoscode — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=her_7pa0vrg',label:'youtube.com — Amigoscode Spring Security',free:true},
+          {name:'Spring Security Reference Documentation',who:'Spring.io',type:'td',url:'https://docs.spring.io/spring-security/reference',label:'docs.spring.io/spring-security',free:true},
+          {name:'PostgreSQL Official Tutorial',who:'PostgreSQL',type:'td',url:'https://www.postgresql.org/docs/current/tutorial.html',label:'postgresql.org/docs/tutorial',free:true},
+          {name:'Flyway Database Migrations',who:'Flyway Docs',type:'td',url:'https://flywaydb.org/documentation',label:'flywaydb.org/documentation',free:true},
+        ],
+        certs:[
+          {name:'Oracle OCAJP — Java SE 17',provider:'Oracle Certification',url:'https://education.oracle.com/java-se-17-developer',label:'education.oracle.com',free:false,note:'Exam ~$245; highly regarded in enterprise'},
+          {name:'Coursera — Databases and SQL for Data Science',provider:'IBM — Coursera',url:'https://www.coursera.org/learn/sql-data-science',label:'coursera.org — SQL for Data Science',free:true,note:'Free audit available'},
+        ]
+      },
+      {
+        id:'java-deploy', num:'PHASE 04', title:'Microservices & Deployment', months:'Month 8–11', emoji:'🏗️',
+        topics:['Microservices architecture — patterns and best practices','Spring Cloud — service discovery, config server','Docker — containerize Spring Boot apps','Docker Compose for multi-service local dev','Kubernetes basics — pods, services, deployments','GitHub Actions CI/CD pipeline for Spring apps','Cloud deployment to AWS Elastic Beanstalk or GCP','API Gateway with Spring Cloud Gateway','Message brokers — RabbitMQ or Kafka basics','Distributed tracing with Zipkin / Sleuth','Load balancing and circuit breakers — Resilience4j','Monitoring with Spring Actuator + Prometheus + Grafana'],
+        libraries:[{name:'Spring Cloud',desc:'Microservices toolkit',install:'start.spring.io → Cloud',icon:'☁️'},{name:'Docker',desc:'Container platform',install:'docker.com/get-started',icon:'🐳'},{name:'Kubernetes',desc:'Container orchestration',install:'kubernetes.io/docs/setup',icon:'⚙️'},{name:'RabbitMQ',desc:'Message broker',install:'rabbitmq.com/download',icon:'🐰'},{name:'Apache Kafka',desc:'Event streaming',install:'kafka.apache.org/quickstart',icon:'📨'},{name:'Resilience4j',desc:'Circuit breaker',install:'mvn: resilience4j',icon:'🛡️'}],
+        resources:[
+          {name:'Microservices with Spring Boot — Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=BLlEgtp2_i8',label:'youtube.com — fCC Microservices',free:true},
+          {name:'Spring Cloud Documentation',who:'Spring.io',type:'td',url:'https://spring.io/projects/spring-cloud',label:'spring.io/projects/spring-cloud',free:true},
+          {name:'Docker Getting Started',who:'Docker',type:'td',url:'https://docs.docker.com/get-started',label:'docs.docker.com/get-started',free:true},
+          {name:'Kubernetes Official Tutorials',who:'kubernetes.io',type:'td',url:'https://kubernetes.io/docs/tutorials',label:'kubernetes.io/docs/tutorials',free:true},
+        ],
+        certs:[
+          {name:'Certified Kubernetes Application Developer (CKAD)',provider:'Linux Foundation',url:'https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad',label:'linuxfoundation.org — CKAD',free:false,note:'Exam ~$395; most valued container cert'},
+          {name:'AWS Certified Developer Associate',provider:'AWS',url:'https://aws.amazon.com/certification/certified-developer-associate',label:'aws.amazon.com/certification',free:false,note:'Free prep on Skill Builder; exam ~$150'},
+          {name:'Google Cloud Associate Cloud Engineer',provider:'Google Cloud',url:'https://cloud.google.com/learn/certification/cloud-engineer',label:'cloud.google.com/certification',free:false,note:'Free learning path; exam ~$200'},
+        ]
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────
+  //  ASP.NET CORE STACK
+  // ────────────────────────────────────────
+  {
+    id:'dotnet', name:'ASP.NET Core', icon:'💜', color:'#818cf8',
+    desc:'C# · ASP.NET Core · Entity Framework · SQL Server · Azure',
+    phases:[
+      {
+        id:'dotnet-csharp', num:'PHASE 01', title:'C# Language Fundamentals', months:'Month 1–3', emoji:'#️⃣',
+        topics:['C# basics — variables, types, operators, control flow','Methods, parameters, return types','OOP in C# — classes, inheritance, interfaces, polymorphism','Properties, auto-properties, constructors','Collections — List<T>, Dictionary, Array, IEnumerable','LINQ — lambda queries, method syntax, query syntax','Async/await and Task-based programming','Delegates, events and Func/Action','Exception handling — try/catch/finally, custom exceptions','C# 10/11/12 features — records, pattern matching, init-only','Nullable reference types','String interpolation and string manipulation'],
+        libraries:[{name:'.NET 8 SDK',desc:'Core runtime and SDK',install:'dotnet.microsoft.com/download',icon:'💜'},{name:'Visual Studio 2022',desc:'Best IDE for .NET',install:'visualstudio.microsoft.com',icon:'💻'},{name:'VS Code + C# Extension',desc:'Lightweight option',install:'marketplace.visualstudio.com',icon:'🔵'},{name:'NuGet',desc:'Package manager for .NET',install:'nuget.org',icon:'📦'}],
+        resources:[
+          {name:'C# Tutorial for Beginners',who:'Microsoft Learn',type:'tc',url:'https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp',label:'learn.microsoft.com/csharp',free:true},
+          {name:'C# Full Course for Beginners',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=GhQdlIFylQ8',label:'youtube.com — fCC C# Full Course',free:true},
+          {name:'C# in a Nutshell — Free Chapters',who:'O\'Reilly / Albahari',type:'tb2',url:'https://www.albahari.com/nutshell',label:'albahari.com/nutshell',free:true},
+          {name:'Microsoft Learn .NET C# Path',who:'Microsoft',type:'tc',url:'https://learn.microsoft.com/en-us/training/dotnet',label:'learn.microsoft.com/training/dotnet',free:true},
+        ],
+        certs:[
+          {name:'Microsoft Certified: Azure Fundamentals (AZ-900)',provider:'Microsoft',url:'https://learn.microsoft.com/en-us/certifications/azure-fundamentals',label:'learn.microsoft.com — AZ-900',free:false,note:'Free study on MS Learn; exam ~$165'},
+          {name:'Microsoft Learn C# Foundational Credential',provider:'Microsoft Learn',url:'https://learn.microsoft.com/en-us/credentials/certifications/foundational-csharp-with-microsoft',label:'learn.microsoft.com/csharp-credential',free:true,note:'100% free C# certificate via freeCodeCamp partnership'},
+        ]
+      },
+      {
+        id:'dotnet-aspnet', num:'PHASE 02', title:'ASP.NET Core & Web APIs', months:'Month 3–6', emoji:'🌐',
+        topics:['ASP.NET Core project structure and middleware pipeline','Controllers and minimal APIs','Routing — attribute routing, route constraints','Model binding and model validation with DataAnnotations','DTOs and AutoMapper for object mapping','Dependency injection — built-in DI container','Swagger / OpenAPI with Swashbuckle','API versioning strategies','Response caching and output caching','Health checks and logging with Serilog','Background services with IHostedService','Filters — action filters, exception filters, auth filters'],
+        libraries:[{name:'ASP.NET Core',desc:'Web framework',install:'dotnet new webapi',icon:'🌐'},{name:'AutoMapper',desc:'Object-to-object mapping',install:'NuGet: AutoMapper',icon:'🗺️'},{name:'FluentValidation',desc:'Validation rules',install:'NuGet: FluentValidation',icon:'✅'},{name:'Swashbuckle',desc:'Swagger UI for .NET',install:'NuGet: Swashbuckle.AspNetCore',icon:'📄'},{name:'Serilog',desc:'Structured logging',install:'NuGet: Serilog',icon:'📋'},{name:'MediatR',desc:'CQRS mediator pattern',install:'NuGet: MediatR',icon:'📨'},{name:'Polly',desc:'Resilience and retries',install:'NuGet: Polly',icon:'🔄'},{name:'Carter',desc:'Minimal API modules',install:'NuGet: Carter',icon:'🧩'}],
+        resources:[
+          {name:'ASP.NET Core Documentation',who:'Microsoft',type:'td',url:'https://learn.microsoft.com/en-us/aspnet/core',label:'learn.microsoft.com/aspnet/core',free:true},
+          {name:'ASP.NET Core Web API Full Course',who:'Nick Chapsas — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=ZXdFisA_hOY',label:'youtube.com — Nick Chapsas ASP.NET',free:true},
+          {name:'Minimal APIs in .NET 8',who:'Microsoft Learn',type:'td',url:'https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis',label:'learn.microsoft.com — Minimal APIs',free:true},
+          {name:'ASP.NET Core Best Practices',who:'Microsoft',type:'tb2',url:'https://learn.microsoft.com/en-us/aspnet/core/fundamentals/best-practices',label:'learn.microsoft.com — Best Practices',free:true},
+        ],
+        certs:[
+          {name:'Microsoft Certified: Azure Developer Associate (AZ-204)',provider:'Microsoft',url:'https://learn.microsoft.com/en-us/certifications/azure-developer',label:'learn.microsoft.com — AZ-204',free:false,note:'Free study on MS Learn; exam ~$165. Gold standard for .NET devs'},
+          {name:'freeCodeCamp Foundational C# with Microsoft',provider:'freeCodeCamp + Microsoft',url:'https://www.freecodecamp.org/learn/foundational-c-sharp-with-microsoft',label:'freecodecamp.org — C# with Microsoft',free:true,note:'100% free certificate'},
+        ]
+      },
+      {
+        id:'dotnet-ef', num:'PHASE 03', title:'Entity Framework & SQL Server', months:'Month 5–7', emoji:'🗃️',
+        topics:['Entity Framework Core — DbContext, DbSet','Code-first migrations — Add-Migration, Update-Database','Configuring entities with Fluent API','Relationships — one-to-many, many-to-many, one-to-one','LINQ with EF Core — querying, filtering, projections','Eager vs lazy vs explicit loading','Transactions and SaveChanges','Raw SQL queries with EF Core','SQL Server setup and connection strings','Indexes, constraints and database design','Repository pattern and Unit of Work pattern','EF Core performance tips — no-tracking, compiled queries'],
+        libraries:[{name:'Entity Framework Core',desc:'ORM for .NET',install:'NuGet: Microsoft.EntityFrameworkCore',icon:'🔷'},{name:'SQL Server',desc:'Microsoft relational DB',install:'microsoft.com/sql-server',icon:'🗃️'},{name:'SQLite',desc:'Lightweight DB for dev',install:'NuGet: EFCore.Sqlite',icon:'📱'},{name:'PostgreSQL + Npgsql',desc:'Open-source SQL DB',install:'NuGet: Npgsql.EFCore.Postgresql',icon:'🐘'},{name:'EF Core Tools',desc:'CLI migration tools',install:'dotnet tool install --global dotnet-ef',icon:'🛠️'},{name:'Bogus',desc:'Fake data for seeding',install:'NuGet: Bogus',icon:'🎲'}],
+        resources:[
+          {name:'Entity Framework Core Documentation',who:'Microsoft',type:'td',url:'https://learn.microsoft.com/en-us/ef/core',label:'learn.microsoft.com/ef/core',free:true},
+          {name:'EF Core Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=SryQxUeChMo',label:'youtube.com — fCC EF Core',free:true},
+          {name:'SQL Server Tutorial',who:'sqlservertutorial.net',type:'tb2',url:'https://www.sqlservertutorial.net',label:'sqlservertutorial.net',free:true},
+        ],
+        certs:[
+          {name:'Microsoft DP-300: Administering Azure SQL',provider:'Microsoft',url:'https://learn.microsoft.com/en-us/certifications/azure-database-administrator-associate',label:'learn.microsoft.com — DP-300',free:false,note:'Free study; exam ~$165'},
+          {name:'Coursera SQL for Data Science',provider:'UC Davis — Coursera',url:'https://www.coursera.org/learn/sql-for-data-science',label:'coursera.org — SQL for Data Science',free:true,note:'Free audit available'},
+        ]
+      },
+      {
+        id:'dotnet-azure', num:'PHASE 04', title:'Security, Testing & Azure Deployment', months:'Month 7–10', emoji:'☁️',
+        topics:['ASP.NET Core Identity — user registration, login, roles','JWT bearer authentication','OAuth2 & OpenID Connect — Azure AD, Google, GitHub','Role-based and policy-based authorization','xUnit and NUnit for unit testing .NET','Integration testing with WebApplicationFactory','Mocking with Moq or NSubstitute','Azure App Service deployment from VS or GitHub Actions','Azure SQL Database — cloud SQL Server','Azure Blob Storage for file uploads','Azure Key Vault for secrets management','Application Insights for monitoring and telemetry'],
+        libraries:[{name:'ASP.NET Core Identity',desc:'User management system',install:'NuGet: Microsoft.AspNetCore.Identity',icon:'👤'},{name:'xUnit',desc:'Unit testing framework',install:'NuGet: xunit',icon:'🧪'},{name:'Moq',desc:'Mocking library',install:'NuGet: Moq',icon:'🎭'},{name:'FluentAssertions',desc:'Readable test assertions',install:'NuGet: FluentAssertions',icon:'✅'},{name:'Azure SDK',desc:'Azure services client',install:'NuGet: Azure.Storage.Blobs',icon:'☁️'},{name:'Testcontainers',desc:'DB integration testing',install:'NuGet: Testcontainers',icon:'📦'}],
+        resources:[
+          {name:'Azure for .NET Developers',who:'Microsoft Learn',type:'tc',url:'https://learn.microsoft.com/en-us/azure/developer/dotnet',label:'learn.microsoft.com/azure/dotnet',free:true},
+          {name:'ASP.NET Core Security Documentation',who:'Microsoft',type:'td',url:'https://learn.microsoft.com/en-us/aspnet/core/security',label:'learn.microsoft.com/aspnet/security',free:true},
+          {name:'GitHub Actions for .NET',who:'Microsoft Docs',type:'td',url:'https://learn.microsoft.com/en-us/dotnet/devops/github-actions-overview',label:'learn.microsoft.com/dotnet/devops',free:true},
+        ],
+        certs:[
+          {name:'Microsoft AZ-204: Azure Developer Associate',provider:'Microsoft',url:'https://learn.microsoft.com/en-us/certifications/azure-developer',label:'learn.microsoft.com — AZ-204',free:false,note:'Most valuable cert for .NET/Azure devs; exam ~$165'},
+          {name:'Microsoft AZ-900: Azure Fundamentals',provider:'Microsoft',url:'https://learn.microsoft.com/en-us/certifications/azure-fundamentals',label:'learn.microsoft.com — AZ-900',free:false,note:'Great starting Azure cert; exam ~$165. Free prep on MS Learn'},
+          {name:'Microsoft Learn — .NET Learning Path',provider:'Microsoft Learn',url:'https://learn.microsoft.com/en-us/training/dotnet',label:'learn.microsoft.com/training/dotnet',free:true,note:'100% free — earn trophies & badges'},
+        ]
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────
+  //  PYTHON FULL STACK
+  // ────────────────────────────────────────
+  {
+    id:'python', name:'Python Full Stack', icon:'🐍', color:'#38bdf8',
+    desc:'Python · Django · FastAPI · PostgreSQL · React/HTMX',
+    phases:[
+      {
+        id:'python-core', num:'PHASE 01', title:'Python for Web Dev', months:'Month 1–2', emoji:'🐍',
+        topics:['Python data types — strings, lists, dicts, tuples, sets','Functions — args, kwargs, default params, closures','OOP — classes, inheritance, dunder methods','List comprehensions and generators','Decorators — writing and using them','Context managers — with statement','Virtual environments — venv, pipenv, poetry','pip and package management','Type hints and mypy for type checking','Testing with pytest — fixtures, parametrize','Python 3.10–3.12 features — structural pattern matching','Working with JSON, CSV and file I/O'],
+        libraries:[{name:'Python 3.12',desc:'Core language',install:'python.org/downloads',icon:'🐍'},{name:'pip',desc:'Package installer',install:'Included with Python',icon:'📦'},{name:'venv/Poetry',desc:'Virtual environments',install:'python -m venv env',icon:'🌿'},{name:'pytest',desc:'Testing framework',install:'pip install pytest',icon:'🧪'},{name:'mypy',desc:'Static type checker',install:'pip install mypy',icon:'🔍'},{name:'black',desc:'Code formatter',install:'pip install black',icon:'⬛'}],
+        resources:[
+          {name:'Python Full Course for Beginners',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=rfscVS0vtbw',label:'youtube.com — fCC Python',free:true},
+          {name:'CS50P — Harvard Python',who:'Harvard / edX',type:'tc',url:'https://cs50.harvard.edu/python',label:'cs50.harvard.edu/python',free:true},
+          {name:'Real Python Tutorials',who:'Real Python',type:'tb2',url:'https://realpython.com',label:'realpython.com',free:true},
+          {name:'Python Official Docs — Tutorial',who:'Python.org',type:'td',url:'https://docs.python.org/3/tutorial',label:'docs.python.org/3/tutorial',free:true},
+        ],
+        certs:[
+          {name:'PCEP — Certified Python Entry (Python Institute)',provider:'Python Institute',url:'https://pythoninstitute.org/pcep',label:'pythoninstitute.org/pcep',free:true,note:'Free course; exam ~$59'},
+          {name:'CS50P — Harvard Certificate',provider:'Harvard / edX',url:'https://cs50.harvard.edu/python',label:'cs50.harvard.edu/python',free:true,note:'Course free; verified cert ~$149 optional'},
+          {name:'Google IT Automation with Python',provider:'Google — Coursera',url:'https://www.coursera.org/professional-certificates/google-it-automation',label:'coursera.org — Google IT Automation',free:true,note:'Free audit; financial aid for cert'},
+        ]
+      },
+      {
+        id:'python-django', num:'PHASE 02', title:'Django Web Framework', months:'Month 2–5', emoji:'🎸',
+        topics:['Django project structure — settings, urls, apps','Django ORM — models, migrations, querysets','Views — function-based and class-based views','Templates — Django template language, template inheritance','Static files and media files management','Forms and ModelForms with validation','Django Admin — customization and features','Django REST Framework — serializers, views, routers','DRF authentication — token, session, JWT with simplejwt','Permissions and throttling in DRF','Django signals — post_save, pre_delete','Celery for background tasks with Redis broker'],
+        libraries:[{name:'Django',desc:'Batteries-included framework',install:'pip install django',icon:'🎸'},{name:'Django REST Framework',desc:'Build REST APIs in Django',install:'pip install djangorestframework',icon:'🔌'},{name:'djangorestframework-simplejwt',desc:'JWT auth for DRF',install:'pip install djangorestframework-simplejwt',icon:'🔑'},{name:'django-environ',desc:'Environment variables',install:'pip install django-environ',icon:'🔐'},{name:'django-cors-headers',desc:'CORS headers',install:'pip install django-cors-headers',icon:'🌍'},{name:'Celery',desc:'Task queue',install:'pip install celery',icon:'🌿'},{name:'Pillow',desc:'Image processing',install:'pip install Pillow',icon:'🖼️'},{name:'django-filter',desc:'Querystring filtering',install:'pip install django-filter',icon:'🔎'}],
+        resources:[
+          {name:'Django Official Tutorial',who:'Django Project',type:'td',url:'https://docs.djangoproject.com/en/5.0/intro/tutorial01',label:'docs.djangoproject.com',free:true},
+          {name:'Django & DRF Full Course',who:'Dennis Ivy — YouTube',type:'tv',url:'https://www.youtube.com/c/DennisIvy',label:'youtube.com — Dennis Ivy',free:true},
+          {name:'Django for APIs Book — Free Intro',who:'William S. Vincent',type:'tb2',url:'https://djangoforapis.com',label:'djangoforapis.com',free:true},
+          {name:'DRF Official Documentation',who:'Django REST Framework',type:'td',url:'https://www.django-rest-framework.org',label:'django-rest-framework.org',free:true},
+        ],
+        certs:[
+          {name:'IBM Python for Data Science, AI & Dev',provider:'IBM — Coursera',url:'https://www.coursera.org/learn/python-for-applied-data-science-ai',label:'coursera.org — IBM Python',free:true,note:'Free audit available'},
+          {name:'Django Developer — TestDome',provider:'TestDome',url:'https://www.testdome.com/tests/django-test/116',label:'testdome.com/tests/django',free:false,note:'~$15 per test; shareable certificate'},
+          {name:'Meta Back-End Developer Certificate',provider:'Meta — Coursera',url:'https://www.coursera.org/professional-certificates/meta-back-end-developer',label:'coursera.org — Meta Back-End',free:true,note:'Free audit; financial aid available. Includes Django'},
+        ]
+      },
+      {
+        id:'python-fastapi', num:'PHASE 03', title:'FastAPI & Modern Python APIs', months:'Month 5–7', emoji:'⚡',
+        topics:['FastAPI fundamentals — path operations, request body, query params','Pydantic models for data validation and serialization','Dependency injection in FastAPI','FastAPI with SQLAlchemy and async support','Alembic database migrations','Async database with asyncpg or databases lib','JWT authentication with OAuth2PasswordBearer','Background tasks and webhooks','WebSockets with FastAPI','OpenAPI auto-documentation — Swagger and ReDoc','Testing FastAPI with httpx and pytest','Rate limiting with slowapi'],
+        libraries:[{name:'FastAPI',desc:'Modern async Python API',install:'pip install fastapi',icon:'⚡'},{name:'Uvicorn',desc:'ASGI server',install:'pip install uvicorn[standard]',icon:'🦄'},{name:'Pydantic',desc:'Data validation with types',install:'pip install pydantic',icon:'✅'},{name:'SQLAlchemy',desc:'Python SQL toolkit & ORM',install:'pip install sqlalchemy',icon:'🗃️'},{name:'Alembic',desc:'DB migrations',install:'pip install alembic',icon:'✈️'},{name:'httpx',desc:'Async HTTP testing',install:'pip install httpx',icon:'📡'},{name:'python-jose',desc:'JWT handling',install:'pip install python-jose',icon:'🔑'},{name:'passlib',desc:'Password hashing',install:'pip install passlib',icon:'🔐'}],
+        resources:[
+          {name:'FastAPI Official Documentation',who:'FastAPI / Tiangolo',type:'td',url:'https://fastapi.tiangolo.com',label:'fastapi.tiangolo.com',free:true},
+          {name:'FastAPI Full Course',who:'freeCodeCamp — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=7t2alSnE2-I',label:'youtube.com — fCC FastAPI',free:true},
+          {name:'Full Stack FastAPI + React',who:'Tiangolo — GitHub',type:'tto',url:'https://github.com/tiangolo/full-stack-fastapi-template',label:'github.com/tiangolo/full-stack-fastapi-template',free:true},
+          {name:'Real Python — FastAPI Tutorial',who:'Real Python',type:'tb2',url:'https://realpython.com/fastapi-python-web-apis',label:'realpython.com/fastapi-python-web-apis',free:true},
+        ],
+        certs:[
+          {name:'freeCodeCamp Scientific Computing with Python',provider:'freeCodeCamp',url:'https://www.freecodecamp.org/learn/scientific-computing-with-python',label:'freecodecamp.org',free:true,note:'100% free certificate'},
+          {name:'PCPP1 — Python Professional (Python Institute)',provider:'Python Institute',url:'https://pythoninstitute.org/pcpp1',label:'pythoninstitute.org/pcpp1',free:false,note:'Free course; exam ~$195'},
+        ]
+      },
+      {
+        id:'python-deploy', num:'PHASE 04', title:'Databases, Frontend & Deployment', months:'Month 7–10', emoji:'🚀',
+        topics:['PostgreSQL with psycopg2 and SQLAlchemy','Database design — normalization, indexes, foreign keys','Redis caching with django-redis or aioredis','React frontend with Django/FastAPI backend','HTMX — modern HTML-centric interactivity (Django-friendly)','File storage — local, AWS S3 with boto3','Deploying Django/FastAPI to Railway, Render or DigitalOcean','Gunicorn/Uvicorn as production WSGI/ASGI servers','Nginx as reverse proxy — basic config','Docker and docker-compose for Python apps','GitHub Actions CI/CD — test and deploy on push','Environment management with 12-factor app principles'],
+        libraries:[{name:'PostgreSQL + psycopg2',desc:'Python PostgreSQL adapter',install:'pip install psycopg2-binary',icon:'🐘'},{name:'boto3',desc:'AWS SDK for Python',install:'pip install boto3',icon:'☁️'},{name:'Redis',desc:'Caching & queues',install:'pip install redis',icon:'🔴'},{name:'Gunicorn',desc:'Production WSGI server',install:'pip install gunicorn',icon:'🦄'},{name:'Nginx',desc:'Reverse proxy server',install:'nginx.org/en/download.html',icon:'🔀'},{name:'Docker',desc:'Containerize Python apps',install:'docker.com/get-started',icon:'🐳'},{name:'HTMX',desc:'HTML-first interactivity',install:'unpkg.com/htmx.org',icon:'✨'}],
+        resources:[
+          {name:'Django Deployment Checklist',who:'Django Project',type:'td',url:'https://docs.djangoproject.com/en/5.0/howto/deployment/checklist',label:'docs.djangoproject.com/deployment',free:true},
+          {name:'Deploy Django App on Render',who:'Render Docs',type:'td',url:'https://render.com/docs/deploy-django',label:'render.com/docs/deploy-django',free:true},
+          {name:'AWS for Python — boto3 Docs',who:'AWS',type:'td',url:'https://boto3.amazonaws.com/v1/documentation/api/latest/index.html',label:'boto3.amazonaws.com',free:true},
+          {name:'HTMX Official Docs & Examples',who:'HTMX.org',type:'td',url:'https://htmx.org',label:'htmx.org',free:true},
+        ],
+        certs:[
+          {name:'Meta Back-End Developer Professional Certificate',provider:'Meta — Coursera',url:'https://www.coursera.org/professional-certificates/meta-back-end-developer',label:'coursera.org — Meta Back-End',free:true,note:'Free audit; highly valued; includes Django & APIs'},
+          {name:'AWS Certified Developer Associate',provider:'AWS',url:'https://aws.amazon.com/certification/certified-developer-associate',label:'aws.amazon.com/certification',free:false,note:'Free prep on Skill Builder; exam ~$150'},
+          {name:'Google Cloud Professional Cloud Developer',provider:'Google Cloud',url:'https://cloud.google.com/learn/certification/cloud-developer',label:'cloud.google.com/certification',free:false,note:'Free prep on Cloud Skills Boost; exam ~$200'},
+        ]
+      },
+    ]
+  },
+];
+
+// ═══════════════════════════════════════════════════
+//  STATE & PERSISTENCE
+// ═══════════════════════════════════════════════════
+function load(){try{return JSON.parse(localStorage.getItem('fs_roadmap_v1')||'{}');}catch{return{};}}
+function save(s){localStorage.setItem('fs_roadmap_v1',JSON.stringify(s));}
+let S = load();
+
+const gc = (phid, type, i) => !!(S[phid]?.[type]?.[i]);
+function sc(phid, type, i, v){if(!S[phid])S[phid]={};if(!S[phid][type])S[phid][type]={};S[phid][type][i]=v;save(S);}
+const gn = (phid) => S[phid]?.notes||'';
+function sn(phid, v){if(!S[phid])S[phid]={};S[phid].notes=v;save(S);}
+
+// ═══════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════
+let currentFilter = 'mern';
+
+function render(){
+  const root = document.getElementById('roadmap-root');
+  root.innerHTML = '';
+
+  STACKS.forEach(stack => {
+    const sec = document.createElement('div');
+    sec.className = 'stack-section';
+    sec.id = 'stack-' + stack.id;
+    if(currentFilter !== 'all' && currentFilter !== stack.id) sec.classList.add('hidden');
+
+    // calc stack progress
+    let stot=0, sdone=0;
+    stack.phases.forEach(ph=>{
+      const td=ph.topics.filter((_,i)=>gc(ph.id,'topics',i)).length;
+      const ld=ph.libraries.filter((_,i)=>gc(ph.id,'libs',i)).length;
+      stot += ph.topics.length + ph.libraries.length;
+      sdone += td + ld;
+    });
+    const spct = stot ? Math.round(sdone/stot*100) : 0;
+
+    sec.innerHTML = `
+      <div class="sstack-hdr" style="--sh-color:${stack.color}; border:1px solid ${stack.color}22;">
+        <span class="sstack-icon">${stack.icon}</span>
+        <div>
+          <div class="sstack-name" style="color:${stack.color}">${stack.name}</div>
+          <div class="sstack-sub">${stack.desc}</div>
+        </div>
+        <div class="sstack-stat" style="color:${stack.color};border-color:${stack.color}33;background:${stack.color}11">${spct}% · ${sdone}/${stot}</div>
+      </div>
+    `;
+
+    stack.phases.forEach((ph, pi) => {
+      const td = ph.topics.filter((_,i)=>gc(ph.id,'topics',i)).length;
+      const ld = ph.libraries.filter((_,i)=>gc(ph.id,'libs',i)).length;
+      const tot = ph.topics.length + ph.libraries.length;
+      const done = td + ld;
+      const pct = tot ? Math.round(done/tot*100) : 0;
+      const pc = pct===100 ? '#10b981' : pct>0 ? stack.color : '#475569';
+
+      const phEl = document.createElement('div');
+      phEl.className = 'phase';
+      phEl.id = 'ph-' + ph.id;
+      phEl.style.animationDelay = pi * 0.04 + 's';
+
+      phEl.innerHTML = `
+<div class="phd" style="background:linear-gradient(135deg,${stack.color}20,${stack.color}08)" onclick="tog('${ph.id}')">
+  <span style="font-size:1.1rem">${ph.emoji}</span>
+  <span class="phnum" style="color:${stack.color}">${ph.num}</span>
+  <span class="phtitle">${ph.title}</span>
+  <span class="phmons">${ph.months}</span>
+  <span class="phpill" style="color:${pc}">
+    <span class="phdot" style="background:${pc}"></span>${pct}% · ${done}/${tot}
+  </span>
+  <span class="chev">▾</span>
+</div>
+<div class="phpbar"><div class="phpbfill" style="width:${pct}%;background:${stack.color}"></div></div>
+<div class="phb">
+  <div class="tabs">
+    <button class="tb on" style="--tc:${stack.color}" onclick="stab(event,'${ph.id}','t')">✅ Topics (${td}/${ph.topics.length})</button>
+    <button class="tb" style="--tc:${stack.color}" onclick="stab(event,'${ph.id}','l')">🔧 Libraries (${ld}/${ph.libraries.length})</button>
+    <button class="tb" style="--tc:${stack.color}" onclick="stab(event,'${ph.id}','r')">🔗 Resources</button>
+    <button class="tb" style="--tc:${stack.color}" onclick="stab(event,'${ph.id}','c')">🏆 Certifications</button>
+    <button class="tb" style="--tc:${stack.color}" onclick="stab(event,'${ph.id}','n')">📝 Notes</button>
+  </div>
+
+  <div class="tcw on" id="t-${ph.id}-t">
+    <div class="cklist">
+      ${ph.topics.map((t,i)=>`
+      <div class="ci ${gc(ph.id,'topics',i)?'done':''}" onclick="chk('${ph.id}','topics',${i},this)">
+        <div class="cbox">${gc(ph.id,'topics',i)?'✓':''}</div>
+        <span class="clbl">${t}</span>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-l">
+    <div class="lgrid">
+      ${ph.libraries.map((l,i)=>`
+      <div class="lc ${gc(ph.id,'libs',i)?'done':''}" onclick="chk('${ph.id}','libs',${i},this)">
+        <div class="lic">${l.icon}</div>
+        <div class="linfo">
+          <div class="lname">${l.name}</div>
+          <div class="ldesc">${l.desc}</div>
+          <div class="linst">${l.install}</div>
+        </div>
+        <div class="lchk">${gc(ph.id,'libs',i)?'✓':''}</div>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-r">
+    <div class="res-note">Click any card to open the resource in a new tab</div>
+    <div class="rgrid">
+      ${ph.resources.map(r=>`
+      <a href="${r.url}" target="_blank" rel="noopener noreferrer" class="rc">
+        <span class="rtype ${r.type}">${{tv:'VIDEO',tc:'COURSE',tb2:'BOOK/BLOG',td:'DOCS',tpr:'PRACTICE',tto:'TOOL',tpa:'PAPER'}[r.type]||r.type}</span>
+        <div class="rinfo">
+          <div class="rname">${r.name}</div>
+          <div class="rurl">🔗 ${r.label}</div>
+          <div class="rwho">${r.who}</div>
+        </div>
+        <div class="rright">
+          ${r.free?'<span class="ftag">FREE</span>':''}
+          <span class="rarr">→</span>
+        </div>
+      </a>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-c">
+    <div class="cert-note">Free & recognized certifications to validate your skills</div>
+    <div class="cgrid">
+      ${(ph.certs||[]).map(c=>`
+      <a href="${c.url}" target="_blank" rel="noopener noreferrer" class="cc">
+        <span class="cprov">${c.provider.split('—')[0].trim()}</span>
+        <div class="cinfo">
+          <div class="cname">${c.name}</div>
+          <div class="curl">🏆 ${c.label}</div>
+          <div class="cnote">${c.note}</div>
+        </div>
+        <div class="rright">
+          <span class="${c.free?'ctag-free':'ctag-paid'}">${c.free?'FREE':'PAID'}</span>
+          <span class="carr">→</span>
+        </div>
+      </a>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-n">
+    <label class="nlbl">Notes for ${ph.title}</label>
+    <textarea class="nta" placeholder="Jot down what you learned, code snippets, project ideas..." oninput="sn('${ph.id}',this.value)">${gn(ph.id)}</textarea>
+  </div>
+</div>`;
+      sec.appendChild(phEl);
+    });
+
+    root.appendChild(sec);
+  });
+
+  updash();
+}
+
+// ═══════════════════════════════════════════════════
+//  INTERACTIONS
+// ═══════════════════════════════════════════════════
+function tog(id){ document.getElementById('ph-'+id).classList.toggle('closed'); }
+
+function stab(e, pid, k){
+  e.stopPropagation();
+  const b = e.target.closest('.phb');
+  b.querySelectorAll('.tb').forEach(x=>x.classList.remove('on'));
+  b.querySelectorAll('.tcw').forEach(x=>x.classList.remove('on'));
+  e.target.classList.add('on');
+  b.querySelector(`#t-${pid}-${k}`).classList.add('on');
+}
+
+function chk(phid, type, idx, el){
+  const done = !el.classList.contains('done');
+  sc(phid, type, idx, done);
+  el.classList.toggle('done', done);
+  const bx = el.querySelector('.cbox,.lchk');
+  if(bx) bx.textContent = done ? '✓' : '';
+  updphase(phid);
+  updash();
+}
+
+function updphase(phid){
+  const stack = STACKS.find(s=>s.phases.some(p=>p.id===phid));
+  if(!stack) return;
+  const ph = stack.phases.find(p=>p.id===phid);
+  const td = ph.topics.filter((_,i)=>gc(ph.id,'topics',i)).length;
+  const ld = ph.libraries.filter((_,i)=>gc(ph.id,'libs',i)).length;
+  const tot = ph.topics.length + ph.libraries.length;
+  const done = td + ld;
+  const pct = tot ? Math.round(done/tot*100) : 0;
+  const pc = pct===100 ? '#10b981' : pct>0 ? stack.color : '#475569';
+  const el = document.getElementById('ph-'+ph.id);
+  if(!el) return;
+  el.querySelector('.phpill').innerHTML = `<span class="phdot" style="background:${pc}"></span>${pct}% · ${done}/${tot}`;
+  el.querySelector('.phpill').style.color = pc;
+  el.querySelector('.phpbfill').style.width = pct + '%';
+  const tbs = el.querySelectorAll('.tb');
+  tbs[0].textContent = `✅ Topics (${td}/${ph.topics.length})`;
+  tbs[1].textContent = `🔧 Libraries (${ld}/${ph.libraries.length})`;
+}
+
+function updash(){
+  let gtot=0, gdone=0;
+  const msgs = ['Start your journey 🚀','Making progress! 🌱','Building momentum! 🔥','Halfway there! ⚡','Almost there! 💪','Full Stack Master! 🎉'];
+
+  STACKS.forEach(stack => {
+    let stot=0, sdone=0;
+    stack.phases.forEach(ph=>{
+      const td=ph.topics.filter((_,i)=>gc(ph.id,'topics',i)).length;
+      const ld=ph.libraries.filter((_,i)=>gc(ph.id,'libs',i)).length;
+      stot += ph.topics.length + ph.libraries.length;
+      sdone += td + ld;
+    });
+    gtot += stot; gdone += sdone;
+    const spct = stot ? Math.round(sdone/stot*100) : 0;
+    const dv = document.getElementById('d-'+stack.id);
+    const ds = document.getElementById('d-'+stack.id+'-sub');
+    if(dv) dv.innerHTML = `${spct}<small>%</small>`;
+    if(ds) ds.textContent = `${sdone} / ${stot} items`;
+
+    // Update stack header stat
+    const sh = document.querySelector(`#stack-${stack.id} .sstack-stat`);
+    if(sh) sh.textContent = `${spct}% · ${sdone}/${stot}`;
+  });
+
+  const pct = gtot ? Math.round(gdone/gtot*100) : 0;
+  document.getElementById('d-overall').innerHTML = `${pct}<small>%</small>`;
+  document.getElementById('d-msg').textContent = msgs[Math.min(Math.floor(pct/20),5)];
+  document.getElementById('ring-pct').textContent = pct+'%';
+  const C=125.66, off = C - (pct/100)*C;
+  document.getElementById('main-ring').style.strokeDashoffset = off;
+  document.getElementById('nav-fill').style.width = pct+'%';
+  document.getElementById('nav-pct').textContent = pct;
+  document.getElementById('banner').classList.toggle('show', pct===100);
+}
+
+function filterStack(id){
+  currentFilter = id;
+
+  // Update nav buttons
+  document.querySelectorAll('.ns').forEach(b=>{
+    b.classList.remove('act');
+    const bid = b.getAttribute('onclick').match(/'(\w+)'/)[1];
+    if(bid === id) b.classList.add('act');
+  });
+
+  // Update filter bar
+  document.querySelectorAll('.fb').forEach(b=>{
+    b.classList.remove('act');
+    const bid = b.getAttribute('onclick').match(/'(\w+)'/)[1];
+    if(bid === id) b.classList.add('act');
+  });
+
+  // Show/hide stacks
+  document.querySelectorAll('.stack-section').forEach(sec=>{
+    const sid = sec.id.replace('stack-','');
+    if(id === 'all' || sid === id){
+      sec.classList.remove('hidden');
+    } else {
+      sec.classList.add('hidden');
+    }
+  });
+}
+
+function resetAll(){
+  if(confirm('Reset ALL progress across all stacks? This cannot be undone.')){
+    localStorage.removeItem('fs_roadmap_v1');
+    S={};
+    render();
+  }
+}
+
+render();
+</script>
+</body>
+</html>

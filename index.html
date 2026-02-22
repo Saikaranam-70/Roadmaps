@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI/ML Roadmap — Progress Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #04060f;
+  --card: #0f1629;
+  --border: rgba(99,102,241,0.15);
+  --accent: #6366f1;
+  --cyan: #22d3ee;
+  --green: #10b981;
+  --orange: #f97316;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --dim: #94a3b8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;top:-40%;left:-20%;width:70%;height:70%;background:radial-gradient(ellipse,rgba(99,102,241,0.07) 0%,transparent 70%);pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;bottom:-30%;right:-10%;width:60%;height:60%;background:radial-gradient(ellipse,rgba(34,211,238,0.05) 0%,transparent 70%);pointer-events:none;z-index:0;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(4,6,15,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--cyan);letter-spacing:0.1em;}
+.nav-right{display:flex;align-items:center;gap:1.4rem;}
+.nstat{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--muted);}
+.nstat b{color:var(--cyan);}
+.pbar{width:110px;height:4px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden;}
+.pfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--cyan));border-radius:99px;transition:width .6s ease;}
+.rbtn{font-family:'Space Mono',monospace;font-size:0.62rem;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#f87171;padding:.38rem .75rem;border-radius:7px;cursor:pointer;letter-spacing:.04em;}
+.rbtn:hover{background:rgba(239,68,68,0.18);}
+
+.hero{position:relative;z-index:1;padding:108px 2rem 44px;text-align:center;max-width:840px;margin:0 auto;}
+.badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.28);border-radius:99px;padding:.28rem 1rem;font-family:'Space Mono',monospace;font-size:.62rem;color:var(--cyan);letter-spacing:.1em;margin-bottom:1.3rem;animation:fu .5s ease both;}
+.badge::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:bl 2s infinite;}
+@keyframes bl{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.4);}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.8rem);font-weight:800;line-height:1.08;letter-spacing:-0.03em;animation:fu .5s .1s ease both;}
+.g{background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{margin-top:.9rem;color:var(--muted);font-size:.95rem;line-height:1.7;max-width:500px;margin-left:auto;margin-right:auto;animation:fu .5s .2s ease both;}
+@keyframes fu{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+.dash{position:relative;z-index:1;max-width:1060px;margin:0 auto 2.8rem;padding:0 2rem;animation:fu .5s .3s ease both;}
+.dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;}
+.dc{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:1rem 1.2rem;position:relative;overflow:hidden;}
+.dc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--c,var(--accent));}
+.dlbl{font-family:'Space Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;}
+.dval{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;line-height:1;}
+.dval span{font-size:.85rem;color:var(--muted);font-weight:400;}
+.dsub{font-size:.7rem;color:var(--muted);margin-top:.25rem;}
+.rwrap{display:flex;align-items:center;gap:.9rem;margin-top:.4rem;}
+.rcont{position:relative;width:60px;height:60px;flex-shrink:0;}
+.rcont svg{transform:rotate(-90deg);}
+.rbg{fill:none;stroke:rgba(255,255,255,0.06);stroke-width:5;}
+.rfg{fill:none;stroke-width:5;stroke-linecap:round;stroke:var(--accent);transition:stroke-dashoffset .8s ease;}
+.rtxt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;}
+
+main{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:0 2rem 6rem;}
+.shead{display:flex;align-items:center;gap:1rem;margin-bottom:1.6rem;}
+.sline{flex:1;height:1px;background:var(--border);}
+.slbl{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;}
+
+/* PHASE */
+.phase{margin-bottom:1.8rem;animation:fu .5s ease both;}
+.phd{display:flex;align-items:center;gap:.85rem;padding:.9rem 1.2rem;border-radius:11px 11px 0 0;cursor:pointer;user-select:none;transition:filter .2s;}
+.phd:hover{filter:brightness(1.06);}
+.phnum{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;opacity:.65;}
+.phtitle{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;flex:1;}
+.phmonths{font-family:'Space Mono',monospace;font-size:.6rem;opacity:.6;}
+.phpill{background:rgba(0,0,0,.3);border-radius:99px;padding:.2rem .65rem;font-family:'Space Mono',monospace;font-size:.62rem;display:flex;align-items:center;gap:.4rem;white-space:nowrap;}
+.phdot{width:5px;height:5px;border-radius:50%;}
+.chev{opacity:.6;font-size:.72rem;transition:transform .3s;}
+.phase.closed .chev{transform:rotate(-90deg);}
+.phb{background:var(--card);border:1px solid var(--border);border-top:none;border-radius:0 0 11px 11px;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s;max-height:5000px;opacity:1;}
+.phase.closed .phb{max-height:0;opacity:0;}
+.phpbar{height:3px;background:rgba(255,255,255,0.04);}
+.phpbfill{height:100%;transition:width .5s ease;}
+
+.tabs{display:flex;border-bottom:1px solid var(--border);padding:0 1.2rem;gap:.05rem;}
+.tb{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;padding:.7rem .7rem;cursor:pointer;transition:color .2s,border-color .2s;margin-bottom:-1px;white-space:nowrap;}
+.tb.on{color:var(--tc,var(--cyan));border-bottom-color:var(--tc,var(--cyan));}
+.tcw{display:none;padding:1.1rem 1.2rem;}
+.tcw.on{display:block;}
+
+/* TOPICS */
+.cklist{display:flex;flex-direction:column;gap:.45rem;}
+.ci{display:flex;align-items:flex-start;gap:.75rem;padding:.65rem .85rem;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:8px;cursor:pointer;transition:background .15s;user-select:none;}
+.ci:hover{background:rgba(255,255,255,.04);}
+.ci.done{background:rgba(16,185,129,.05);border-color:rgba(16,185,129,.14);}
+.cbox{width:16px;height:16px;border:2px solid var(--muted);border-radius:4px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:.6rem;transition:all .2s;}
+.ci.done .cbox{background:var(--green);border-color:var(--green);}
+.clbl{font-size:.85rem;color:var(--dim);line-height:1.5;transition:color .2s;}
+.ci.done .clbl{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(100,116,139,.4);}
+
+/* LIBS */
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.6rem;}
+.lc{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:.8rem;cursor:pointer;transition:background .15s;display:flex;align-items:flex-start;gap:.65rem;user-select:none;}
+.lc:hover{background:rgba(255,255,255,.04);}
+.lc.done{background:rgba(99,102,241,.06);border-color:rgba(99,102,241,.2);}
+.lic{width:28px;height:28px;border-radius:6px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.linfo{flex:1;min-width:0;}
+.lname{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--text);font-weight:700;margin-bottom:.12rem;}
+.ldesc{font-size:.7rem;color:var(--muted);line-height:1.3;}
+.linst{font-family:'Space Mono',monospace;font-size:.58rem;color:var(--cyan);margin-top:.28rem;opacity:.8;}
+.lchk{width:14px;height:14px;border:2px solid var(--muted);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.52rem;flex-shrink:0;margin-top:1px;transition:all .2s;}
+.lc.done .lchk{background:var(--accent);border-color:var(--accent);}
+
+/* ── RESOURCES — THE KEY SECTION ── */
+.res-section-note{
+  font-family:'Space Mono',monospace;
+  font-size:.65rem;
+  color:var(--muted);
+  margin-bottom:.9rem;
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+}
+.res-section-note::before{
+  content:'';
+  width:5px;height:5px;
+  border-radius:50%;
+  background:var(--cyan);
+  flex-shrink:0;
+}
+.rgrid{display:flex;flex-direction:column;gap:.55rem;}
+.rc{
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+  padding:.85rem 1rem;
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:9px;
+  text-decoration:none;
+  transition:background .15s,border-color .2s,transform .15s;
+  cursor:pointer;
+}
+.rc:hover{
+  background:rgba(34,211,238,.06);
+  border-color:rgba(34,211,238,.28);
+  transform:translateX(5px);
+}
+.rtype{
+  font-family:'Space Mono',monospace;
+  font-size:.56rem;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+  padding:.17rem .48rem;
+  border-radius:4px;
+  white-space:nowrap;
+  flex-shrink:0;
+  font-weight:700;
+}
+.tv{background:rgba(239,68,68,.15);color:#f87171;}
+.tc2{background:rgba(99,102,241,.15);color:#a5b4fc;}
+.tb2{background:rgba(234,179,8,.15);color:#fcd34d;}
+.tpr{background:rgba(16,185,129,.15);color:#34d399;}
+.td{background:rgba(34,211,238,.15);color:var(--cyan);}
+.tpa{background:rgba(249,115,22,.15);color:#fb923c;}
+.tto{background:rgba(168,85,247,.15);color:#c084fc;}
+.rinfo{flex:1;min-width:0;}
+.rname{font-size:.875rem;color:var(--text);font-weight:500;line-height:1.35;margin-bottom:.2rem;}
+.rurl{
+  font-family:'Space Mono',monospace;
+  font-size:.63rem;
+  color:var(--cyan);
+  opacity:.75;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:flex;
+  align-items:center;
+  gap:.3rem;
+}
+.rright{display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
+.ftag{font-family:'Space Mono',monospace;font-size:.56rem;color:var(--green);background:rgba(16,185,129,.12);padding:.13rem .42rem;border-radius:4px;white-space:nowrap;}
+.rarr{color:var(--cyan);font-size:.85rem;opacity:.45;transition:opacity .2s,transform .2s;}
+.rc:hover .rarr{opacity:1;transform:translateX(3px);}
+
+/* NOTES */
+.nwrap{display:flex;flex-direction:column;gap:.45rem;}
+.nlbl{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
+.nta{width:100%;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:.85rem;color:var(--dim);font-family:'DM Sans',sans-serif;font-size:.85rem;line-height:1.6;resize:vertical;min-height:100px;outline:none;transition:border-color .2s;}
+.nta:focus{border-color:rgba(99,102,241,.4);}
+.nta::placeholder{color:var(--muted);}
+
+/* CERTS */
+.cgrid{display:flex;flex-direction:column;gap:.55rem;}
+.cert-note{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--muted);margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem;}
+.cert-note::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0;}
+.cc{display:flex;align-items:center;gap:.8rem;padding:.85rem 1rem;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:9px;text-decoration:none;transition:background .15s,border-color .2s,transform .15s;}
+.cc:hover{background:rgba(249,115,22,.06);border-color:rgba(249,115,22,.3);transform:translateX(5px);}
+.cprov{font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.07em;text-transform:uppercase;padding:.17rem .48rem;border-radius:4px;white-space:nowrap;flex-shrink:0;font-weight:700;background:rgba(249,115,22,.15);color:#fb923c;}
+.cinfo{flex:1;min-width:0;}
+.cname{font-size:.875rem;color:var(--text);font-weight:500;line-height:1.35;margin-bottom:.2rem;}
+.curl{font-family:'Space Mono',monospace;font-size:.63rem;color:var(--orange);opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:.3rem;}
+.cright{display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
+.ctag{font-family:'Space Mono',monospace;font-size:.56rem;padding:.13rem .42rem;border-radius:4px;white-space:nowrap;}
+.ctag-free{color:var(--green);background:rgba(16,185,129,.12);}
+.ctag-cert{color:#fb923c;background:rgba(249,115,22,.12);}
+.carr{color:var(--orange);font-size:.85rem;opacity:.45;transition:opacity .2s,transform .2s;}
+.cc:hover .carr{opacity:1;transform:translateX(3px);}
+
+/* TOOLS */
+.tsect{margin-top:3.2rem;}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:.65rem;}
+.tool{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.9rem;text-decoration:none;display:flex;align-items:center;gap:.75rem;transition:border-color .2s,transform .15s;}
+.tool:hover{border-color:rgba(99,102,241,.4);transform:translateY(-2px);}
+.te{font-size:1.25rem;}
+.tnm{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:600;color:var(--text);}
+.tds{font-size:.7rem;color:var(--muted);margin-top:.08rem;}
+
+/* BANNER */
+.banner{display:none;background:linear-gradient(135deg,rgba(16,185,129,.12),rgba(99,102,241,.12));border:1px solid rgba(16,185,129,.3);border-radius:13px;padding:1.3rem 1.8rem;text-align:center;margin-bottom:1.8rem;}
+.banner.show{display:block;animation:fu .5s ease;}
+.banner h3{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:var(--green);margin-bottom:.25rem;}
+.banner p{font-size:.85rem;color:var(--muted);}
+
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:rgba(99,102,241,.3);border-radius:99px;}
+@media(max-width:700px){.dgrid{grid-template-columns:repeat(2,1fr);}.nav-right{display:none;}}
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 12px;
+  /* background-color: #ffffff; */
+  /* border-bottom: 2px solid #e5e7eb; */
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #374151;
+  font-size: 15px;
+  font-weight: 500;
+  position: relative;
+  padding: 6px 0;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -4px;
+  background-color: #2563eb;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #2563eb;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">// AI·ML·ROADMAP</div>
+  <div class="nav-links">
+    <a href="/">AIML</a>
+    <a href="/FullStack_Roadmap_Tracker.html">Full Stack</a>
+    <a href="/Cloud_Computing_Roadmap.html">Cloud</a>
+    <a href="/Data_Roadmap_Tracker.html">Data</a>
+  </div>
+  <div class="nav-right">
+    <div class="nstat">Topics: <b id="n-topics">0/0</b></div>
+    <div class="nstat">Libs: <b id="n-libs">0/0</b></div>
+    <div style="display:flex;align-items:center;gap:.5rem;">
+      <div class="nstat">Progress</div>
+      <div class="pbar"><div class="pfill" id="nav-fill" style="width:0%"></div></div>
+      <div class="nstat"><b id="nav-pct">0</b>%</div>
+    </div>
+    <button class="rbtn" onclick="resetAll()">↺ Reset</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="badge">INTERACTIVE PROGRESS TRACKER · AUTO-SAVED</div>
+  <h1>Your <span class="g">AI / ML</span><br>Learning Roadmap</h1>
+  <p>Tick off topics and libraries as you learn. Click any resource link to open it. Progress saves automatically in your browser.</p>
+</div>
+
+<div class="dash">
+  <div class="dgrid">
+    <div class="dc" style="--c:var(--accent)">
+      <div class="dlbl">Overall Progress</div>
+      <div class="rwrap">
+        <div class="rcont">
+          <svg width="60" height="60" viewBox="0 0 60 60">
+            <circle class="rbg" cx="30" cy="30" r="24"/>
+            <circle class="rfg" id="main-ring" cx="30" cy="30" r="24" stroke-dasharray="150.8" stroke-dashoffset="150.8"/>
+          </svg>
+          <div class="rtxt" id="ring-pct">0%</div>
+        </div>
+        <div>
+          <div class="dval" id="d-overall">0<span>%</span></div>
+          <div class="dsub" id="d-msg">Start learning! 🌱</div>
+        </div>
+      </div>
+    </div>
+    <div class="dc" style="--c:var(--green)">
+      <div class="dlbl">Topics Done</div>
+      <div class="dval" id="d-topics">0<span> done</span></div>
+      <div class="dsub" id="d-tsub">of 0 total topics</div>
+    </div>
+    <div class="dc" style="--c:var(--cyan)">
+      <div class="dlbl">Libraries Learned</div>
+      <div class="dval" id="d-libs">0<span> done</span></div>
+      <div class="dsub" id="d-lsub">of 0 total libraries</div>
+    </div>
+    <div class="dc" style="--c:var(--orange)">
+      <div class="dlbl">Phases Active</div>
+      <div class="dval" id="d-phases">0<span> / 8</span></div>
+      <div class="dsub">phases in progress</div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="banner" id="banner">
+    <h3>🎉 Roadmap Complete!</h3>
+    <p>You've mastered the entire AI/ML curriculum. You are an AI engineer now. Go build something amazing.</p>
+  </div>
+  <div class="shead"><div class="sline"></div><div class="slbl">8 Learning Phases — click phase to expand</div><div class="sline"></div></div>
+  <div id="phases"></div>
+
+  <div class="tsect">
+    <div class="shead"><div class="sline"></div><div class="slbl">Free Tools to Bookmark Now</div><div class="sline"></div></div>
+    <div class="tgrid">
+      <a href="https://colab.research.google.com" target="_blank" class="tool"><span class="te">🖥️</span><div><div class="tnm">Google Colab</div><div class="tds">Free GPU for training</div></div></a>
+      <a href="https://www.kaggle.com" target="_blank" class="tool"><span class="te">📊</span><div><div class="tnm">Kaggle</div><div class="tds">Datasets & competitions</div></div></a>
+      <a href="https://huggingface.co" target="_blank" class="tool"><span class="te">🤗</span><div><div class="tnm">Hugging Face</div><div class="tds">Models & datasets</div></div></a>
+      <a href="https://github.com" target="_blank" class="tool"><span class="te">🐙</span><div><div class="tnm">GitHub</div><div class="tds">Showcase your work</div></div></a>
+      <a href="https://code.visualstudio.com" target="_blank" class="tool"><span class="te">💻</span><div><div class="tnm">VS Code</div><div class="tds">Best code editor</div></div></a>
+      <a href="https://ollama.com" target="_blank" class="tool"><span class="te">🦙</span><div><div class="tnm">Ollama</div><div class="tds">Run LLMs locally free</div></div></a>
+      <a href="https://streamlit.io" target="_blank" class="tool"><span class="te">⚡</span><div><div class="tnm">Streamlit</div><div class="tds">Build AI apps fast</div></div></a>
+      <a href="https://paperswithcode.com" target="_blank" class="tool"><span class="te">📄</span><div><div class="tnm">Papers With Code</div><div class="tds">Latest AI research</div></div></a>
+    </div>
+  </div>
+</main>
+
+<script>
+const PHASES = [
+  {
+    id:'python',num:'PHASE 01',title:'Python Programming',months:'Month 1–3',color:'#6366f1',emoji:'🐍',
+    topics:['Variables, data types, operators','Loops — for, while and conditionals','Functions — def, return, arguments, scope','Lists, tuples, dictionaries and sets','File handling — read and write files','Error handling — try / except / finally','Object Oriented Programming (OOP)','Modules and packages — import system'],
+    libraries:[{name:'Python 3',desc:'The language itself',install:'python.org/downloads',icon:'🐍'}],
+    resources:[
+      {name:'Python Full Course for Beginners',who:'freeCodeCamp',type:'tv',url:'https://www.youtube.com/watch?v=rfscVS0vtbw',label:'youtube.com/watch?v=rfscVS0vtbw',free:true},
+      {name:'CS50P — Harvard Free Python Course',who:'Harvard University',type:'tc2',url:'https://cs50.harvard.edu/python',label:'cs50.harvard.edu/python',free:true},
+      {name:'Automate the Boring Stuff with Python',who:'Al Sweigart — Free Book',type:'tb2',url:'https://automatetheboringstuff.com',label:'automatetheboringstuff.com',free:true},
+      {name:'W3Schools Python Tutorial',who:'W3Schools',type:'td',url:'https://www.w3schools.com/python',label:'w3schools.com/python',free:true},
+      {name:'Python Exercises — Exercism',who:'Exercism',type:'tpr',url:'https://exercism.org/tracks/python',label:'exercism.org/tracks/python',free:true},
+      {name:'Practice Python in the Browser — Replit',who:'Replit',type:'tto',url:'https://replit.com',label:'replit.com',free:true},
+    ]
+  },
+  {
+    id:'datascience',num:'PHASE 02',title:'Data Science Libraries',months:'Month 2–4',color:'#0891b2',emoji:'📊',
+    topics:['NumPy — arrays, reshape, slicing, broadcasting','NumPy — math operations and linear algebra functions','Pandas — Series and DataFrame basics','Pandas — read_csv, groupby, merge, fillna','Matplotlib — line, bar, scatter and histogram plots','Seaborn — heatmaps, pairplots, distribution plots','Exploratory Data Analysis (EDA) on real datasets','Data cleaning — handling missing values and outliers'],
+    libraries:[
+      {name:'NumPy',desc:'Numerical arrays and math',install:'pip install numpy',icon:'🔢'},
+      {name:'Pandas',desc:'Data analysis & DataFrames',install:'pip install pandas',icon:'🐼'},
+      {name:'Matplotlib',desc:'Charts and graphs',install:'pip install matplotlib',icon:'📈'},
+      {name:'Seaborn',desc:'Statistical visualizations',install:'pip install seaborn',icon:'🎨'},
+    ],
+    resources:[
+      {name:'NumPy Official Quickstart Tutorial',who:'NumPy Docs',type:'td',url:'https://numpy.org/doc/stable/user/quickstart.html',label:'numpy.org/doc/stable/user/quickstart.html',free:true},
+      {name:'Pandas Getting Started Guide',who:'Pandas Docs',type:'td',url:'https://pandas.pydata.org/docs/getting_started/index.html',label:'pandas.pydata.org/docs/getting_started',free:true},
+      {name:'Matplotlib Official Tutorials',who:'Matplotlib Docs',type:'td',url:'https://matplotlib.org/stable/tutorials/index.html',label:'matplotlib.org/stable/tutorials',free:true},
+      {name:'Kaggle Pandas Course',who:'Kaggle — Free',type:'tc2',url:'https://www.kaggle.com/learn/pandas',label:'kaggle.com/learn/pandas',free:true},
+      {name:'Kaggle Data Visualization Course',who:'Kaggle — Free',type:'tc2',url:'https://www.kaggle.com/learn/data-visualization',label:'kaggle.com/learn/data-visualization',free:true},
+      {name:'NumPy & Pandas Full Tutorial',who:'freeCodeCamp YouTube',type:'tv',url:'https://www.youtube.com/watch?v=r-uOLxNrNk8',label:'youtube.com/watch?v=r-uOLxNrNk8',free:true},
+    ]
+  },
+  {
+    id:'math',num:'PHASE 03',title:'Mathematics for AI',months:'Month 3–5',color:'#7c3aed',emoji:'∑',
+    topics:['Linear Algebra — vectors, scalars, matrices','Matrix multiplication, transpose and inverse','Dot product, cross product and norms','Eigenvalues and eigenvectors (key for PCA)','Calculus — derivatives and differentiation rules','Partial derivatives and gradient vectors','Chain rule — the foundation of backpropagation','Statistics — mean, median, variance, std deviation','Probability — conditional probability, Bayes theorem','Distributions — Normal, Bernoulli, Binomial'],
+    libraries:[
+      {name:'NumPy',desc:'Practice matrix math in code',install:'pip install numpy',icon:'🔢'},
+      {name:'SciPy',desc:'Scientific & statistical tools',install:'pip install scipy',icon:'🔬'},
+      {name:'SymPy',desc:'Symbolic math and calculus',install:'pip install sympy',icon:'➗'},
+    ],
+    resources:[
+      {name:'Essence of Linear Algebra',who:'3Blue1Brown — YouTube (BEST)',type:'tv',url:'https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab',label:'youtube.com — 3Blue1Brown Linear Algebra Playlist',free:true},
+      {name:'Essence of Calculus',who:'3Blue1Brown — YouTube',type:'tv',url:'https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr',label:'youtube.com — 3Blue1Brown Calculus Playlist',free:true},
+      {name:'Statistics and Probability',who:'Khan Academy',type:'tc2',url:'https://www.khanacademy.org/math/statistics-probability',label:'khanacademy.org/math/statistics-probability',free:true},
+      {name:'Linear Algebra Course',who:'Khan Academy',type:'tc2',url:'https://www.khanacademy.org/math/linear-algebra',label:'khanacademy.org/math/linear-algebra',free:true},
+      {name:'Mathematics for Machine Learning — Free PDF',who:'Deisenroth, Faisal, Ong',type:'tb2',url:'https://mml-book.github.io',label:'mml-book.github.io',free:true},
+      {name:'StatQuest — Stats & ML Explained Simply',who:'Josh Starmer — YouTube',type:'tv',url:'https://www.youtube.com/@statquest',label:'youtube.com/@statquest',free:true},
+    ]
+  },
+  {
+    id:'ml',num:'PHASE 04',title:'Machine Learning',months:'Month 5–8',color:'#059669',emoji:'🤖',
+    topics:['Types of ML — supervised, unsupervised, reinforcement','Linear Regression — cost function and gradient descent','Logistic Regression — classification and sigmoid','Decision Trees — splitting, entropy, information gain','Random Forest — ensemble methods and bagging','Support Vector Machines (SVM)','K-Nearest Neighbors (KNN)','Model evaluation — accuracy, precision, recall, F1, ROC','Overfitting and underfitting — bias-variance tradeoff','Cross-validation and train/val/test splits','Feature engineering and data preprocessing'],
+    libraries:[
+      {name:'Scikit-learn',desc:'#1 ML library — MUST LEARN',install:'pip install scikit-learn',icon:'🧠'},
+      {name:'XGBoost',desc:'Powerful gradient boosting',install:'pip install xgboost',icon:'⚡'},
+      {name:'LightGBM',desc:'Fast gradient boosting',install:'pip install lightgbm',icon:'💡'},
+      {name:'Joblib',desc:'Save and load trained models',install:'pip install joblib',icon:'💾'},
+    ],
+    resources:[
+      {name:'Machine Learning Specialization',who:'Andrew Ng — Coursera (FREE audit)',type:'tc2',url:'https://www.coursera.org/specializations/machine-learning-introduction',label:'coursera.org/specializations/machine-learning-introduction',free:true},
+      {name:'Intro to Machine Learning',who:'Kaggle — Free Course',type:'tc2',url:'https://www.kaggle.com/learn/intro-to-machine-learning',label:'kaggle.com/learn/intro-to-machine-learning',free:true},
+      {name:'Intermediate Machine Learning',who:'Kaggle — Free Course',type:'tc2',url:'https://www.kaggle.com/learn/intermediate-machine-learning',label:'kaggle.com/learn/intermediate-machine-learning',free:true},
+      {name:'Scikit-learn User Guide',who:'Official Documentation',type:'td',url:'https://scikit-learn.org/stable/user_guide.html',label:'scikit-learn.org/stable/user_guide.html',free:true},
+      {name:'Google Machine Learning Crash Course',who:'Google Developers',type:'tc2',url:'https://developers.google.com/machine-learning/crash-course',label:'developers.google.com/machine-learning/crash-course',free:true},
+      {name:'StatQuest Machine Learning Playlist',who:'Josh Starmer — YouTube',type:'tv',url:'https://www.youtube.com/playlist?list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF',label:'youtube.com — StatQuest ML Playlist',free:true},
+    ]
+  },
+  {
+    id:'dl',num:'PHASE 05',title:'Deep Learning',months:'Month 8–12',color:'#b45309',emoji:'🧬',
+    topics:['Neural networks — neurons, layers, weights, biases','Activation functions — ReLU, Sigmoid, Tanh, Softmax','Loss functions — MSE for regression, CrossEntropy for classification','Backpropagation — how networks learn step by step','Optimizers — SGD, Adam, RMSprop','CNNs — Conv layers, pooling, image classification','RNNs and LSTMs — sequences and time series','Batch normalization and dropout (regularization)','Training tricks — learning rate, batch size, epochs','Training on GPU with Google Colab (free)'],
+    libraries:[
+      {name:'PyTorch',desc:'Industry standard — LEARN THIS FIRST',install:'pip install torch torchvision',icon:'🔥'},
+      {name:'TorchVision',desc:'Image datasets and transforms',install:'pip install torchvision',icon:'👁️'},
+      {name:'TensorFlow',desc:'Google deep learning framework',install:'pip install tensorflow',icon:'🌊'},
+      {name:'Keras',desc:'High-level beginner-friendly API',install:'pip install keras',icon:'🎯'},
+    ],
+    resources:[
+      {name:'Practical Deep Learning for Coders',who:'fast.ai — FREE',type:'tc2',url:'https://course.fast.ai',label:'course.fast.ai',free:true},
+      {name:'Deep Learning Specialization',who:'Andrew Ng — Coursera',type:'tc2',url:'https://www.coursera.org/specializations/deep-learning',label:'coursera.org/specializations/deep-learning',free:true},
+      {name:'PyTorch Official Tutorials',who:'PyTorch Team',type:'td',url:'https://pytorch.org/tutorials',label:'pytorch.org/tutorials',free:true},
+      {name:'Dive into Deep Learning — Interactive Book',who:'d2l.ai — FREE',type:'tb2',url:'https://d2l.ai',label:'d2l.ai',free:true},
+      {name:'MIT 6.S191 Introduction to Deep Learning',who:'MIT OpenCourseWare',type:'tc2',url:'https://introtodeeplearning.com',label:'introtodeeplearning.com',free:true},
+      {name:'Neural Networks from Scratch',who:'Sentdex — YouTube',type:'tv',url:'https://www.youtube.com/playlist?list=PLQVvvaa0QuDcjD5BAebSh37BarUFAZpfP',label:'youtube.com — Sentdex Neural Nets from Scratch',free:true},
+    ]
+  },
+  {
+    id:'nlp',num:'PHASE 06',title:'NLP & Transformers',months:'Month 12–16',color:'#d97706',emoji:'📝',
+    topics:['Text preprocessing — tokenization, lowercasing, punctuation','Stemming, lemmatization and stop word removal','Bag of Words and TF-IDF representations','Word embeddings — Word2Vec, GloVe, FastText','RNN, LSTM, GRU for text sequences','Attention mechanism — the key innovation in modern AI','Transformer architecture — Encoder, Decoder, Self-Attention','BERT — pre-training and fine-tuning for NLP tasks','GPT — autoregressive language modeling explained','Hugging Face Transformers library hands-on'],
+    libraries:[
+      {name:'Transformers',desc:'Hugging Face — ESSENTIAL',install:'pip install transformers',icon:'🤗'},
+      {name:'Datasets',desc:'Hugging Face dataset hub',install:'pip install datasets',icon:'📦'},
+      {name:'Tokenizers',desc:'Fast tokenization library',install:'pip install tokenizers',icon:'✂️'},
+      {name:'NLTK',desc:'Classic NLP toolkit',install:'pip install nltk',icon:'📚'},
+      {name:'spaCy',desc:'Industrial NLP pipeline',install:'pip install spacy',icon:'🚀'},
+    ],
+    resources:[
+      {name:'Neural Networks: Zero to Hero',who:'Andrej Karpathy — YouTube ← MUST WATCH',type:'tv',url:'https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ',label:'youtube.com — Karpathy Zero to Hero Playlist',free:true},
+      {name:'Hugging Face NLP Course',who:'Hugging Face — Official Free Course',type:'tc2',url:'https://huggingface.co/learn/nlp-course/chapter1/1',label:'huggingface.co/learn/nlp-course',free:true},
+      {name:'Attention Is All You Need — Original Paper',who:'Vaswani et al. 2017',type:'tpa',url:'https://arxiv.org/abs/1706.03762',label:'arxiv.org/abs/1706.03762',free:true},
+      {name:'The Illustrated Transformer',who:'Jay Alammar — Blog',type:'tb2',url:'https://jalammar.github.io/illustrated-transformer',label:'jalammar.github.io/illustrated-transformer',free:true},
+      {name:'The Illustrated BERT',who:'Jay Alammar — Blog',type:'tb2',url:'https://jalammar.github.io/illustrated-bert',label:'jalammar.github.io/illustrated-bert',free:true},
+      {name:'Kaggle NLP Getting Started',who:'Kaggle — Free Course',type:'tc2',url:'https://www.kaggle.com/learn/natural-language-processing',label:'kaggle.com/learn/natural-language-processing',free:true},
+    ]
+  },
+  {
+    id:'llm',num:'PHASE 07',title:'Large Language Models',months:'Month 16–22',color:'#dc2626',emoji:'💬',
+    topics:['LLM architecture — how GPT, LLaMA, Mistral, Gemma work','Tokenization at scale — BPE and SentencePiece','Pre-training — next token prediction on massive text','Supervised Fine-Tuning (SFT) on custom data','RLHF — Reinforcement Learning from Human Feedback','LoRA — Low Rank Adaptation for efficient fine-tuning','PEFT — Parameter Efficient Fine Tuning techniques','Prompt engineering — zero-shot, few-shot, chain-of-thought','RAG — Retrieval Augmented Generation with vector DBs','Quantization — running large models on consumer hardware','Running LLMs locally on your own PC with Ollama'],
+    libraries:[
+      {name:'PEFT',desc:'LoRA and efficient fine-tuning',install:'pip install peft',icon:'🔧'},
+      {name:'TRL',desc:'RLHF training library',install:'pip install trl',icon:'🏋️'},
+      {name:'LangChain',desc:'Build LLM applications',install:'pip install langchain',icon:'⛓️'},
+      {name:'LlamaIndex',desc:'RAG and data indexing',install:'pip install llama-index',icon:'🦙'},
+      {name:'ChromaDB',desc:'Local vector database',install:'pip install chromadb',icon:'🗃️'},
+      {name:'BitsAndBytes',desc:'4-bit quantization',install:'pip install bitsandbytes',icon:'⚙️'},
+    ],
+    resources:[
+      {name:'LLM Course — Complete Free Guide',who:'mlabonne — GitHub',type:'tb2',url:'https://github.com/mlabonne/llm-course',label:'github.com/mlabonne/llm-course',free:true},
+      {name:"Let's Build GPT from Scratch",who:'Andrej Karpathy — YouTube',type:'tv',url:'https://www.youtube.com/watch?v=kCc8FmEb1nY',label:'youtube.com/watch?v=kCc8FmEb1nY',free:true},
+      {name:'Hugging Face PEFT Documentation',who:'Hugging Face',type:'td',url:'https://huggingface.co/docs/peft',label:'huggingface.co/docs/peft',free:true},
+      {name:'LangChain Documentation',who:'LangChain',type:'td',url:'https://docs.langchain.com',label:'docs.langchain.com',free:true},
+      {name:'Ollama — Download and Run LLMs Locally',who:'Ollama',type:'tto',url:'https://ollama.com',label:'ollama.com',free:true},
+      {name:'Prompt Engineering Guide',who:'DAIR.AI',type:'tb2',url:'https://www.promptingguide.ai',label:'promptingguide.ai',free:true},
+    ]
+  },
+  {
+    id:'projects',num:'PHASE 08',title:'Build Real Projects',months:'Month 20–24',color:'#4f46e5',emoji:'🚀',
+    topics:['Build a chatbot using a fine-tuned open-source LLM','Document Q&A system — RAG with your own PDF files','AI image classifier — CNN for real world classification','Sentiment analysis REST API deployed with FastAPI','AI web app UI built with Streamlit or Gradio','Personal AI assistant with tools and memory','Deploy a model to Hugging Face Spaces (free hosting)','Publish all projects on GitHub with good README files'],
+    libraries:[
+      {name:'Streamlit',desc:'AI web apps in minutes',install:'pip install streamlit',icon:'⚡'},
+      {name:'FastAPI',desc:'Production REST APIs',install:'pip install fastapi uvicorn',icon:'🌐'},
+      {name:'Gradio',desc:'Quick ML demos and UIs',install:'pip install gradio',icon:'🎛️'},
+      {name:'Docker',desc:'Containerize your project',install:'docker.com/get-started',icon:'🐳'},
+    ],
+    resources:[
+      {name:'Streamlit Documentation',who:'Streamlit — Official',type:'td',url:'https://docs.streamlit.io',label:'docs.streamlit.io',free:true},
+      {name:'FastAPI Documentation',who:'FastAPI — Official',type:'td',url:'https://fastapi.tiangolo.com',label:'fastapi.tiangolo.com',free:true},
+      {name:'Gradio Quickstart Guide',who:'Gradio — Official',type:'td',url:'https://www.gradio.app/guides/quickstart',label:'gradio.app/guides/quickstart',free:true},
+      {name:'Hugging Face Spaces — Free Model Hosting',who:'Hugging Face',type:'tto',url:'https://huggingface.co/spaces',label:'huggingface.co/spaces',free:true},
+      {name:'Kaggle Competitions — Practice on Real Data',who:'Kaggle',type:'tpr',url:'https://www.kaggle.com/competitions',label:'kaggle.com/competitions',free:true},
+      {name:'GitHub — Build Your Portfolio',who:'GitHub',type:'tto',url:'https://github.com',label:'github.com',free:true},
+    ]
+  },
+];
+
+const TM={tv:'VIDEO',tc2:'COURSE',tb2:'BOOK / BLOG',tpr:'PRACTICE',td:'DOCS',tpa:'PAPER',tto:'TOOL'};
+
+const CERTS = {
+  python:[
+    {name:'Python Essentials 1 & 2 (PCEP-30-0x)',provider:'Cisco / Python Institute',url:'https://pythoninstitute.org/pcep',label:'pythoninstitute.org/pcep',free:true,note:'Free online course + paid exam (~$59)'},
+    {name:'Python for Everybody Specialization',provider:'University of Michigan — Coursera',url:'https://www.coursera.org/specializations/python',label:'coursera.org/specializations/python',free:true,note:'Free to audit all courses'},
+    {name:'Google IT Automation with Python',provider:'Google — Coursera',url:'https://www.coursera.org/professional-certificates/google-it-automation',label:'coursera.org — Google IT Automation',free:true,note:'Free audit; financial aid available for cert'},
+    {name:'CS50P Certificate — Harvard',provider:'Harvard / edX',url:'https://cs50.harvard.edu/python',label:'cs50.harvard.edu/python',free:true,note:'Course is 100% free; verified cert ~$149 optional'},
+  ],
+  datascience:[
+    {name:'IBM Data Science Professional Certificate',provider:'IBM — Coursera',url:'https://www.coursera.org/professional-certificates/ibm-data-science',label:'coursera.org — IBM Data Science',free:true,note:'Free audit; financial aid for certificate'},
+    {name:'Google Data Analytics Certificate',provider:'Google — Coursera',url:'https://www.coursera.org/professional-certificates/google-data-analytics',label:'coursera.org — Google Data Analytics',free:true,note:'Free audit available'},
+    {name:'Kaggle Data Visualization Certificate',provider:'Kaggle',url:'https://www.kaggle.com/learn/data-visualization',label:'kaggle.com/learn/data-visualization',free:true,note:'100% free certificate from Kaggle'},
+    {name:'Kaggle Pandas Certificate',provider:'Kaggle',url:'https://www.kaggle.com/learn/pandas',label:'kaggle.com/learn/pandas',free:true,note:'100% free certificate from Kaggle'},
+  ],
+  math:[
+    {name:'Mathematics for Machine Learning Specialization',provider:'Imperial College — Coursera',url:'https://www.coursera.org/specializations/mathematics-machine-learning',label:'coursera.org — Math for ML',free:true,note:'Free audit; financial aid available'},
+    {name:'Linear Algebra — Khan Academy',provider:'Khan Academy',url:'https://www.khanacademy.org/math/linear-algebra',label:'khanacademy.org/math/linear-algebra',free:true,note:'100% free — earn mastery points'},
+    {name:'Statistics & Probability — Khan Academy',provider:'Khan Academy',url:'https://www.khanacademy.org/math/statistics-probability',label:'khanacademy.org/math/statistics-probability',free:true,note:'100% free — full mastery path'},
+    {name:'Intro to Statistics — Udacity',provider:'Udacity',url:'https://www.udacity.com/course/intro-to-statistics--st101',label:'udacity.com — Intro to Statistics',free:true,note:'Free course — no certificate but solid content'},
+  ],
+  ml:[
+    {name:'Machine Learning Specialization',provider:'Andrew Ng — Coursera',url:'https://www.coursera.org/specializations/machine-learning-introduction',label:'coursera.org — Andrew Ng ML',free:true,note:'Free audit; financial aid for certificate'},
+    {name:'Google ML Crash Course',provider:'Google Developers',url:'https://developers.google.com/machine-learning/crash-course',label:'developers.google.com/ml-crash-course',free:true,note:'100% free — no certificate but highly respected'},
+    {name:'Kaggle Intro to ML Certificate',provider:'Kaggle',url:'https://www.kaggle.com/learn/intro-to-machine-learning',label:'kaggle.com/learn/intro-to-machine-learning',free:true,note:'100% free Kaggle certificate'},
+    {name:'Kaggle Intermediate ML Certificate',provider:'Kaggle',url:'https://www.kaggle.com/learn/intermediate-machine-learning',label:'kaggle.com/learn/intermediate-machine-learning',free:true,note:'100% free Kaggle certificate'},
+    {name:'IBM Machine Learning Professional Certificate',provider:'IBM — Coursera',url:'https://www.coursera.org/professional-certificates/ibm-machine-learning',label:'coursera.org — IBM ML Certificate',free:true,note:'Free audit; financial aid for cert'},
+  ],
+  dl:[
+    {name:'Deep Learning Specialization',provider:'Andrew Ng / deeplearning.ai — Coursera',url:'https://www.coursera.org/specializations/deep-learning',label:'coursera.org — Deep Learning Specialization',free:true,note:'Free audit; financial aid for certificate'},
+    {name:'Practical Deep Learning for Coders',provider:'fast.ai',url:'https://course.fast.ai',label:'course.fast.ai',free:true,note:'100% free — globally recognized by practitioners'},
+    {name:'MIT 6.S191 Deep Learning',provider:'MIT OpenCourseWare',url:'https://introtodeeplearning.com',label:'introtodeeplearning.com',free:true,note:'Free course; completion certificate available'},
+    {name:'TensorFlow Developer Certificate',provider:'Google / TensorFlow',url:'https://www.tensorflow.org/certificate',label:'tensorflow.org/certificate',free:false,note:'Exam fee $100 — prep materials are free'},
+    {name:'Kaggle Intro to Deep Learning Certificate',provider:'Kaggle',url:'https://www.kaggle.com/learn/intro-to-deep-learning',label:'kaggle.com/learn/intro-to-deep-learning',free:true,note:'100% free Kaggle certificate'},
+  ],
+  nlp:[
+    {name:'Hugging Face NLP Course Certificate',provider:'Hugging Face',url:'https://huggingface.co/learn/nlp-course',label:'huggingface.co/learn/nlp-course',free:true,note:'100% free official certificate from HF'},
+    {name:'Kaggle NLP Certificate',provider:'Kaggle',url:'https://www.kaggle.com/learn/natural-language-processing',label:'kaggle.com/learn/natural-language-processing',free:true,note:'100% free Kaggle certificate'},
+    {name:'NLP Specialization — deeplearning.ai',provider:'deeplearning.ai — Coursera',url:'https://www.coursera.org/specializations/natural-language-processing',label:'coursera.org — NLP Specialization',free:true,note:'Free audit; financial aid available for cert'},
+    {name:'Applied Text Mining in Python',provider:'University of Michigan — Coursera',url:'https://www.coursera.org/learn/python-text-mining',label:'coursera.org — Applied Text Mining',free:true,note:'Free audit available'},
+  ],
+  llm:[
+    {name:'Generative AI with LLMs',provider:'deeplearning.ai — Coursera',url:'https://www.coursera.org/learn/generative-ai-with-llms',label:'coursera.org — Gen AI with LLMs',free:true,note:'Free audit; financial aid for certificate'},
+    {name:'Google Cloud Gen AI Learning Path',provider:'Google Cloud Skills Boost',url:'https://www.cloudskillsboost.google/paths/118',label:'cloudskillsboost.google — Gen AI Path',free:true,note:'100% free learning path with Google badge'},
+    {name:'deeplearning.ai Free Short Courses',provider:'deeplearning.ai',url:'https://www.deeplearning.ai/short-courses',label:'deeplearning.ai/short-courses',free:true,note:'All short courses are 100% free (RAG, Agents, Prompt Eng...)'},
+    {name:'AWS Gen AI Foundations Badge',provider:'Amazon Web Services',url:'https://explore.skillbuilder.aws/learn/courses/17763',label:'skillbuilder.aws — AWS Gen AI Foundations',free:true,note:'Free AWS digital badge on completion'},
+    {name:'Microsoft AI-900 Azure AI Fundamentals',provider:'Microsoft Learn',url:'https://learn.microsoft.com/en-us/certifications/azure-ai-fundamentals',label:'learn.microsoft.com — AI-900',free:false,note:'Free study materials; exam ~$165'},
+  ],
+  projects:[
+    {name:'Kaggle Competition Medals',provider:'Kaggle',url:'https://www.kaggle.com/competitions',label:'kaggle.com/competitions',free:true,note:'Earn medals on your Kaggle profile — valued by employers'},
+    {name:'AI Engineer Roadmap Certificate',provider:'roadmap.sh',url:'https://roadmap.sh/ai-engineer',label:'roadmap.sh/ai-engineer',free:true,note:'Free skill verification and shareable certificate'},
+    {name:'LinkedIn Skill Assessment Badge',provider:'LinkedIn',url:'https://www.linkedin.com/skill-assessments/home',label:'linkedin.com/skill-assessments',free:true,note:'Free LinkedIn badge — shows on your profile'},
+    {name:'Google Cloud Digital Leader',provider:'Google Cloud',url:'https://cloud.google.com/learn/certification/cloud-digital-leader',label:'cloud.google.com/certification',free:false,note:'Exam fee ~$200; free prep on Cloud Skills Boost'},
+    {name:'GitHub Profile as Portfolio',provider:'GitHub',url:'https://github.com',label:'github.com',free:true,note:'Build a strong public GitHub — more valued than most certs'},
+  ],
+};
+
+function load(){try{return JSON.parse(localStorage.getItem('aiml_v3')||'{}');}catch{return{};}}
+function save(s){localStorage.setItem('aiml_v3',JSON.stringify(s));}
+let S=load();
+const gc=(p,t,i)=>!!(S[p]?.[t]?.[i]);
+function sc(p,t,i,v){if(!S[p])S[p]={};if(!S[p][t])S[p][t]={};S[p][t][i]=v;save(S);}
+const gn=(p)=>S[p]?.notes||'';
+function sn(p,v){if(!S[p])S[p]={};S[p].notes=v;save(S);}
+
+function render(){
+  const cont=document.getElementById('phases');
+  cont.innerHTML='';
+  PHASES.forEach((ph,pi)=>{
+    const td=ph.topics.filter((_,i)=>gc(ph.id,'topics',i)).length;
+    const ld=ph.libraries.filter((_,i)=>gc(ph.id,'libs',i)).length;
+    const tot=ph.topics.length+ph.libraries.length;
+    const done=td+ld;
+    const pct=tot?Math.round(done/tot*100):0;
+    const pc=pct===100?'#10b981':pct>0?ph.color:'#475569';
+    const el=document.createElement('div');
+    el.className='phase';el.id='ph-'+ph.id;
+    el.style.animationDelay=pi*.045+'s';
+    el.innerHTML=`
+<div class="phd" style="background:linear-gradient(135deg,${ph.color}22,${ph.color}0a)" onclick="tog('${ph.id}')">
+  <span style="font-size:1.2rem">${ph.emoji}</span>
+  <span class="phnum" style="color:${ph.color}">${ph.num}</span>
+  <span class="phtitle">${ph.title}</span>
+  <span class="phmonths">${ph.months}</span>
+  <span class="phpill" style="color:${pc}">
+    <span class="phdot" style="background:${pc}"></span>${pct}% · ${done}/${tot}
+  </span>
+  <span class="chev">▾</span>
+</div>
+<div class="phpbar"><div class="phpbfill" style="width:${pct}%;background:${ph.color}"></div></div>
+<div class="phb">
+  <div class="tabs">
+    <button class="tb on" style="--tc:${ph.color}" onclick="stab(event,'${ph.id}','t')">✅ Topics (${td}/${ph.topics.length})</button>
+    <button class="tb" style="--tc:${ph.color}" onclick="stab(event,'${ph.id}','l')">🔧 Libraries (${ld}/${ph.libraries.length})</button>
+    <button class="tb" style="--tc:${ph.color}" onclick="stab(event,'${ph.id}','r')">🔗 Resources & Links</button>
+    <button class="tb" style="--tc:${ph.color}" onclick="stab(event,'${ph.id}','c')">🏆 Certifications</button>
+    <button class="tb" style="--tc:${ph.color}" onclick="stab(event,'${ph.id}','n')">📝 My Notes</button>
+  </div>
+
+  <div class="tcw on" id="t-${ph.id}-t">
+    <div class="cklist">
+      ${ph.topics.map((t,i)=>`
+      <div class="ci ${gc(ph.id,'topics',i)?'done':''}" onclick="chk('${ph.id}','topics',${i},this)">
+        <div class="cbox">${gc(ph.id,'topics',i)?'✓':''}</div>
+        <span class="clbl">${t}</span>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-l">
+    <div class="lgrid">
+      ${ph.libraries.map((l,i)=>`
+      <div class="lc ${gc(ph.id,'libs',i)?'done':''}" onclick="chk('${ph.id}','libs',${i},this)">
+        <div class="lic">${l.icon}</div>
+        <div class="linfo">
+          <div class="lname">${l.name}</div>
+          <div class="ldesc">${l.desc}</div>
+          <div class="linst">${l.install}</div>
+        </div>
+        <div class="lchk">${gc(ph.id,'libs',i)?'✓':''}</div>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-r">
+    <div class="res-section-note">Click any card below to open the resource in a new tab</div>
+    <div class="rgrid">
+      ${ph.resources.map(r=>`
+      <a href="${r.url}" target="_blank" rel="noopener noreferrer" class="rc">
+        <span class="rtype ${r.type}">${TM[r.type]||r.type}</span>
+        <div class="rinfo">
+          <div class="rname">${r.name}</div>
+          <div class="rurl">🔗 ${r.label}</div>
+          <div style="font-size:.7rem;color:var(--muted);margin-top:.15rem">${r.who}</div>
+        </div>
+        <div class="rright">
+          ${r.free?'<span class="ftag">FREE</span>':''}
+          <span class="rarr">→</span>
+        </div>
+      </a>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-c">
+    <div class="cert-note">Free & low-cost certifications to validate your skills — click any to open</div>
+    <div class="cgrid">
+      ${(CERTS[ph.id]||[]).map(c=>`
+      <a href="${c.url}" target="_blank" rel="noopener noreferrer" class="cc">
+        <span class="cprov">${c.provider.split('—')[0].trim()}</span>
+        <div class="cinfo">
+          <div class="cname">${c.name}</div>
+          <div class="curl">🏆 ${c.label}</div>
+          <div style="font-size:.7rem;color:var(--muted);margin-top:.15rem">${c.note}</div>
+        </div>
+        <div class="cright">
+          <span class="ctag ${c.free?'ctag-free':'ctag-cert'}">${c.free?'FREE':'PAID'}</span>
+          <span class="carr">→</span>
+        </div>
+      </a>`).join('')}
+    </div>
+  </div>
+
+  <div class="tcw" id="t-${ph.id}-n">
+    <div class="nwrap">
+      <label class="nlbl">Your notes for ${ph.title}</label>
+      <textarea class="nta" placeholder="Write key things you learned, questions, code snippets, links to your projects..." oninput="sn('${ph.id}',this.value)">${gn(ph.id)}</textarea>
+    </div>
+  </div>
+</div>`;
+    cont.appendChild(el);
+  });
+  updash();
+}
+
+function tog(id){document.getElementById('ph-'+id).classList.toggle('closed');}
+function stab(e,pid,k){
+  e.stopPropagation();
+  const b=e.target.closest('.phb');
+  b.querySelectorAll('.tb').forEach(x=>x.classList.remove('on'));
+  b.querySelectorAll('.tcw').forEach(x=>x.classList.remove('on'));
+  e.target.classList.add('on');
+  b.querySelector(`#t-${pid}-${k}`).classList.add('on');
+}
+function chk(pid,type,idx,el){
+  const done=!el.classList.contains('done');
+  sc(pid,type,idx,done);
+  el.classList.toggle('done',done);
+  const bx=el.querySelector('.cbox,.lchk');
+  if(bx)bx.textContent=done?'✓':'';
+  uphase(pid);updash();
+}
+function uphase(pid){
+  const ph=PHASES.find(p=>p.id===pid);
+  const td=ph.topics.filter((_,i)=>gc(pid,'topics',i)).length;
+  const ld=ph.libraries.filter((_,i)=>gc(pid,'libs',i)).length;
+  const tot=ph.topics.length+ph.libraries.length;
+  const done=td+ld;
+  const pct=tot?Math.round(done/tot*100):0;
+  const pc=pct===100?'#10b981':pct>0?ph.color:'#475569';
+  const el=document.getElementById('ph-'+pid);
+  el.querySelector('.phpill').innerHTML=`<span class="phdot" style="background:${pc}"></span>${pct}% · ${done}/${tot}`;
+  el.querySelector('.phpill').style.color=pc;
+  el.querySelector('.phpbfill').style.width=pct+'%';
+  const tbs=el.querySelectorAll('.tb');
+  tbs[0].textContent=`✅ Topics (${td}/${ph.topics.length})`;
+  tbs[1].textContent=`🔧 Libraries (${ld}/${ph.libraries.length})`;
+}
+function updash(){
+  let tt=0,td2=0,tl=0,ld2=0,ps=0;
+  PHASES.forEach(ph=>{
+    const td=ph.topics.filter((_,i)=>gc(ph.id,'topics',i)).length;
+    const ld=ph.libraries.filter((_,i)=>gc(ph.id,'libs',i)).length;
+    tt+=ph.topics.length;tl+=ph.libraries.length;td2+=td;ld2+=ld;
+    if(td>0||ld>0)ps++;
+  });
+  const tot=tt+tl,done=td2+ld2;
+  const pct=tot?Math.round(done/tot*100):0;
+  const msgs=['Start learning! 🌱','Great start! 🔥','Building momentum! 💪','Halfway there! ⚡','Almost there! 🚀','Complete! 🎉'];
+  document.getElementById('d-overall').innerHTML=`${pct}<span>%</span>`;
+  document.getElementById('d-msg').textContent=msgs[Math.min(Math.floor(pct/20),5)];
+  document.getElementById('d-topics').innerHTML=`${td2}<span> done</span>`;
+  document.getElementById('d-tsub').textContent=`of ${tt} total topics`;
+  document.getElementById('d-libs').innerHTML=`${ld2}<span> done</span>`;
+  document.getElementById('d-lsub').textContent=`of ${tl} total libraries`;
+  document.getElementById('d-phases').innerHTML=`${ps}<span> / 8</span>`;
+  const C=150.8,off=C-(pct/100)*C;
+  document.getElementById('main-ring').style.strokeDashoffset=off;
+  document.getElementById('ring-pct').textContent=pct+'%';
+  document.getElementById('nav-fill').style.width=pct+'%';
+  document.getElementById('nav-pct').textContent=pct;
+  document.getElementById('n-topics').textContent=`${td2}/${tt}`;
+  document.getElementById('n-libs').textContent=`${ld2}/${tl}`;
+  document.getElementById('banner').classList.toggle('show',pct===100);
+}
+function resetAll(){
+  if(confirm('Reset ALL progress? This cannot be undone.')){
+    localStorage.removeItem('aiml_v3');S={};render();
+  }
+}
+render();
+</script>
+</body>
+</html>
