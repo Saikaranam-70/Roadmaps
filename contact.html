@@ -104,11 +104,22 @@ main{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 2rem 6r
   <div class="section">
     <h2>Send a Message</h2>
     <p>You can use the form below to send me a message. I typically respond within 1–3 business days.</p>
-    <form onsubmit="handleSubmit(event)">
-      <div class="form-group"><label for="name">Your Name</label><input type="text" id="name" placeholder="John Doe" required></div>
-      <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" placeholder="you@example.com" required></div>
-      <div class="form-group"><label for="subject">Subject</label>
-        <select id="subject">
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="from_name" placeholder="John Doe" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="reply_to" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="subject">Subject</label>
+        <select id="subject" name="subject">
           <option>General Question</option>
           <option>Roadmap Feedback</option>
           <option>Bug Report</option>
@@ -116,15 +127,119 @@ main{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 2rem 6r
           <option>Other</option>
         </select>
       </div>
-      <div class="form-group"><label for="message">Message</label><textarea id="message" placeholder="Write your message here..." required></textarea></div>
-      <button type="submit" class="submit-btn">Send Message →</button>
-      <div class="success-msg" id="success-msg">✅ Thank you! Your message has been received. I'll get back to you soon.</div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Write your message here..." required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submit-btn">
+        <span id="btn-text">Send Message</span>
+        <span id="btn-icon">→</span>
+      </button>
+
+      <!-- Status messages -->
+      <div class="status-msg success-msg" id="success-msg">
+        ✅ Message sent! I'll get back to you within 1–3 business days.
+      </div>
+      <div class="status-msg error-msg" id="error-msg">
+        ❌ Something went wrong. Please try again or reach out via LinkedIn.
+      </div>
     </form>
+
+    <!-- Setup instructions (visible only before EmailJS is configured) -->
+    <div class="setup-notice" id="setup-notice">
+      <div class="setup-title">⚙️ One-time EmailJS Setup Required</div>
+      <ol>
+        <li>Go to <a href="https://www.emailjs.com/" target="_blank" rel="noopener">emailjs.com</a> → Sign up free (200 emails/month)</li>
+        <li>Add an <strong>Email Service</strong> (connect your Gmail) → copy the <strong>Service ID</strong></li>
+        <li>Create an <strong>Email Template</strong> using variables: <code>{{from_name}}</code>, <code>{{reply_to}}</code>, <code>{{subject}}</code>, <code>{{message}}</code> → copy the <strong>Template ID</strong></li>
+        <li>Go to <strong>Account → API Keys</strong> → copy your <strong>Public Key</strong></li>
+        <li>Replace the 3 placeholders in the script below with your real IDs</li>
+      </ol>
+    </div>
+
+    <style>
+    .status-msg{display:none;border-radius:9px;padding:1rem 1.2rem;font-size:.9rem;margin-top:1rem;}
+    .success-msg{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:#34d399;}
+    .error-msg{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171;}
+    .submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+    .spinner{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .setup-notice{margin-top:1.4rem;background:rgba(249,115,22,.07);border:1px solid rgba(249,115,22,.25);border-radius:10px;padding:1.2rem 1.4rem;}
+    .setup-title{font-family:'Space Mono',monospace;font-size:.7rem;color:#fb923c;letter-spacing:.06em;margin-bottom:.8rem;}
+    .setup-notice ol{color:var(--dim);font-size:.85rem;line-height:2;padding-left:1.2rem;}
+    .setup-notice code{background:rgba(99,102,241,.15);color:#a5b4fc;padding:.1rem .4rem;border-radius:4px;font-family:'Space Mono',monospace;font-size:.75rem;}
+    .setup-notice a{color:var(--cyan);}
+    </style>
+
     <script>
-    function handleSubmit(e){
+    // ─────────────────────────────────────────────────────────────────
+    // REPLACE these 3 values with your real EmailJS credentials
+    // Get them free at https://www.emailjs.com/
+    // ─────────────────────────────────────────────────────────────────
+    const EMAILJS_PUBLIC_KEY  = 'QnpAzp_7ypgXkhq-g';   // Account → API Keys
+    const EMAILJS_SERVICE_ID  = 'service_ctkkkyp';   // Email Services tab
+    const EMAILJS_TEMPLATE_ID = 'template_49dalyk';  // Email Templates tab
+    // ─────────────────────────────────────────────────────────────────
+
+    const isConfigured = !['YOUR_PUBLIC_KEY','YOUR_SERVICE_ID','YOUR_TEMPLATE_ID']
+      .includes(EMAILJS_PUBLIC_KEY) &&
+      !['YOUR_PUBLIC_KEY','YOUR_SERVICE_ID','YOUR_TEMPLATE_ID']
+      .includes(EMAILJS_SERVICE_ID) &&
+      !['YOUR_PUBLIC_KEY','YOUR_SERVICE_ID','YOUR_TEMPLATE_ID']
+      .includes(EMAILJS_TEMPLATE_ID);
+
+    if (isConfigured) {
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+      document.getElementById('setup-notice').style.display = 'none';
+    }
+
+    async function handleSubmit(e) {
       e.preventDefault();
-      document.getElementById('success-msg').style.display='block';
-      e.target.reset();
+
+      if (!isConfigured) {
+        document.getElementById('error-msg').textContent =
+          '⚙️ EmailJS not configured yet. See the setup instructions below.';
+        document.getElementById('error-msg').style.display = 'block';
+        return;
+      }
+
+      const btn      = document.getElementById('submit-btn');
+      const btnText  = document.getElementById('btn-text');
+      const btnIcon  = document.getElementById('btn-icon');
+      const successEl = document.getElementById('success-msg');
+      const errorEl   = document.getElementById('error-msg');
+
+      // Hide previous messages
+      successEl.style.display = 'none';
+      errorEl.style.display   = 'none';
+
+      // Loading state
+      btn.disabled = true;
+      btnText.textContent = 'Sending';
+      btnIcon.innerHTML = '<span class="spinner"></span>';
+
+      try {
+        await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, e.target);
+        // Success
+        btnText.textContent = 'Sent!';
+        btnIcon.textContent = '✓';
+        successEl.style.display = 'block';
+        e.target.reset();
+        // Reset button after 4s
+        setTimeout(() => {
+          btn.disabled = false;
+          btnText.textContent = 'Send Message';
+          btnIcon.textContent = '→';
+        }, 4000);
+      } catch (err) {
+        // Error
+        btn.disabled = false;
+        btnText.textContent = 'Send Message';
+        btnIcon.textContent = '→';
+        errorEl.style.display = 'block';
+        console.error('EmailJS error:', err);
+      }
     }
     </script>
   </div>
