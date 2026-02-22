@@ -3,7 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Full Stack Roadmap — MERN · Java · ASP.NET · Python</title>
+<title>Full Stack Development Roadmap 2025 — MERN · Java · ASP.NET · Python | Sai Karanam</title>
+<meta name="description" content="Complete Full Stack Development roadmap with interactive progress tracker. Learn MERN Stack, Java Spring Boot, ASP.NET Core, and Python Django/FastAPI. Track topics, libraries, certifications, and build real portfolio projects.">
+<meta name="keywords" content="full stack roadmap, MERN stack roadmap, React learning path, Node.js roadmap, Java Spring Boot guide, ASP.NET Core roadmap, Python Django roadmap, full stack developer 2025, Sai Karanam">
+<meta name="author" content="Sai Karanam">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://saikaranam.me/FullStack_Roadmap_Tracker.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://saikaranam.me/FullStack_Roadmap_Tracker.html">
+<meta property="og:title" content="Full Stack Development Roadmap 2025 — MERN · Java · ASP.NET · Python | Sai Karanam">
+<meta property="og:description" content="Complete Full Stack Development roadmap with interactive progress tracker across 4 tech stacks.">
+<meta property="og:image" content="https://saikaranam.me/og-image.png">
+<meta property="og:site_name" content="Sai Karanam Dev Roadmaps">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://saikaranam.me/FullStack_Roadmap_Tracker.html">
+<meta name="twitter:title" content="Full Stack Development Roadmap 2025 | Sai Karanam">
+<meta name="twitter:description" content="Complete Full Stack Development roadmap across MERN, Java, ASP.NET and Python.">
+<meta name="twitter:image" content="https://saikaranam.me/og-image.png">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Full Stack Development Roadmap",
+  "url": "https://saikaranam.me/FullStack_Roadmap_Tracker.html",
+  "description": "Complete Full Stack Development roadmap with interactive progress tracker across MERN, Java, ASP.NET, and Python.",
+  "author": {"@type": "Person", "name": "Sai Karanam", "url": "https://saikaranam.me"},
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://saikaranam.me/"},
+      {"@type": "ListItem", "position": 2, "name": "Full Stack Roadmap", "item": "https://saikaranam.me/FullStack_Roadmap_Tracker.html"}
+    ]
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -239,15 +280,16 @@ main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 2rem 6
   justify-content: center;
   gap: 25px;
   padding: 12px;
-  /* background-color: #ffffff; */
-  /* border-bottom: 2px solid #e5e7eb; */
 }
 
 .nav-links a {
   text-decoration: none;
-  color: #374151;
-  font-size: 15px;
-  font-weight: 500;
+  color: var(--muted);
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  letter-spacing: .07em;
+  text-transform: uppercase;
   position: relative;
   padding: 6px 0;
   transition: color 0.3s ease;
@@ -260,15 +302,15 @@ main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 2rem 6
   height: 2px;
   left: 0;
   bottom: -4px;
-  background-color: #2563eb;
+  background: linear-gradient(90deg, var(--green), var(--blue));
   transition: width 0.3s ease;
 }
 
-.nav-links a:hover {
-  color: #2563eb;
+.nav-links a:hover, .nav-links a[aria-current="page"] {
+  color: var(--text);
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover::after, .nav-links a[aria-current="page"]::after {
   width: 100%;
 }
 </style>
@@ -286,10 +328,10 @@ main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 2rem 6
     <button class="ns" style="color:var(--dim);border-color:rgba(148,163,184,.2);background:transparent;" onclick="filterStack('all')">ALL</button>
   </div>
   <div class="nav-links">
-    <a href="/index.html">AIML</a>
-    <a href="/">Full Stack</a>
-    <a href="/Cloud_Computing_Roadmap.html">Cloud</a>
-    <a href="/Data_Roadmap_Tracker.html">Data</a>
+    <a href="https://saikaranam.me/">AIML</a>
+    <a href="https://saikaranam.me/FullStack_Roadmap_Tracker.html" aria-current="page">Full Stack</a>
+    <a href="https://saikaranam.me/Cloud_Computing_Roadmap.html">Cloud</a>
+    <a href="https://saikaranam.me/Data_Roadmap_Tracker.html">Data</a>
   </div>
   <div class="nav-right">
     <span class="npct">Progress: <b id="nav-pct">0</b>%</span>
@@ -384,12 +426,66 @@ main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 2rem 6
       <a href="https://www.thunderclient.com" target="_blank" class="tool"><span class="te">⚡</span><div><div class="tnm">Thunder Client</div><div class="tds">API client inside VS Code</div></div></a>
     </div>
   </div>
+
+  <div class="tools-wrap" style="margin-top:3rem;">
+    <div class="sec-head"><div class="sec-line"></div><div class="sec-lbl">🚀 Portfolio Projects to Build</div><div class="sec-line"></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:.7rem;">
+      <div class="fs-proj-card" style="border-color:rgba(16,185,129,.2);">
+        <div class="fs-proj-top"><span class="fs-proj-tag" style="background:rgba(16,185,129,.12);color:var(--mern)">MERN</span><span class="fs-proj-diff diff-beg2">Beginner</span></div>
+        <div class="fs-proj-title">Full-Stack Todo App</div>
+        <div class="fs-proj-desc">Build a complete CRUD todo application with React frontend, Node/Express API, MongoDB storage, user auth with JWT, and deploy to Vercel + Render.</div>
+        <div class="fs-proj-stack">React · Node.js · Express · MongoDB · JWT</div>
+      </div>
+      <div class="fs-proj-card" style="border-color:rgba(16,185,129,.2);">
+        <div class="fs-proj-top"><span class="fs-proj-tag" style="background:rgba(16,185,129,.12);color:var(--mern)">MERN</span><span class="fs-proj-diff diff-int2">Intermediate</span></div>
+        <div class="fs-proj-title">Real-Time Chat Application</div>
+        <div class="fs-proj-desc">Build a full-stack chat app with Socket.io for real-time messaging, rooms, online presence indicator, and message history with MongoDB.</div>
+        <div class="fs-proj-stack">React · Socket.io · Node.js · MongoDB</div>
+      </div>
+      <div class="fs-proj-card" style="border-color:rgba(16,185,129,.2);">
+        <div class="fs-proj-top"><span class="fs-proj-tag" style="background:rgba(16,185,129,.12);color:var(--mern)">MERN</span><span class="fs-proj-diff diff-adv2">Advanced</span></div>
+        <div class="fs-proj-title">E-Commerce Platform</div>
+        <div class="fs-proj-desc">Build a full e-commerce store with product catalog, cart, Stripe payments, order management, admin dashboard, and image uploads to Cloudinary.</div>
+        <div class="fs-proj-stack">React · Redux · Node.js · Stripe · MongoDB</div>
+      </div>
+      <div class="fs-proj-card" style="border-color:rgba(245,158,11,.2);">
+        <div class="fs-proj-top"><span class="fs-proj-tag" style="background:rgba(245,158,11,.12);color:var(--java)">Java</span><span class="fs-proj-diff diff-int2">Intermediate</span></div>
+        <div class="fs-proj-title">Banking REST API</div>
+        <div class="fs-proj-desc">Build a banking microservice with Spring Boot — user accounts, transactions, Spring Security with JWT auth, and H2/PostgreSQL database with JPA.</div>
+        <div class="fs-proj-stack">Spring Boot · Spring Security · JPA · PostgreSQL</div>
+      </div>
+      <div class="fs-proj-card" style="border-color:rgba(129,140,248,.2);">
+        <div class="fs-proj-top"><span class="fs-proj-tag" style="background:rgba(129,140,248,.12);color:var(--purple)">.NET</span><span class="fs-proj-diff diff-int2">Intermediate</span></div>
+        <div class="fs-proj-title">Task Manager API + Blazor UI</div>
+        <div class="fs-proj-desc">Build a project management tool with ASP.NET Core Web API backend and Blazor WASM frontend, EF Core with migrations, and Azure deployment.</div>
+        <div class="fs-proj-stack">ASP.NET Core · Blazor · EF Core · Azure</div>
+      </div>
+      <div class="fs-proj-card" style="border-color:rgba(56,189,248,.2);">
+        <div class="fs-proj-top"><span class="fs-proj-tag" style="background:rgba(56,189,248,.12);color:var(--blue)">Python</span><span class="fs-proj-diff diff-adv2">Advanced</span></div>
+        <div class="fs-proj-title">AI-Powered Blog Platform</div>
+        <div class="fs-proj-desc">Build a Django blog where users can write posts and get AI-generated summaries, tags, and SEO suggestions using the OpenAI API — with Celery for async tasks.</div>
+        <div class="fs-proj-stack">Django · DRF · OpenAI API · Celery · PostgreSQL</div>
+      </div>
+    </div>
+  </div>
 </main>
 
+<style>
+.fs-proj-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem;transition:border-color .2s,transform .15s;position:relative;overflow:hidden;}
+.fs-proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),var(--blue));}
+.fs-proj-card:hover{transform:translateY(-3px);}
+.fs-proj-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;}
+.fs-proj-tag{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:.06em;text-transform:uppercase;padding:.14rem .45rem;border-radius:5px;font-weight:700;}
+.fs-proj-diff{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:.05em;text-transform:uppercase;padding:.14rem .45rem;border-radius:5px;}
+.diff-beg2{background:rgba(16,185,129,.1);color:var(--green);}
+.diff-int2{background:rgba(56,189,248,.1);color:var(--blue);}
+.diff-adv2{background:rgba(248,113,113,.1);color:var(--red);}
+.fs-proj-title{font-family:'Bricolage Grotesque',sans-serif;font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:.35rem;line-height:1.3;}
+.fs-proj-desc{font-size:.76rem;color:var(--muted);line-height:1.6;margin-bottom:.5rem;}
+.fs-proj-stack{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--blue);opacity:.8;border-top:1px solid var(--border);padding-top:.4rem;}
+</style>
+
 <script>
-// ═══════════════════════════════════════════════════
-//  DATA
-// ═══════════════════════════════════════════════════
 
 const STACKS = [
   // ────────────────────────────────────────

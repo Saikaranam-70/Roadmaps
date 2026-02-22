@@ -3,7 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI/ML Roadmap — Progress Tracker</title>
+<title>AI/ML Learning Roadmap & Progress Tracker 2025 | Sai Karanam</title>
+<meta name="description" content="Complete AI and Machine Learning learning roadmap with interactive progress tracker. Track topics, libraries, certifications, and projects across 8 phases — Python, Data Science, Math, ML, Deep Learning, NLP, LLMs, and AI Engineering.">
+<meta name="keywords" content="AI roadmap, machine learning roadmap, ML learning path, deep learning guide, NLP tutorial, LLM course, Python for AI, data science roadmap, progress tracker, Sai Karanam">
+<meta name="author" content="Sai Karanam">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://saikaranam.me/">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://saikaranam.me/">
+<meta property="og:title" content="AI/ML Learning Roadmap & Progress Tracker 2025 | Sai Karanam">
+<meta property="og:description" content="Complete AI and Machine Learning learning roadmap with interactive progress tracker. Track topics, libraries, certifications, and projects across 8 learning phases.">
+<meta property="og:image" content="https://saikaranam.me/og-image.png">
+<meta property="og:site_name" content="Sai Karanam Dev Roadmaps">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://saikaranam.me/">
+<meta name="twitter:title" content="AI/ML Learning Roadmap & Progress Tracker 2025 | Sai Karanam">
+<meta name="twitter:description" content="Complete AI and Machine Learning learning roadmap with interactive progress tracker across 8 phases.">
+<meta name="twitter:image" content="https://saikaranam.me/og-image.png">
+
+<!-- Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "AI/ML Learning Roadmap & Progress Tracker",
+  "url": "https://saikaranam.me/",
+  "description": "Complete AI and Machine Learning learning roadmap with interactive progress tracker across 8 phases.",
+  "author": {
+    "@type": "Person",
+    "name": "Sai Karanam",
+    "url": "https://saikaranam.me"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://saikaranam.me/"},
+      {"@type": "ListItem", "position": 2, "name": "AI/ML Roadmap", "item": "https://saikaranam.me/"}
+    ]
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -228,15 +273,16 @@ main{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:0 2rem 6
   justify-content: center;
   gap: 25px;
   padding: 12px;
-  /* background-color: #ffffff; */
-  /* border-bottom: 2px solid #e5e7eb; */
 }
 
 .nav-links a {
   text-decoration: none;
-  color: #374151;
-  font-size: 15px;
-  font-weight: 500;
+  color: var(--muted);
+  font-size: 13px;
+  font-family: 'Space Mono', monospace;
+  font-weight: 400;
+  letter-spacing: .07em;
+  text-transform: uppercase;
   position: relative;
   padding: 6px 0;
   transition: color 0.3s ease;
@@ -249,15 +295,15 @@ main{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:0 2rem 6
   height: 2px;
   left: 0;
   bottom: -4px;
-  background-color: #2563eb;
+  background: linear-gradient(90deg, var(--accent), var(--cyan));
   transition: width 0.3s ease;
 }
 
-.nav-links a:hover {
-  color: #2563eb;
+.nav-links a:hover, .nav-links a[aria-current="page"] {
+  color: var(--text);
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover::after, .nav-links a[aria-current="page"]::after {
   width: 100%;
 }
 </style>
@@ -267,10 +313,10 @@ main{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:0 2rem 6
 <nav>
   <div class="nav-logo">// AI·ML·ROADMAP</div>
   <div class="nav-links">
-    <a href="/">AIML</a>
-    <a href="/FullStack_Roadmap_Tracker.html">Full Stack</a>
-    <a href="/Cloud_Computing_Roadmap.html">Cloud</a>
-    <a href="/Data_Roadmap_Tracker.html">Data</a>
+    <a href="https://saikaranam.me/" aria-current="page">AIML</a>
+    <a href="https://saikaranam.me/FullStack_Roadmap_Tracker.html">Full Stack</a>
+    <a href="https://saikaranam.me/Cloud_Computing_Roadmap.html">Cloud</a>
+    <a href="https://saikaranam.me/Data_Roadmap_Tracker.html">Data</a>
   </div>
   <div class="nav-right">
     <div class="nstat">Topics: <b id="n-topics">0/0</b></div>
@@ -347,7 +393,109 @@ main{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:0 2rem 6
       <a href="https://paperswithcode.com" target="_blank" class="tool"><span class="te">📄</span><div><div class="tnm">Papers With Code</div><div class="tds">Latest AI research</div></div></a>
     </div>
   </div>
+
+  <div class="tsect" id="projects-section">
+    <div class="shead"><div class="sline"></div><div class="slbl">🚀 Project Ideas to Build Your Portfolio</div><div class="sline"></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.75rem;" id="proj-grid">
+      <div class="proj-card" data-diff="beginner">
+        <div class="proj-top">
+          <span class="proj-tag diff-beg">Beginner</span>
+          <span class="proj-phase">Phase 1–2</span>
+        </div>
+        <div class="proj-title">Python Data Analysis Dashboard</div>
+        <div class="proj-desc">Analyze a real Kaggle dataset with Pandas, create visualizations with Matplotlib/Seaborn, and build a Streamlit dashboard to display insights.</div>
+        <div class="proj-stack">Python · Pandas · Seaborn · Streamlit</div>
+      </div>
+      <div class="proj-card" data-diff="beginner">
+        <div class="proj-top">
+          <span class="proj-tag diff-beg">Beginner</span>
+          <span class="proj-phase">Phase 3–4</span>
+        </div>
+        <div class="proj-title">House Price Predictor</div>
+        <div class="proj-desc">Classic regression project using the Boston or Ames Housing dataset. Apply feature engineering, train multiple ML models, compare performance, and deploy with Streamlit.</div>
+        <div class="proj-stack">Scikit-learn · Pandas · Streamlit</div>
+      </div>
+      <div class="proj-card" data-diff="beginner">
+        <div class="proj-top">
+          <span class="proj-tag diff-beg">Beginner</span>
+          <span class="proj-phase">Phase 4</span>
+        </div>
+        <div class="proj-title">Customer Churn Classifier</div>
+        <div class="proj-desc">Predict customer churn using the Telco dataset. Train Random Forest and XGBoost, tune hyperparameters, and visualize feature importance in a Streamlit app.</div>
+        <div class="proj-stack">XGBoost · Scikit-learn · Matplotlib</div>
+      </div>
+      <div class="proj-card" data-diff="intermediate">
+        <div class="proj-top">
+          <span class="proj-tag diff-int">Intermediate</span>
+          <span class="proj-phase">Phase 5</span>
+        </div>
+        <div class="proj-title">Image Classifier — CNN from Scratch</div>
+        <div class="proj-desc">Build a CNN with PyTorch to classify images (CIFAR-10 or custom dataset). Implement data augmentation, batch normalization, and achieve >85% accuracy.</div>
+        <div class="proj-stack">PyTorch · TorchVision · Google Colab</div>
+      </div>
+      <div class="proj-card" data-diff="intermediate">
+        <div class="proj-top">
+          <span class="proj-tag diff-int">Intermediate</span>
+          <span class="proj-phase">Phase 5–6</span>
+        </div>
+        <div class="proj-title">Sentiment Analysis API</div>
+        <div class="proj-desc">Fine-tune a BERT model on movie reviews or Twitter data. Build a REST API with FastAPI to serve predictions, and deploy to Hugging Face Spaces for free.</div>
+        <div class="proj-stack">Transformers · FastAPI · HuggingFace Spaces</div>
+      </div>
+      <div class="proj-card" data-diff="intermediate">
+        <div class="proj-top">
+          <span class="proj-tag diff-int">Intermediate</span>
+          <span class="proj-phase">Phase 6</span>
+        </div>
+        <div class="proj-title">Text Summarizer & Q&A Bot</div>
+        <div class="proj-desc">Use Hugging Face Transformers to summarize long documents and answer questions. Build a clean Gradio or Streamlit UI and publish on HuggingFace Spaces.</div>
+        <div class="proj-stack">Transformers · Gradio · HuggingFace</div>
+      </div>
+      <div class="proj-card" data-diff="advanced">
+        <div class="proj-top">
+          <span class="proj-tag diff-adv">Advanced</span>
+          <span class="proj-phase">Phase 7</span>
+        </div>
+        <div class="proj-title">Custom LLM Chatbot with RAG</div>
+        <div class="proj-desc">Build a RAG-powered chatbot over your own documents using LangChain + ChromaDB + local LLM via Ollama. Add conversation memory and a Streamlit chat UI.</div>
+        <div class="proj-stack">LangChain · ChromaDB · Ollama · Streamlit</div>
+      </div>
+      <div class="proj-card" data-diff="advanced">
+        <div class="proj-top">
+          <span class="proj-tag diff-adv">Advanced</span>
+          <span class="proj-phase">Phase 7–8</span>
+        </div>
+        <div class="proj-title">Fine-tune LLaMA with LoRA</div>
+        <div class="proj-desc">Fine-tune Llama 3 or Mistral on a custom instruction dataset using LoRA/QLoRA on free Colab GPU. Push to Hugging Face Hub and build an inference API.</div>
+        <div class="proj-stack">PEFT · TRL · Transformers · HuggingFace Hub</div>
+      </div>
+      <div class="proj-card" data-diff="advanced">
+        <div class="proj-top">
+          <span class="proj-tag diff-adv">Advanced</span>
+          <span class="proj-phase">Phase 8</span>
+        </div>
+        <div class="proj-title">Autonomous AI Research Agent</div>
+        <div class="proj-desc">Build a multi-step AI agent that can search the web, read documents, write code, and compile a research report — using LangChain Agents or the OpenAI Assistants API.</div>
+        <div class="proj-stack">LangChain · OpenAI API · Tavily · FastAPI</div>
+      </div>
+    </div>
+  </div>
 </main>
+
+<style>
+.proj-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.1rem;transition:border-color .2s,transform .15s;position:relative;overflow:hidden;}
+.proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--cyan));}
+.proj-card:hover{border-color:rgba(99,102,241,.3);transform:translateY(-3px);}
+.proj-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.65rem;}
+.proj-tag{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;padding:.15rem .5rem;border-radius:4px;font-weight:700;}
+.diff-beg{background:rgba(16,185,129,.12);color:#34d399;}
+.diff-int{background:rgba(99,102,241,.12);color:#a5b4fc;}
+.diff-adv{background:rgba(239,68,68,.12);color:#f87171;}
+.proj-phase{font-family:'Space Mono',monospace;font-size:.55rem;color:var(--muted);}
+.proj-title{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:.4rem;line-height:1.3;}
+.proj-desc{font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:.55rem;}
+.proj-stack{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--cyan);opacity:.8;border-top:1px solid var(--border);padding-top:.45rem;margin-top:.1rem;}
+</style>
 
 <script>
 const PHASES = [
