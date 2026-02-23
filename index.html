@@ -270,6 +270,125 @@ main{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:0 2rem 6
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:rgba(99,102,241,.3);border-radius:99px;}
 @media(max-width:700px){.dgrid{grid-template-columns:repeat(2,1fr);}.nav-right{display:none;}}
+
+/* ── COMPREHENSIVE MOBILE RESPONSIVE STYLES ── */
+@media(max-width:768px){
+  /* Nav */
+  nav{padding:0 1rem;height:52px;}
+  .nav-logo{font-size:.7rem;}
+  .nav-links{gap:14px;padding:8px 1rem;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .nav-links a{font-size:11px;}
+
+  /* Hero */
+  .hero{padding:76px 1rem 32px;}
+  h1{font-size:clamp(1.6rem,7vw,2.5rem);}
+  .hero p{font-size:.85rem;}
+
+  /* Dashboard grid */
+  .dash{padding:0 1rem;margin-bottom:2rem;}
+  .dgrid{grid-template-columns:repeat(2,1fr);gap:.65rem;}
+  .dval{font-size:1.4rem;}
+
+  /* Main content */
+  main{padding:0 1rem 5rem;}
+
+  /* Phase header */
+  .phd{padding:.75rem 1rem;gap:.6rem;flex-wrap:wrap;}
+  .phtitle{font-size:.9rem;}
+  .phmonths{display:none;}
+  .phpill{font-size:.58rem;padding:.18rem .5rem;}
+
+  /* Tabs — scrollable row */
+  .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 .8rem;gap:0;scrollbar-width:none;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tb{font-size:.58rem;padding:.65rem .55rem;white-space:nowrap;flex-shrink:0;}
+
+  /* Tab content */
+  .tcw{padding:.85rem 1rem;}
+
+  /* Checklist items */
+  .ci{padding:.55rem .7rem;gap:.6rem;}
+  .clbl{font-size:.8rem;}
+
+  /* Libraries grid */
+  .lgrid{grid-template-columns:1fr;}
+  .lc{padding:.7rem;}
+  .lname{font-size:.68rem;}
+  .ldesc{font-size:.66rem;}
+
+  /* Resources */
+  .rc{padding:.7rem .8rem;gap:.6rem;flex-wrap:wrap;}
+  .rc:hover{transform:none;}
+  .rname{font-size:.82rem;}
+  .rtype{font-size:.52rem;}
+  .rright{width:100%;justify-content:flex-end;}
+  .rurl{font-size:.58rem;}
+
+  /* Certs */
+  .cc{padding:.7rem .8rem;gap:.6rem;flex-wrap:wrap;}
+  .cc:hover{transform:none;}
+  .cname{font-size:.82rem;}
+  .cright{width:100%;justify-content:flex-end;}
+
+  /* Tools grid */
+  .tgrid{grid-template-columns:repeat(2,1fr);}
+  .tool{padding:.75rem;}
+  .tnm{font-size:.78rem;}
+  .tds{font-size:.65rem;}
+
+  /* Projects */
+  .proj-title{font-size:.85rem;}
+  .proj-desc{font-size:.74rem;}
+}
+
+@media(max-width:480px){
+  /* Nav */
+  nav{height:48px;}
+  .nav-logo{font-size:.65rem;}
+  .nav-links{gap:10px;}
+
+  /* Hero */
+  .hero{padding:68px .85rem 28px;}
+  h1{font-size:1.55rem;}
+  .badge{font-size:.58rem;}
+
+  /* Dashboard */
+  .dash{padding:0 .85rem;}
+  .dgrid{grid-template-columns:repeat(2,1fr);gap:.5rem;}
+  .dc{padding:.75rem .9rem;}
+  .dval{font-size:1.2rem;}
+  .dlbl{font-size:.52rem;}
+  .dsub{font-size:.62rem;}
+  .rcont{width:48px;height:48px;}
+  .rtxt{font-size:.6rem;}
+
+  /* Main */
+  main{padding:0 .85rem 4rem;}
+
+  /* Phase */
+  .phd{padding:.65rem .85rem;}
+  .phtitle{font-size:.85rem;}
+  .phnum{font-size:.52rem;}
+  .phpill{font-size:.54rem;}
+
+  /* Tabs */
+  .tb{font-size:.55rem;padding:.6rem .45rem;}
+
+  /* Check items */
+  .ci{padding:.5rem .6rem;}
+  .clbl{font-size:.76rem;}
+  .cbox{width:14px;height:14px;}
+
+  /* Libraries */
+  .lc{padding:.6rem;}
+  .lic{width:24px;height:24px;font-size:.8rem;}
+
+  /* Tools */
+  .tgrid{grid-template-columns:1fr;}
+  
+  /* Section header */
+  .slbl{font-size:.55rem;}
+}
 .nav-links {
   display: flex;
   justify-content: center;

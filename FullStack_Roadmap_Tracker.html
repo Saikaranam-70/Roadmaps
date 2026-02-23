@@ -104,7 +104,50 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(8,12,20,0.94
 .nfill{height:100%;background:linear-gradient(90deg,var(--green),var(--blue));border-radius:99px;transition:width .5s ease;}
 .rbtn{font-family:'JetBrains Mono',monospace;font-size:.58rem;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);color:var(--red);padding:.3rem .65rem;border-radius:6px;cursor:pointer;letter-spacing:.04em;transition:background .2s;}
 .rbtn:hover{background:rgba(248,113,113,.15);}
-@media(max-width:768px){.nav-stacks{display:none;}.nav-right{display:none;}}
+@media(max-width:768px){.nav-stacks{display:none;}.nav-right{display:none;};}
+
+/* ── COMPREHENSIVE MOBILE STYLES ── */
+@media(max-width:768px){
+  nav{padding:0 1rem;height:52px;}
+  .nav-logo{font-size:.7rem;}
+  .hero{padding:76px 1rem 32px;}
+  .hero h1{font-size:clamp(1.6rem,7vw,2.5rem)!important;}
+  .hero p{font-size:.85rem;}
+  .dash,.dgrid-wrap{padding:0 1rem;margin-bottom:2rem;}
+  main{padding:0 1rem 5rem;}
+  .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 .8rem;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tb{font-size:.58rem;padding:.65rem .55rem;white-space:nowrap;flex-shrink:0;}
+  .tcw{padding:.85rem 1rem;}
+  .ci{padding:.55rem .7rem;gap:.6rem;}
+  .clbl{font-size:.8rem;}
+  .lgrid{grid-template-columns:1fr;}
+  .rc,.cc{padding:.7rem .8rem;gap:.6rem;flex-wrap:wrap;}
+  .rc:hover,.cc:hover{transform:none;}
+  .rname,.cname{font-size:.82rem;}
+  .rright,.cright{width:100%;justify-content:flex-end;}
+  .rurl,.curl{font-size:.58rem;}
+  .tgrid{grid-template-columns:repeat(2,1fr);}
+  .phd{padding:.75rem 1rem;gap:.6rem;}
+  .phtitle{font-size:.9rem;}
+  .phmonths{display:none;}
+  .dgrid{grid-template-columns:repeat(2,1fr)!important;gap:.65rem;}
+  .dval{font-size:1.4rem!important;}
+}
+@media(max-width:480px){
+  nav{height:48px;}
+  .hero{padding:68px .85rem 28px;}
+  .dash{padding:0 .85rem;}
+  .dgrid{gap:.5rem!important;}
+  .dc{padding:.75rem .9rem;}
+  .dval{font-size:1.2rem!important;}
+  main{padding:0 .85rem 4rem;}
+  .phd{padding:.65rem .85rem;}
+  .phtitle{font-size:.85rem;}
+  .tb{font-size:.55rem;padding:.6rem .45rem;}
+  .clbl{font-size:.76rem;}
+  .tgrid{grid-template-columns:1fr;}
+}
 
 /* ─── HERO ─── */
 .hero{position:relative;z-index:1;padding:96px 2rem 40px;text-align:center;max-width:900px;margin:0 auto;}
