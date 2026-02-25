@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCS NQT 2026 — Zero to Hero Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --card: #1a1a26;
+    --border: #2a2a3e;
+    --accent: #00e5ff;
+    --accent2: #ff6b35;
+    --accent3: #7c3aed;
+    --green: #00ff88;
+    --text: #e8e8f0;
+    --muted: #6b7280;
+    --yellow: #ffd700;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+  /* HEADER */
+  header {
+    padding: 60px 20px 40px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(0,229,255,0.1);
+    border: 1px solid rgba(0,229,255,0.3);
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    padding: 6px 16px;
+    border-radius: 2px;
+    margin-bottom: 24px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(0,229,255,0.2); }
+    50% { box-shadow: 0 0 25px rgba(0,229,255,0.5); }
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, var(--accent3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-bottom: 40px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* OVERALL PROGRESS */
+  .overall-progress {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 32px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .overall-progress::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent3), var(--green));
+  }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .progress-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+  }
+
+  .progress-pct {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .progress-bar-wrap {
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    height: 10px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 12px rgba(0,229,255,0.5);
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-val {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--green);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .stat-lbl { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+  /* RESET BTN */
+  .btn-reset {
+    margin-left: auto;
+    background: rgba(255,107,53,0.1);
+    border: 1px solid rgba(255,107,53,0.3);
+    color: var(--accent2);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-reset:hover { background: rgba(255,107,53,0.2); }
+
+  /* PHASE */
+  .phase { margin-bottom: 48px; }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .phase-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    background: rgba(0,229,255,0.1);
+    border: 1px solid rgba(0,229,255,0.2);
+    padding: 4px 10px;
+    border-radius: 2px;
+    letter-spacing: 2px;
+    white-space: nowrap;
+  }
+
+  .phase-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .phase-meta {
+    margin-left: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .phase-progress-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--green);
+  }
+
+  /* TOPIC GRID */
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  /* TOPIC CARD */
+  .topic-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .topic-card:hover {
+    border-color: rgba(0,229,255,0.25);
+    transform: translateY(-2px);
+  }
+
+  .topic-card.completed {
+    border-color: rgba(0,255,136,0.3);
+    background: rgba(0,255,136,0.03);
+  }
+
+  .topic-top {
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .topic-icon {
+    font-size: 1.4rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .topic-info { flex: 1; }
+
+  .topic-name {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .topic-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .topic-check {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    margin-top: 2px;
+  }
+
+  .topic-card.completed .topic-check {
+    border-color: var(--green);
+    background: var(--green);
+    color: #000;
+  }
+
+  .checkmark { font-size: 12px; display: none; }
+  .topic-card.completed .checkmark { display: block; }
+
+  /* SUBTASKS */
+  .subtasks {
+    border-top: 1px solid var(--border);
+    padding: 12px 20px 16px;
+  }
+
+  .subtask {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    cursor: pointer;
+  }
+
+  .subtask-check {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+
+  .subtask.done .subtask-check {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+  }
+
+  .subtask.done .subtask-check::after { content: '✓'; font-size: 10px; font-weight: 700; }
+
+  .subtask-label {
+    font-size: 0.82rem;
+    color: var(--muted);
+    transition: color 0.15s;
+  }
+
+  .subtask.done .subtask-label {
+    color: var(--text);
+    text-decoration: line-through;
+    text-decoration-color: var(--accent);
+  }
+
+  .resource-tag {
+    margin-left: auto;
+    font-size: 0.65rem;
+    font-family: 'Space Mono', monospace;
+    color: var(--accent2);
+    background: rgba(255,107,53,0.08);
+    border: 1px solid rgba(255,107,53,0.2);
+    padding: 2px 6px;
+    border-radius: 2px;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .resource-tag:hover { background: rgba(255,107,53,0.15); }
+
+  /* TOPIC PROGRESS BAR */
+  .topic-progress-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.05);
+    margin: 0 20px 12px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .topic-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  /* EXAM INFO */
+  .exam-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .info-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .info-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .info-card.blue::after { background: var(--accent); }
+  .info-card.orange::after { background: var(--accent2); }
+  .info-card.purple::after { background: var(--accent3); }
+  .info-card.yellow::after { background: var(--yellow); }
+
+  .info-icon { font-size: 1.6rem; margin-bottom: 8px; }
+  .info-title { font-size: 0.7rem; color: var(--muted); letter-spacing: 1px; font-family: 'Space Mono', monospace; margin-bottom: 4px; }
+  .info-val { font-size: 1.1rem; font-weight: 700; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-family: 'Space Mono', monospace;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Collapse toggle */
+  .toggle-arrow {
+    font-size: 0.7rem;
+    margin-left: 6px;
+    color: var(--muted);
+    transition: transform 0.2s;
+    display: inline-block;
+  }
+
+  .phase-toggle { cursor: pointer; display: flex; align-items: center; gap: 16px; flex: 1; }
+  .phase-collapsed .topic-grid { display: none; }
+  .phase-collapsed .toggle-arrow { transform: rotate(-90deg); }
+
+  @media (max-width: 600px) {
+    .stats-row { gap: 20px; }
+    .progress-pct { font-size: 2rem; }
+    .phase-meta { display: none; }
+  }
+  .nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 12px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 13px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  position: relative;
+  padding: 6px 0;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -4px;
+  background-color: var(--coral);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a[aria-current="page"] {
+  color: var(--text);
+}
+
+.nav-links a:hover::after, .nav-links a[aria-current="page"]::after {
+  width: 100%;
+}
+</style>
+</head>
+<body>
+  <div class="nav-links">
+    <a href="https://saikaranam.me/">AIML</a>
+    <a href="https://saikaranam.me/FullStack_Roadmap_Tracker.html">Full Stack</a>
+    <a href="https://saikaranam.me/Cloud_Computing_Roadmap.html" >Cloud</a>
+    <a href="https://saikaranam.me/Data_Roadmap_Tracker.html">Data</a>
+    <a href="https://saikaranam.me/tcs-nqt.html" aria-current="page">TCS-NQT</a>
+  </div>
+
+<header>
+  
+  <div class="badge">◉ TCS NQT 2026 — COMPLETE ROADMAP</div>
+  <h1>Zero to Hero</h1>
+  <p class="subtitle">// structured prep guide · free resources · track progress</p>
+</header>
+
+<div class="container">
+
+  <!-- EXAM INFO -->
+  <div class="exam-info">
+    <div class="info-card blue">
+      <div class="info-icon">📋</div>
+      <div class="info-title">SECTIONS</div>
+      <div class="info-val">Foundation + Advanced</div>
+    </div>
+    <div class="info-card orange">
+      <div class="info-icon">⏱️</div>
+      <div class="info-title">DURATION</div>
+      <div class="info-val">~3 Hours Total</div>
+    </div>
+    <div class="info-card purple">
+      <div class="info-icon">🎯</div>
+      <div class="info-title">TOTAL MARKS</div>
+      <div class="info-val">Adaptive Scoring</div>
+    </div>
+    <div class="info-card yellow">
+      <div class="info-icon">🗓️</div>
+      <div class="info-title">PREP TIME</div>
+      <div class="info-val">3–4 Months</div>
+    </div>
+  </div>
+
+  <!-- OVERALL PROGRESS -->
+  <div class="overall-progress">
+    <div class="progress-header">
+      <div>
+        <div class="progress-label">OVERALL COMPLETION</div>
+        <div class="progress-pct" id="overallPct">0%</div>
+      </div>
+      <button class="btn-reset" onclick="resetAll()">↺ RESET ALL</button>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="overallBar" style="width:0%"></div>
+    </div>
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-val" id="doneTopics">0</div>
+        <div class="stat-lbl">Topics Done</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="totalTopics">0</div>
+        <div class="stat-lbl">Total Topics</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="doneSubtasks">0</div>
+        <div class="stat-lbl">Subtasks Done</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="totalSubtasks">0</div>
+        <div class="stat-lbl">Total Subtasks</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROADMAP PHASES -->
+  <div id="roadmap"></div>
+
+</div>
+
+<footer>
+  Built for TCS NQT 2026 aspirants · Progress saved in browser · Stay consistent 💪
+</footer>
+
+<script>
+const roadmap = [
+  {
+    phase: "PHASE 01",
+    title: "Foundation — Aptitude & Reasoning",
+    duration: "Weeks 1–4",
+    color: "#00e5ff",
+    topics: [
+      {
+        id: "num_sys",
+        icon: "🔢",
+        name: "Number Systems",
+        desc: "Divisibility, HCF/LCM, remainders, unit digits, base conversions",
+        subtasks: [
+          { id: "ns1", label: "Divisibility rules 2–19", link: "https://www.indiabix.com/aptitude/numbers/" },
+          { id: "ns2", label: "HCF & LCM problems", link: "https://www.indiabix.com/aptitude/hcf-and-lcm/" },
+          { id: "ns3", label: "Remainder theorem", link: "https://unacademy.com/content/ssc/study-material/mathematics/remainder-theorem/" },
+          { id: "ns4", label: "Unit digit & cyclicity", link: "https://www.indiabix.com/aptitude/numbers/" },
+          { id: "ns5", label: "Practice 50 Qs on IndiaBix", link: "https://www.indiabix.com/aptitude/numbers/" },
+        ]
+      },
+      {
+        id: "percent",
+        icon: "📊",
+        name: "Percentages & Profit-Loss",
+        desc: "%, successive changes, profit-loss, discounts, markup",
+        subtasks: [
+          { id: "p1", label: "Percentage basics & formulas", link: "https://www.indiabix.com/aptitude/percentage/" },
+          { id: "p2", label: "Profit & Loss shortcuts", link: "https://www.indiabix.com/aptitude/profit-and-loss/" },
+          { id: "p3", label: "Discount & marked price", link: "https://www.indiabix.com/aptitude/profit-and-loss/" },
+          { id: "p4", label: "Mixed problems practice", link: "https://www.indiabix.com/aptitude/percentage/" },
+        ]
+      },
+      {
+        id: "ratio",
+        icon: "⚖️",
+        name: "Ratio, Proportion & Mixture",
+        desc: "Ratios, partnership, alligation, mixtures",
+        subtasks: [
+          { id: "r1", label: "Ratio & proportion concepts", link: "https://www.indiabix.com/aptitude/ratio-and-proportion/" },
+          { id: "r2", label: "Alligation & mixture rule", link: "https://www.indiabix.com/aptitude/alligation-or-mixture/" },
+          { id: "r3", label: "Partnership problems", link: "https://www.indiabix.com/aptitude/partnership/" },
+        ]
+      },
+      {
+        id: "time_work",
+        icon: "🕐",
+        name: "Time, Speed & Work",
+        desc: "Time-distance, boats, trains, pipes, work efficiency",
+        subtasks: [
+          { id: "tw1", label: "Time & distance basics", link: "https://www.indiabix.com/aptitude/time-and-distance/" },
+          { id: "tw2", label: "Relative speed & trains", link: "https://www.indiabix.com/aptitude/problems-on-trains/" },
+          { id: "tw3", label: "Boats & streams", link: "https://www.indiabix.com/aptitude/boats-and-streams/" },
+          { id: "tw4", label: "Time & work, pipes", link: "https://www.indiabix.com/aptitude/time-and-work/" },
+        ]
+      },
+      {
+        id: "si_ci",
+        icon: "💰",
+        name: "Simple & Compound Interest",
+        desc: "SI, CI, growth/decay, effective rate",
+        subtasks: [
+          { id: "si1", label: "Simple interest formula & Qs", link: "https://www.indiabix.com/aptitude/simple-interest/" },
+          { id: "si2", label: "Compound interest (half-yearly)", link: "https://www.indiabix.com/aptitude/compound-interest/" },
+          { id: "si3", label: "Practice 30 Qs", link: "https://www.indiabix.com/aptitude/compound-interest/" },
+        ]
+      },
+      {
+        id: "series",
+        icon: "🔡",
+        name: "Series & Sequences",
+        desc: "Number series, letter series, missing terms",
+        subtasks: [
+          { id: "sr1", label: "Arithmetic & geometric series", link: "https://www.indiabix.com/verbal-reasoning/number-series/" },
+          { id: "sr2", label: "Mixed series patterns", link: "https://www.indiabix.com/verbal-reasoning/number-series/" },
+          { id: "sr3", label: "Letter series patterns", link: "https://www.indiabix.com/verbal-reasoning/letter-series/" },
+        ]
+      },
+      {
+        id: "logical",
+        icon: "🧩",
+        name: "Logical Reasoning",
+        desc: "Blood relations, coding-decoding, direction sense, syllogisms, puzzles",
+        subtasks: [
+          { id: "lr1", label: "Blood relations", link: "https://www.indiabix.com/verbal-reasoning/blood-relation-test/" },
+          { id: "lr2", label: "Coding-decoding", link: "https://www.indiabix.com/verbal-reasoning/coding-decoding/" },
+          { id: "lr3", label: "Direction sense", link: "https://www.indiabix.com/verbal-reasoning/direction-sense-test/" },
+          { id: "lr4", label: "Syllogisms", link: "https://www.indiabix.com/verbal-reasoning/syllogism/" },
+          { id: "lr5", label: "Seating arrangement puzzles", link: "https://www.indiabix.com/logical-reasoning/logical-problems/" },
+        ]
+      },
+      {
+        id: "data_interp",
+        icon: "📈",
+        name: "Data Interpretation",
+        desc: "Tables, bar charts, pie charts, line graphs, caselets",
+        subtasks: [
+          { id: "di1", label: "Table DI sets", link: "https://www.indiabix.com/data-interpretation/table-charts/" },
+          { id: "di2", label: "Bar & line chart DI", link: "https://www.indiabix.com/data-interpretation/bar-charts/" },
+          { id: "di3", label: "Pie chart DI", link: "https://www.indiabix.com/data-interpretation/pie-charts/" },
+        ]
+      },
+    ]
+  },
+  {
+    phase: "PHASE 02",
+    title: "Verbal — English Language",
+    duration: "Weeks 3–6",
+    color: "#ff6b35",
+    topics: [
+      {
+        id: "vocab",
+        icon: "📖",
+        name: "Vocabulary & Word Power",
+        desc: "Synonyms, antonyms, analogies, fill in the blanks",
+        subtasks: [
+          { id: "v1", label: "Learn 10 new words/day (Merriam-Webster)", link: "https://www.merriam-webster.com/word-of-the-day" },
+          { id: "v2", label: "Synonyms & antonyms practice", link: "https://www.indiabix.com/verbal-ability/synonyms/" },
+          { id: "v3", label: "Word analogy problems", link: "https://www.indiabix.com/verbal-ability/analogies/" },
+          { id: "v4", label: "Fill in the blanks (100 Qs)", link: "https://www.indiabix.com/verbal-ability/selecting-words/" },
+        ]
+      },
+      {
+        id: "grammar",
+        icon: "✍️",
+        name: "Grammar & Sentence Correction",
+        desc: "Tenses, subject-verb agreement, error spotting, prepositions",
+        subtasks: [
+          { id: "g1", label: "English grammar basics (BBC)", link: "https://www.bbc.co.uk/learningenglish/english/course/english-you-need/unit-1/session-1" },
+          { id: "g2", label: "Error spotting practice", link: "https://www.indiabix.com/verbal-ability/spotting-errors/" },
+          { id: "g3", label: "Sentence correction 100 Qs", link: "https://www.indiabix.com/verbal-ability/sentence-correction/" },
+          { id: "g4", label: "Prepositions & conjunctions", link: "https://www.indiabix.com/verbal-ability/completing-statements/" },
+        ]
+      },
+      {
+        id: "rc",
+        icon: "📝",
+        name: "Reading Comprehension",
+        desc: "Passages, inference, tone, main idea",
+        subtasks: [
+          { id: "rc1", label: "RC passage strategies (YouTube TCS NQT)", link: "https://youtube.com/results?search_query=TCS+NQT+reading+comprehension" },
+          { id: "rc2", label: "Practice 20 RC passages", link: "https://www.indiabix.com/verbal-ability/reading-comprehension/" },
+          { id: "rc3", label: "Inference & tone questions", link: "https://www.indiabix.com/verbal-ability/reading-comprehension/" },
+        ]
+      },
+      {
+        id: "para",
+        icon: "🔀",
+        name: "Para-jumbles & Sentence Ordering",
+        desc: "Rearranging sentences, odd one out",
+        subtasks: [
+          { id: "pj1", label: "Para-jumble strategy", link: "https://www.indiabix.com/verbal-ability/ordering-of-sentences/" },
+          { id: "pj2", label: "Practice 50 sets", link: "https://www.indiabix.com/verbal-ability/ordering-of-sentences/" },
+        ]
+      },
+    ]
+  },
+  {
+    phase: "PHASE 03",
+    title: "Programming Logic & Computer Science",
+    duration: "Weeks 5–10",
+    color: "#7c3aed",
+    topics: [
+      {
+        id: "prog_basics",
+        icon: "💻",
+        name: "Programming Fundamentals",
+        desc: "Variables, loops, conditionals, functions, arrays — C/Java/Python",
+        subtasks: [
+          { id: "pb1", label: "C programming basics (freeCodeCamp YouTube)", link: "https://www.youtube.com/watch?v=KJgsSFOSQv0" },
+          { id: "pb2", label: "Java basics for NQT (GeeksForGeeks)", link: "https://www.geeksforgeeks.org/java/" },
+          { id: "pb3", label: "Python basics (Python.org docs)", link: "https://docs.python.org/3/tutorial/" },
+          { id: "pb4", label: "TCS NQT coding pattern (PrepInsta)", link: "https://prepinsta.com/tcs-nqt/" },
+          { id: "pb5", label: "50 basic coding questions practice", link: "https://www.hackerrank.com/domains/algorithms" },
+        ]
+      },
+      {
+        id: "arrays_strings",
+        icon: "🧮",
+        name: "Arrays & Strings",
+        desc: "Searching, sorting, string manipulation, pattern programs",
+        subtasks: [
+          { id: "as1", label: "Array manipulation (GFG)", link: "https://www.geeksforgeeks.org/array-data-structure/" },
+          { id: "as2", label: "String operations & palindrome", link: "https://www.geeksforgeeks.org/string-data-structure/" },
+          { id: "as3", label: "Sorting algorithms (bubble, selection, merge)", link: "https://visualgo.net/en/sorting" },
+          { id: "as4", label: "Pattern programs (50 types)", link: "https://www.geeksforgeeks.org/programs-printing-pyramid-patterns-python/" },
+        ]
+      },
+      {
+        id: "ds_basics",
+        icon: "🌳",
+        name: "Data Structures (Basic)",
+        desc: "Stacks, queues, linked lists, trees — concepts",
+        subtasks: [
+          { id: "ds1", label: "Stack & queue concepts", link: "https://www.geeksforgeeks.org/stack-data-structure/" },
+          { id: "ds2", label: "Linked list basics", link: "https://www.geeksforgeeks.org/data-structures/linked-list/" },
+          { id: "ds3", label: "Binary tree traversals", link: "https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/" },
+          { id: "ds4", label: "Practice DS MCQs (Sanfoundry)", link: "https://www.sanfoundry.com/data-structure-mcqs/" },
+        ]
+      },
+      {
+        id: "algo",
+        icon: "⚡",
+        name: "Algorithms & Complexity",
+        desc: "Time/space complexity, searching, recursion, dynamic programming basics",
+        subtasks: [
+          { id: "al1", label: "Big-O notation (CS50 YouTube)", link: "https://www.youtube.com/watch?v=Mo4vesaut8g" },
+          { id: "al2", label: "Binary search & linear search", link: "https://www.geeksforgeeks.org/binary-search/" },
+          { id: "al3", label: "Recursion basics (10 problems)", link: "https://www.geeksforgeeks.org/recursion/" },
+          { id: "al4", label: "Algorithm MCQs (Sanfoundry)", link: "https://www.sanfoundry.com/algorithms-mcqs/" },
+        ]
+      },
+      {
+        id: "dbms",
+        icon: "🗄️",
+        name: "DBMS & SQL Basics",
+        desc: "SQL queries, normalization, ER diagrams, keys",
+        subtasks: [
+          { id: "db1", label: "SQL basics (W3Schools)", link: "https://www.w3schools.com/sql/" },
+          { id: "db2", label: "Joins, GROUP BY, HAVING", link: "https://www.w3schools.com/sql/sql_join.asp" },
+          { id: "db3", label: "Normalization (1NF-3NF)", link: "https://www.geeksforgeeks.org/normal-forms-in-dbms/" },
+          { id: "db4", label: "SQL practice 50 Qs (HackerRank)", link: "https://www.hackerrank.com/domains/sql" },
+        ]
+      },
+      {
+        id: "os_cn",
+        icon: "🖥️",
+        name: "OS & Computer Networks",
+        desc: "Process, threads, memory, TCP/IP, OSI model",
+        subtasks: [
+          { id: "oc1", label: "OS concepts — process, scheduling", link: "https://www.geeksforgeeks.org/operating-systems/" },
+          { id: "oc2", label: "Memory management basics", link: "https://www.geeksforgeeks.org/memory-management-in-operating-system/" },
+          { id: "oc3", label: "OSI & TCP/IP model", link: "https://www.geeksforgeeks.org/layers-of-osi-model/" },
+          { id: "oc4", label: "CN & OS MCQs (Sanfoundry)", link: "https://www.sanfoundry.com/computer-network-mcqs/" },
+        ]
+      },
+    ]
+  },
+  {
+    phase: "PHASE 04",
+    title: "Coding Section — Advanced NQT",
+    duration: "Weeks 9–14",
+    color: "#00ff88",
+    topics: [
+      {
+        id: "tcs_coding",
+        icon: "🏆",
+        name: "TCS NQT Coding Practice",
+        desc: "2 coding Qs in 45 min — practice previous year patterns",
+        subtasks: [
+          { id: "tc1", label: "TCS NQT coding questions bank (PrepInsta)", link: "https://prepinsta.com/tcs-nqt/coding-questions/" },
+          { id: "tc2", label: "50 easy LeetCode problems", link: "https://leetcode.com/problemset/all/?difficulty=EASY" },
+          { id: "tc3", label: "50 medium LeetCode problems", link: "https://leetcode.com/problemset/all/?difficulty=MEDIUM" },
+          { id: "tc4", label: "TCS CodeVita archive practice", link: "https://www.hackerrank.com/contests" },
+          { id: "tc5", label: "HackerRank 30 Days of Code", link: "https://www.hackerrank.com/domains/tutorials/30-days-of-code" },
+        ]
+      },
+      {
+        id: "problem_solving",
+        icon: "🧠",
+        name: "Problem Solving Patterns",
+        desc: "Sliding window, two pointers, greedy, divide & conquer",
+        subtasks: [
+          { id: "ps1", label: "Sliding window problems (10)", link: "https://leetcode.com/tag/sliding-window/" },
+          { id: "ps2", label: "Two pointer technique (10)", link: "https://leetcode.com/tag/two-pointers/" },
+          { id: "ps3", label: "Greedy algorithm problems (10)", link: "https://leetcode.com/tag/greedy/" },
+          { id: "ps4", label: "String manipulation patterns", link: "https://leetcode.com/tag/string/" },
+        ]
+      },
+    ]
+  },
+  {
+    phase: "PHASE 05",
+    title: "Mock Tests & Final Revision",
+    duration: "Weeks 13–16",
+    color: "#ffd700",
+    topics: [
+      {
+        id: "mock_tcs",
+        icon: "🎯",
+        name: "TCS NQT Mock Tests",
+        desc: "Full-length mocks under timed conditions",
+        subtasks: [
+          { id: "mt1", label: "PrepInsta TCS NQT mock test 1", link: "https://prepinsta.com/tcs-nqt/mock-test/" },
+          { id: "mt2", label: "PrepInsta TCS NQT mock test 2", link: "https://prepinsta.com/tcs-nqt/mock-test/" },
+          { id: "mt3", label: "TCS iON practice platform (official)", link: "https://www.tcsion.com/hub/national-qualifier-test/" },
+          { id: "mt4", label: "Analyze errors & weak areas", link: "https://prepinsta.com/tcs-nqt/" },
+          { id: "mt5", label: "Final full mock — timed 3h", link: "https://prepinsta.com/tcs-nqt/mock-test/" },
+        ]
+      },
+      {
+        id: "revision",
+        icon: "📌",
+        name: "Rapid Revision",
+        desc: "Formula sheets, shortcut tricks, last-week sprint",
+        subtasks: [
+          { id: "rv1", label: "Aptitude formula quick-sheet", link: "https://prepinsta.com/tcs-nqt/syllabus/" },
+          { id: "rv2", label: "Programming concept cheatsheet", link: "https://www.geeksforgeeks.org/tcs-nqt/" },
+          { id: "rv3", label: "Verbal shortcuts revision", link: "https://www.indiabix.com/verbal-ability/questions-and-answers/" },
+          { id: "rv4", label: "Weak topic focused 2-day sprint", link: "https://prepinsta.com/tcs-nqt/" },
+        ]
+      },
+      {
+        id: "strategy",
+        icon: "🗺️",
+        name: "Exam Day Strategy",
+        desc: "Time management, section ordering, attempt strategy",
+        subtasks: [
+          { id: "st1", label: "Read official TCS NQT guidelines", link: "https://www.tcsion.com/hub/national-qualifier-test/" },
+          { id: "st2", label: "Attempt order planning (easy→hard)", link: "https://prepinsta.com/tcs-nqt/" },
+          { id: "st3", label: "Time per question calculation", link: "https://prepinsta.com/tcs-nqt/" },
+        ]
+      },
+    ]
+  }
+];
+
+const STORAGE_KEY = 'tcs_nqt_2026_progress';
+
+function getProgress() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  } catch { return {}; }
+}
+
+function saveProgress(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function isTopicDone(topicId) {
+  const p = getProgress();
+  return !!p[`topic_${topicId}`];
+}
+
+function isSubtaskDone(subtaskId) {
+  const p = getProgress();
+  return !!p[`sub_${subtaskId}`];
+}
+
+function toggleTopic(topicId) {
+  const p = getProgress();
+  const key = `topic_${topicId}`;
+  p[key] = !p[key];
+  // Also toggle all subtasks in sync
+  const phase = roadmap.flatMap(ph => ph.topics).find(t => t.id === topicId);
+  if (phase) {
+    phase.subtasks.forEach(s => { p[`sub_${s.id}`] = p[key]; });
+  }
+  saveProgress(p);
+  render();
+}
+
+function toggleSubtask(subtaskId, topicId) {
+  const p = getProgress();
+  p[`sub_${subtaskId}`] = !p[`sub_${subtaskId}`];
+  // Check if all subtasks of topic done
+  const topic = roadmap.flatMap(ph => ph.topics).find(t => t.id === topicId);
+  if (topic) {
+    const allDone = topic.subtasks.every(s => p[`sub_${s.id}`]);
+    p[`topic_${topicId}`] = allDone;
+  }
+  saveProgress(p);
+  render();
+}
+
+function resetAll() {
+  if (confirm('Reset ALL progress? This cannot be undone.')) {
+    localStorage.removeItem(STORAGE_KEY);
+    render();
+  }
+}
+
+function togglePhase(phaseEl) {
+  phaseEl.classList.toggle('phase-collapsed');
+}
+
+function updateOverall() {
+  let totalTopics = 0, doneTopics = 0, totalSubs = 0, doneSubs = 0;
+  roadmap.forEach(phase => {
+    phase.topics.forEach(topic => {
+      totalTopics++;
+      if (isTopicDone(topic.id)) doneTopics++;
+      topic.subtasks.forEach(s => {
+        totalSubs++;
+        if (isSubtaskDone(s.id)) doneSubs++;
+      });
+    });
+  });
+  const pct = totalSubs > 0 ? Math.round((doneSubs / totalSubs) * 100) : 0;
+  document.getElementById('overallPct').textContent = pct + '%';
+  document.getElementById('overallBar').style.width = pct + '%';
+  document.getElementById('doneTopics').textContent = doneTopics;
+  document.getElementById('totalTopics').textContent = totalTopics;
+  document.getElementById('doneSubtasks').textContent = doneSubs;
+  document.getElementById('totalSubtasks').textContent = totalSubs;
+}
+
+function render() {
+  const container = document.getElementById('roadmap');
+  container.innerHTML = '';
+
+  roadmap.forEach((phase, pi) => {
+    const phaseEl = document.createElement('div');
+    phaseEl.className = 'phase';
+    phaseEl.id = `phase_${pi}`;
+
+    // Phase header
+    const totalT = phase.topics.length;
+    const doneT = phase.topics.filter(t => isTopicDone(t.id)).length;
+    phaseEl.innerHTML = `
+      <div class="phase-header">
+        <div class="phase-toggle" onclick="togglePhase(document.getElementById('phase_${pi}'))">
+          <span class="phase-num">${phase.phase}</span>
+          <span class="phase-title">${phase.title} <span class="toggle-arrow">▾</span></span>
+        </div>
+        <span class="phase-progress-text">${doneT}/${totalT}</span>
+        <span class="phase-meta">${phase.duration}</span>
+      </div>
+      <div class="topic-grid" id="grid_${pi}"></div>
+    `;
+
+    container.appendChild(phaseEl);
+
+    const grid = phaseEl.querySelector(`#grid_${pi}`);
+    phase.topics.forEach(topic => {
+      const topicDone = isTopicDone(topic.id);
+      const doneSubs = topic.subtasks.filter(s => isSubtaskDone(s.id)).length;
+      const totalSubs = topic.subtasks.length;
+      const subPct = totalSubs > 0 ? (doneSubs / totalSubs * 100) : 0;
+
+      const card = document.createElement('div');
+      card.className = 'topic-card' + (topicDone ? ' completed' : '');
+      card.innerHTML = `
+        <div class="topic-top" onclick="toggleTopic('${topic.id}')">
+          <div class="topic-icon">${topic.icon}</div>
+          <div class="topic-info">
+            <div class="topic-name">${topic.name}</div>
+            <div class="topic-desc">${topic.desc}</div>
+          </div>
+          <div class="topic-check">
+            <span class="checkmark">✓</span>
+          </div>
+        </div>
+        <div class="topic-progress-bar">
+          <div class="topic-progress-fill" style="width:${subPct}%"></div>
+        </div>
+        <div class="subtasks">
+          ${topic.subtasks.map(s => {
+            const done = isSubtaskDone(s.id);
+            return `<div class="subtask ${done ? 'done' : ''}" onclick="event.stopPropagation(); toggleSubtask('${s.id}', '${topic.id}')">
+              <div class="subtask-check"></div>
+              <span class="subtask-label">${s.label}</span>
+              ${s.link ? `<a class="resource-tag" href="${s.link}" target="_blank" onclick="event.stopPropagation()">FREE →</a>` : ''}
+            </div>`;
+          }).join('')}
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  });
+
+  updateOverall();
+}
+
+// Init
+render();
+</script>
+</body>
+</html>
