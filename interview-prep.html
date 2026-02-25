@@ -1,0 +1,2231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview Prep Roadmap — Full Stack</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Clash+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080b12;
+  --surface: #0e1220;
+  --card: #111827;
+  --card2: #131b2e;
+  --border: #1e2d45;
+  --border2: #243352;
+  --mern: #38bdf8;
+  --spring: #fb923c;
+  --mongo: #4ade80;
+  --sql: #c084fc;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --muted2: #94a3b8;
+  --red: #f87171;
+  --yellow: #fbbf24;
+  --green: #34d399;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Animated background */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 40% at 20% 10%, #0ea5e910 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 80%, #6366f108 0%, transparent 60%),
+    radial-gradient(ellipse 70% 40% at 50% 50%, #10b98105 0%, transparent 70%);
+  pointer-events:none;
+  z-index:0;
+}
+
+body::after {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(30,45,69,0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,45,69,0.4) 1px, transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;
+  z-index:0;
+}
+
+.wrap { position:relative; z-index:1; max-width:1440px; margin:0 auto; padding:0 20px 60px; }
+
+/* ======= HEADER ======= */
+header {
+  padding: 48px 0 36px;
+  text-align: center;
+  position: relative;
+}
+
+.header-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted2);
+  margin-bottom: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 100px;
+}
+
+.header-eyebrow::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--green); animation: pulse 2s infinite; }
+
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+/* ======= MASTER PROGRESS ======= */
+.master-progress {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin: 32px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.master-progress::before {
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:2px;
+  background: linear-gradient(90deg, var(--mern), var(--mongo), var(--spring), var(--sql));
+}
+
+.mp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.mp-title { font-size: 11px; letter-spacing: 2px; color: var(--muted2); text-transform: uppercase; }
+
+.mp-overall {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -1px;
+}
+
+.mp-overall span { font-size: 13px; color: var(--muted); font-weight: 400; }
+
+.tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.track {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.track-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.track-name { font-size: 12px; font-weight: 600; }
+.track-stats { font-size: 10px; color: var(--muted); }
+
+.track-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.track-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.5s cubic-bezier(.4,0,.2,1);
+  width: 0%;
+}
+
+/* ======= TABS ======= */
+.tab-nav {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  margin-bottom: 32px;
+  scrollbar-width: none;
+}
+
+.tab-nav::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tab-btn:hover { color: var(--text); border-color: var(--border2); }
+.tab-btn.active { border-color: currentColor; }
+.tab-btn[data-t="mern"].active { color: var(--mern); background: #38bdf808; }
+.tab-btn[data-t="spring"].active { color: var(--spring); background: #fb923c08; }
+.tab-btn[data-t="mongo"].active { color: var(--mongo); background: #4ade8008; }
+.tab-btn[data-t="sql"].active { color: var(--sql); background: #c084fc08; }
+.tab-btn[data-t="all"].active { color: #fff; background: #ffffff08; }
+
+/* ======= PANEL ======= */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ======= SECTION ======= */
+.section {
+  margin-bottom: 40px;
+}
+
+.section-hdr {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-num {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  min-width: 30px;
+}
+
+.section-name {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  flex: 1;
+}
+
+.section-badge {
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 700;
+  border: 1px solid currentColor;
+}
+
+.lvl-beginner { color: var(--green); }
+.lvl-intermediate { color: var(--yellow); }
+.lvl-advanced { color: var(--red); }
+.lvl-expert { color: #e879f9; }
+
+.section-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  color: var(--muted);
+  margin-left: auto;
+}
+
+.sp-bar {
+  width: 80px;
+  height: 4px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.sp-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+/* ======= CARDS GRID ======= */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 12px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+  position: relative;
+}
+
+.card:hover {
+  border-color: var(--border2);
+  transform: translateY(-1px);
+}
+
+.card-top-bar {
+  height: 2px;
+  width: 100%;
+}
+
+.card-inner {
+  padding: 14px 16px;
+}
+
+.card-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--muted2);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.items { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
+}
+
+.item:hover { background: var(--surface); }
+
+.item.done { opacity: 0.45; }
+
+.checkbox {
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  border: 1.5px solid var(--border2);
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-size: 9px;
+  color: var(--bg);
+  font-weight: 900;
+}
+
+.item.done .checkbox { border-color: transparent; }
+.item.done .label { text-decoration: line-through; color: var(--muted); }
+
+.label {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.45;
+  flex: 1;
+}
+
+.item-tag {
+  font-size: 8px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.tag-q { background: #f8717115; color: #f87171; border: 1px solid #f8717130; }
+.tag-c { background: #60a5fa15; color: #60a5fa; border: 1px solid #60a5fa30; }
+.tag-t { background: #a78bfa15; color: #a78bfa; border: 1px solid #a78bfa30; }
+
+.card-footer {
+  padding: 8px 16px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cf-count { font-size: 10px; color: var(--muted); }
+
+.cf-bar {
+  flex: 1;
+  height: 3px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.cf-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+/* ======= TIPS ======= */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.tip-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.tip-em { font-size: 20px; margin-bottom: 10px; }
+.tip-t { font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+.tip-b { font-size: 11px; color: var(--muted2); line-height: 1.7; }
+.tip-b code { background: var(--surface); padding: 1px 5px; border-radius: 3px; color: var(--mern); font-size: 10px; }
+
+/* Reset btn */
+.reset-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.reset-btn:hover { border-color: var(--red); color: var(--red); }
+
+@keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+.section { animation: fadeIn 0.35s ease both; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="header-eyebrow">Live Progress Tracker</div>
+  <h1>Interview Prep<br>Complete Roadmap</h1>
+  <p class="subtitle">// MERN · Spring Boot · MongoDB · SQL · 0 to Advanced</p>
+</header>
+
+<!-- MASTER PROGRESS -->
+<div class="master-progress">
+  <div class="mp-header">
+    <div>
+      <div class="mp-title">Overall Completion</div>
+      <div class="mp-overall"><span id="done-total">0</span> / <span id="all-total">0</span> <span>topics done</span></div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <div class="mp-overall" id="overall-pct">0%</div>
+      <button class="reset-btn" onclick="resetAll()">Reset All</button>
+    </div>
+  </div>
+  <div class="tracks-grid">
+    <div class="track">
+      <div class="track-top">
+        <div class="track-name" style="color:var(--mern)">⬡ MERN Stack</div>
+        <div class="track-stats" id="mern-stat">0/0</div>
+      </div>
+      <div class="track-bar"><div class="track-fill" id="mern-fill" style="background:var(--mern)"></div></div>
+    </div>
+    <div class="track">
+      <div class="track-top">
+        <div class="track-name" style="color:var(--spring)">☕ Spring Boot</div>
+        <div class="track-stats" id="spring-stat">0/0</div>
+      </div>
+      <div class="track-bar"><div class="track-fill" id="spring-fill" style="background:var(--spring)"></div></div>
+    </div>
+    <div class="track">
+      <div class="track-top">
+        <div class="track-name" style="color:var(--mongo)">🍃 MongoDB</div>
+        <div class="track-stats" id="mongo-stat">0/0</div>
+      </div>
+      <div class="track-bar"><div class="track-fill" id="mongo-fill" style="background:var(--mongo)"></div></div>
+    </div>
+    <div class="track">
+      <div class="track-top">
+        <div class="track-name" style="color:var(--sql)">🗄️ SQL / RDBMS</div>
+        <div class="track-stats" id="sql-stat">0/0</div>
+      </div>
+      <div class="track-bar"><div class="track-fill" id="sql-fill" style="background:var(--sql)"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tab-nav">
+  <button class="tab-btn active" data-t="all">All Topics</button>
+  <button class="tab-btn" data-t="mern">MERN Stack</button>
+  <button class="tab-btn" data-t="spring">Spring Boot</button>
+  <button class="tab-btn" data-t="mongo">MongoDB</button>
+  <button class="tab-btn" data-t="sql">SQL</button>
+  <button class="tab-btn" data-t="tips">Interview Tips</button>
+</div>
+
+<div id="panel-all" class="panel active"></div>
+<div id="panel-mern" class="panel"></div>
+<div id="panel-spring" class="panel"></div>
+<div id="panel-mongo" class="panel"></div>
+<div id="panel-sql" class="panel"></div>
+<div id="panel-tips" class="panel"></div>
+
+</div>
+
+<script>
+// =====================
+// DATA — Full Roadmap
+// =====================
+const ROADMAP = {
+  mern: {
+    color: '#38bdf8',
+    label: '⬡ MERN Stack',
+    sections: [
+      {
+        id: 'js-basics',
+        name: 'JavaScript — Foundations',
+        level: 'beginner',
+        cards: [
+          {
+            title: 'Variables & Types',
+            items: [
+              { label: 'var vs let vs const — scope, hoisting differences', tag: 'q' },
+              { label: 'Primitive types: string, number, boolean, null, undefined, symbol, BigInt', tag: 'c' },
+              { label: 'typeof operator — quirks (typeof null === "object")', tag: 'q' },
+              { label: 'Type coercion — == vs === with examples', tag: 'q' },
+              { label: 'Truthy and falsy values list (0, "", null, undefined, NaN, false)', tag: 'q' },
+              { label: 'Template literals — tagged templates', tag: 'c' },
+            ]
+          },
+          {
+            title: 'Functions',
+            items: [
+              { label: 'Function declaration vs expression vs arrow function', tag: 'q' },
+              { label: 'IIFE — Immediately Invoked Function Expression', tag: 'q' },
+              { label: 'Default parameters', tag: 'c' },
+              { label: 'Rest parameters (...args) vs arguments object', tag: 'q' },
+              { label: 'Higher-order functions — map, filter, reduce', tag: 'q' },
+              { label: 'Pure functions — definition and benefits', tag: 'c' },
+            ]
+          },
+          {
+            title: 'Arrays & Objects',
+            items: [
+              { label: 'Array methods: map, filter, reduce, find, findIndex, some, every, flat, flatMap', tag: 'q' },
+              { label: 'Object destructuring — nested, with defaults', tag: 'c' },
+              { label: 'Array destructuring — skipping elements, rest', tag: 'c' },
+              { label: 'Spread operator — shallow copy vs deep copy', tag: 'q' },
+              { label: 'Object.keys, Object.values, Object.entries', tag: 'q' },
+              { label: 'Optional chaining (?.) and Nullish coalescing (??)', tag: 'q' },
+              { label: 'Array.from, Array.isArray', tag: 'c' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'js-core',
+        name: 'JavaScript — Core Concepts',
+        level: 'intermediate',
+        cards: [
+          {
+            title: 'Scope & Closures',
+            items: [
+              { label: 'Global scope vs function scope vs block scope', tag: 'q' },
+              { label: 'Lexical scope — where variables are defined matters', tag: 'q' },
+              { label: 'Closure — function remembers its outer scope', tag: 'q' },
+              { label: 'Closure practical examples: counter, memoize, module pattern', tag: 'q' },
+              { label: 'IIFE for encapsulation using closures', tag: 'c' },
+              { label: 'Common closure interview trap: var in loop', tag: 'q' },
+            ]
+          },
+          {
+            title: 'this Keyword',
+            items: [
+              { label: 'this in global context (window/undefined in strict)', tag: 'q' },
+              { label: 'this in regular function vs arrow function', tag: 'q' },
+              { label: 'this in object methods', tag: 'q' },
+              { label: 'call(), apply(), bind() — differences with examples', tag: 'q' },
+              { label: 'this in class methods', tag: 'q' },
+              { label: 'this in event listeners', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Prototypes & Inheritance',
+            items: [
+              { label: 'Prototype chain — how property lookup works', tag: 'q' },
+              { label: '__proto__ vs prototype property', tag: 'q' },
+              { label: 'Object.create() for prototypal inheritance', tag: 'q' },
+              { label: 'ES6 class syntax — syntactic sugar over prototypes', tag: 'q' },
+              { label: 'extends and super keyword', tag: 'q' },
+              { label: 'hasOwnProperty vs in operator', tag: 'q' },
+              { label: 'instanceof operator', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Hoisting',
+            items: [
+              { label: 'What is hoisting — declaration moved to top', tag: 'q' },
+              { label: 'var hoisting — undefined, not value', tag: 'q' },
+              { label: 'let/const — Temporal Dead Zone (TDZ)', tag: 'q' },
+              { label: 'Function declaration hoisting — fully hoisted', tag: 'q' },
+              { label: 'Function expression hoisting — variable only', tag: 'q' },
+              { label: 'Class hoisting — not hoisted', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'js-async',
+        name: 'JavaScript — Async & Event Loop',
+        level: 'advanced',
+        cards: [
+          {
+            title: 'Event Loop',
+            items: [
+              { label: 'Call Stack — LIFO structure', tag: 'q' },
+              { label: 'Web APIs — setTimeout, fetch, DOM events', tag: 'c' },
+              { label: 'Callback Queue (Task Queue) — macrotasks', tag: 'q' },
+              { label: 'Microtask Queue — Promises, queueMicrotask', tag: 'q' },
+              { label: 'Microtasks run BEFORE next macrotask — interview key', tag: 'q' },
+              { label: 'Predict output: setTimeout vs Promise order', tag: 'q' },
+              { label: 'requestAnimationFrame placement in event loop', tag: 'c' },
+            ]
+          },
+          {
+            title: 'Promises',
+            items: [
+              { label: 'Promise states: pending, fulfilled, rejected', tag: 'q' },
+              { label: '.then(), .catch(), .finally() chaining', tag: 'q' },
+              { label: 'Promise.all() — fails fast', tag: 'q' },
+              { label: 'Promise.allSettled() — waits for all', tag: 'q' },
+              { label: 'Promise.race() — first to settle wins', tag: 'q' },
+              { label: 'Promise.any() — first fulfilled wins', tag: 'q' },
+              { label: 'Create custom promise from scratch', tag: 'q' },
+              { label: 'Promisification — convert callback to promise', tag: 'c' },
+            ]
+          },
+          {
+            title: 'Async/Await',
+            items: [
+              { label: 'async function always returns a Promise', tag: 'q' },
+              { label: 'await pauses only the async function, not whole thread', tag: 'q' },
+              { label: 'try/catch for error handling in async functions', tag: 'q' },
+              { label: 'Parallel execution — await Promise.all vs sequential await', tag: 'q' },
+              { label: 'Top-level await (ES2022)', tag: 'c' },
+              { label: 'async/await vs Promise chains — which to use', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'node-core',
+        name: 'Node.js — Core Concepts',
+        level: 'intermediate',
+        cards: [
+          {
+            title: 'Node.js Fundamentals',
+            items: [
+              { label: 'Node.js is single-threaded — V8 engine + libuv', tag: 'q' },
+              { label: 'Non-blocking I/O — how Node handles concurrency', tag: 'q' },
+              { label: 'Event-driven architecture', tag: 'q' },
+              { label: 'global object vs window in browser', tag: 'q' },
+              { label: 'process object — process.env, process.argv, process.exit', tag: 'c' },
+              { label: '__dirname and __filename', tag: 'c' },
+              { label: 'CommonJS (require/module.exports) vs ES Modules (import/export)', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Node.js Event Loop (Phases)',
+            items: [
+              { label: 'Phase 1: timers — setTimeout, setInterval', tag: 'q' },
+              { label: 'Phase 2: pending callbacks', tag: 'q' },
+              { label: 'Phase 3: idle, prepare', tag: 'c' },
+              { label: 'Phase 4: poll — I/O callbacks', tag: 'q' },
+              { label: 'Phase 5: check — setImmediate', tag: 'q' },
+              { label: 'Phase 6: close callbacks', tag: 'q' },
+              { label: 'process.nextTick vs setImmediate vs setTimeout(0)', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Streams & Buffers',
+            items: [
+              { label: 'Buffer — binary data in Node.js', tag: 'q' },
+              { label: 'Readable, Writable, Duplex, Transform streams', tag: 'q' },
+              { label: 'Piping streams — readable.pipe(writable)', tag: 'c' },
+              { label: 'Stream events: data, end, error, finish', tag: 'c' },
+              { label: 'Why streams are memory efficient', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Node.js — Modules & Error Handling',
+            items: [
+              { label: 'Module caching — require() caches modules', tag: 'q' },
+              { label: 'Circular dependencies — how to handle', tag: 'q' },
+              { label: 'cluster module — multi-process for CPU', tag: 'q' },
+              { label: 'child_process — spawn vs fork vs exec', tag: 'q' },
+              { label: 'Worker threads for CPU-intensive tasks', tag: 'c' },
+              { label: 'Uncaught exception vs unhandled rejection', tag: 'q' },
+              { label: 'EventEmitter — emit, on, once, off', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'express-core',
+        name: 'Express.js — Complete Guide',
+        level: 'intermediate',
+        cards: [
+          {
+            title: 'Middleware',
+            items: [
+              { label: 'Middleware signature — (req, res, next)', tag: 'q' },
+              { label: 'Application-level vs router-level middleware', tag: 'q' },
+              { label: 'Built-in middleware: express.json(), express.urlencoded(), express.static()', tag: 'c' },
+              { label: 'Third-party: cors, helmet, morgan, body-parser', tag: 'c' },
+              { label: 'Error-handling middleware — 4 args (err, req, res, next)', tag: 'q' },
+              { label: 'Middleware execution order matters', tag: 'q' },
+              { label: 'Custom middleware — logging, auth, rate limit', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Routing',
+            items: [
+              { label: 'express.Router() — modular routing', tag: 'q' },
+              { label: 'Route params — req.params', tag: 'c' },
+              { label: 'Query strings — req.query', tag: 'c' },
+              { label: 'Request body — req.body', tag: 'c' },
+              { label: 'Route chaining — .route().get().post()', tag: 'c' },
+              { label: 'Wildcard routes and 404 handler', tag: 'q' },
+            ]
+          },
+          {
+            title: 'REST API Design',
+            items: [
+              { label: 'RESTful principles — stateless, uniform interface', tag: 'q' },
+              { label: 'HTTP methods: GET, POST, PUT, PATCH, DELETE semantics', tag: 'q' },
+              { label: 'Status codes: 200, 201, 204, 400, 401, 403, 404, 409, 422, 500', tag: 'q' },
+              { label: 'CRUD to HTTP method mapping', tag: 'q' },
+              { label: 'API versioning strategies (/api/v1)', tag: 'c' },
+              { label: 'Request validation — express-validator or Joi', tag: 'c' },
+              { label: 'Pagination: offset-based vs cursor-based', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Authentication in Express',
+            items: [
+              { label: 'JWT — Header.Payload.Signature structure', tag: 'q' },
+              { label: 'JWT signing — jsonwebtoken library', tag: 'c' },
+              { label: 'Access token (short-lived) + Refresh token (long-lived)', tag: 'q' },
+              { label: 'Storing tokens — localStorage vs HttpOnly cookie', tag: 'q' },
+              { label: 'Auth middleware — verify token on protected routes', tag: 'q' },
+              { label: 'bcrypt — password hashing, salt rounds', tag: 'q' },
+              { label: 'Session-based auth vs token-based auth — differences', tag: 'q' },
+              { label: 'CORS — same-origin policy, preflight request', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'react-core',
+        name: 'React.js — Core Concepts',
+        level: 'intermediate',
+        cards: [
+          {
+            title: 'React Fundamentals',
+            items: [
+              { label: 'Virtual DOM — how reconciliation works', tag: 'q' },
+              { label: 'JSX — syntactic sugar for React.createElement', tag: 'q' },
+              { label: 'Component — function that returns JSX', tag: 'c' },
+              { label: 'Props — read-only, parent to child', tag: 'q' },
+              { label: 'State — mutable, triggers re-render', tag: 'q' },
+              { label: 'Controlled vs uncontrolled components', tag: 'q' },
+              { label: 'React keys — why important in lists', tag: 'q' },
+              { label: 'Conditional rendering patterns', tag: 'c' },
+            ]
+          },
+          {
+            title: 'Core Hooks',
+            items: [
+              { label: 'useState — state update is asynchronous', tag: 'q' },
+              { label: 'useState functional update — prev => prev + 1', tag: 'q' },
+              { label: 'useEffect — side effects, dependencies array', tag: 'q' },
+              { label: 'useEffect cleanup function — prevent memory leaks', tag: 'q' },
+              { label: 'useEffect with [] vs [dep] vs no array', tag: 'q' },
+              { label: 'useRef — DOM access + persist value without re-render', tag: 'q' },
+              { label: 'useContext — consume context', tag: 'q' },
+              { label: 'useReducer — complex state logic', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Performance Hooks',
+            items: [
+              { label: 'useMemo — memoize computed value', tag: 'q' },
+              { label: 'useCallback — memoize function reference', tag: 'q' },
+              { label: 'React.memo — prevent child re-render', tag: 'q' },
+              { label: 'When to use useMemo vs useCallback', tag: 'q' },
+              { label: 'Referential equality — why {} !== {} in JS', tag: 'q' },
+              { label: 'useTransition — defer non-urgent updates', tag: 't' },
+              { label: 'useDeferredValue — defer value update', tag: 't' },
+            ]
+          },
+          {
+            title: 'Custom Hooks',
+            items: [
+              { label: 'Custom hook rules — must start with "use"', tag: 'q' },
+              { label: 'useFetch — data fetching hook', tag: 'q' },
+              { label: 'useLocalStorage hook', tag: 'q' },
+              { label: 'useDebounce hook', tag: 'q' },
+              { label: 'useWindowSize hook', tag: 'c' },
+              { label: 'usePrevious — store previous value', tag: 'q' },
+              { label: 'Sharing logic without sharing UI', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'react-advanced',
+        name: 'React.js — Advanced',
+        level: 'advanced',
+        cards: [
+          {
+            title: 'State Management',
+            items: [
+              { label: 'Prop drilling problem — when Context helps', tag: 'q' },
+              { label: 'Context API — createContext, Provider, useContext', tag: 'q' },
+              { label: 'Redux — store, action, reducer, dispatch flow', tag: 'q' },
+              { label: 'Redux Toolkit — createSlice, createAsyncThunk', tag: 'q' },
+              { label: 'Selector — reading from store', tag: 'q' },
+              { label: 'Redux middleware — redux-thunk, redux-saga', tag: 'q' },
+              { label: 'Zustand — lightweight alternative to Redux', tag: 't' },
+              { label: 'Jotai / Recoil — atomic state', tag: 't' },
+            ]
+          },
+          {
+            title: 'React Router',
+            items: [
+              { label: 'BrowserRouter vs HashRouter', tag: 'q' },
+              { label: 'Routes, Route, Link, NavLink', tag: 'c' },
+              { label: 'useNavigate, useParams, useLocation, useSearchParams', tag: 'q' },
+              { label: 'Nested routes — Outlet component', tag: 'q' },
+              { label: 'Protected routes pattern', tag: 'q' },
+              { label: 'Lazy loading routes with React.lazy + Suspense', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Advanced Patterns',
+            items: [
+              { label: 'Higher Order Component (HOC)', tag: 'q' },
+              { label: 'Render Props pattern', tag: 'q' },
+              { label: 'Compound Components pattern', tag: 'q' },
+              { label: 'Error Boundaries — componentDidCatch', tag: 'q' },
+              { label: 'React.forwardRef — pass ref to child', tag: 'q' },
+              { label: 'useImperativeHandle — expose methods from child', tag: 'q' },
+              { label: 'React Portals — render outside DOM tree', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Data Fetching',
+            items: [
+              { label: 'fetch API vs axios — differences', tag: 'q' },
+              { label: 'TanStack Query (React Query) — caching, invalidation', tag: 'q' },
+              { label: 'SWR — stale-while-revalidate strategy', tag: 't' },
+              { label: 'useQuery, useMutation in React Query', tag: 'q' },
+              { label: 'Optimistic UI updates', tag: 'q' },
+              { label: 'Infinite scroll — useInfiniteQuery', tag: 'c' },
+              { label: 'AbortController — cancel fetch on unmount', tag: 'q' },
+            ]
+          },
+          {
+            title: 'React Performance',
+            items: [
+              { label: 'Code splitting — dynamic import()', tag: 'q' },
+              { label: 'React.lazy + Suspense for lazy components', tag: 'q' },
+              { label: 'Virtualization — react-window / react-virtual', tag: 'q' },
+              { label: 'Avoid anonymous functions in JSX', tag: 'q' },
+              { label: 'Profiler API — identify bottlenecks', tag: 'c' },
+              { label: 'State normalization to prevent unnecessary renders', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Testing React',
+            items: [
+              { label: 'Jest — test runner, describe, it, expect', tag: 'q' },
+              { label: 'React Testing Library — render, screen, fireEvent', tag: 'q' },
+              { label: 'getBy vs queryBy vs findBy', tag: 'q' },
+              { label: 'userEvent vs fireEvent', tag: 'q' },
+              { label: 'Mocking modules — jest.mock()', tag: 'q' },
+              { label: 'Testing custom hooks — renderHook', tag: 'q' },
+              { label: 'Snapshot testing — when to avoid', tag: 'c' },
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  spring: {
+    color: '#fb923c',
+    label: '☕ Spring Boot',
+    sections: [
+      {
+        id: 'spring-basics',
+        name: 'Java Fundamentals for Interview',
+        level: 'beginner',
+        cards: [
+          {
+            title: 'OOP Concepts',
+            items: [
+              { label: 'Encapsulation — private fields, public getters/setters', tag: 'q' },
+              { label: 'Inheritance — extends keyword, method overriding', tag: 'q' },
+              { label: 'Polymorphism — compile-time (overloading) vs runtime (overriding)', tag: 'q' },
+              { label: 'Abstraction — abstract class vs interface', tag: 'q' },
+              { label: 'Interface default and static methods (Java 8)', tag: 'q' },
+              { label: 'Functional interface — @FunctionalInterface', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Java 8+ Features',
+            items: [
+              { label: 'Lambda expressions — (a, b) -> a + b', tag: 'q' },
+              { label: 'Stream API — filter, map, reduce, collect', tag: 'q' },
+              { label: 'Optional — avoid NullPointerException', tag: 'q' },
+              { label: 'Method references — Class::method', tag: 'q' },
+              { label: 'Default methods in interfaces', tag: 'q' },
+              { label: 'LocalDate, LocalDateTime — java.time API', tag: 'c' },
+              { label: 'var keyword (Java 10)', tag: 'c' },
+              { label: 'Records (Java 16) — immutable data carriers', tag: 't' },
+            ]
+          },
+          {
+            title: 'Collections & Generics',
+            items: [
+              { label: 'List vs Set vs Map — differences', tag: 'q' },
+              { label: 'ArrayList vs LinkedList — when to use', tag: 'q' },
+              { label: 'HashMap — internal working, hashCode, equals', tag: 'q' },
+              { label: 'HashMap vs Hashtable vs ConcurrentHashMap', tag: 'q' },
+              { label: 'TreeMap vs LinkedHashMap', tag: 'q' },
+              { label: 'Generics — type safety, wildcards (? extends, ? super)', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'spring-core',
+        name: 'Spring Core — IoC & DI',
+        level: 'intermediate',
+        cards: [
+          {
+            title: 'IoC Container',
+            items: [
+              { label: 'Inversion of Control — framework controls object creation', tag: 'q' },
+              { label: 'ApplicationContext vs BeanFactory', tag: 'q' },
+              { label: 'Spring Bean — object managed by IoC container', tag: 'q' },
+              { label: 'Bean lifecycle: instantiation → DI → @PostConstruct → destroy', tag: 'q' },
+              { label: '@PostConstruct and @PreDestroy', tag: 'q' },
+              { label: 'Spring configuration: XML vs @Configuration vs @Component', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Dependency Injection',
+            items: [
+              { label: 'Constructor injection — preferred, immutable', tag: 'q' },
+              { label: 'Setter injection — optional dependencies', tag: 'q' },
+              { label: 'Field injection — @Autowired on field — avoid in prod', tag: 'q' },
+              { label: '@Autowired — byType injection', tag: 'q' },
+              { label: '@Qualifier — resolve multiple beans', tag: 'q' },
+              { label: '@Primary — default bean when multiple available', tag: 'q' },
+              { label: 'Circular dependency — constructor DI throws BeanCurrentlyInCreationException', tag: 'q' },
+              { label: '@Lazy — delay bean initialization', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Bean Scopes & Annotations',
+            items: [
+              { label: 'Singleton scope — one instance per context (default)', tag: 'q' },
+              { label: 'Prototype scope — new instance each time', tag: 'q' },
+              { label: 'Request, Session, Application scopes (web)', tag: 'q' },
+              { label: '@Component vs @Service vs @Repository vs @Controller', tag: 'q' },
+              { label: '@Configuration — defines beans with @Bean methods', tag: 'q' },
+              { label: '@Value — inject properties from application.properties', tag: 'c' },
+              { label: '@PropertySource — load external property files', tag: 'c' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'spring-boot-core',
+        name: 'Spring Boot — Auto Configuration',
+        level: 'intermediate',
+        cards: [
+          {
+            title: 'Spring Boot Internals',
+            items: [
+              { label: '@SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan', tag: 'q' },
+              { label: 'Auto-configuration — spring.factories / AutoConfiguration.imports', tag: 'q' },
+              { label: '@ConditionalOn* annotations — conditional beans', tag: 'q' },
+              { label: 'Embedded server — Tomcat by default', tag: 'q' },
+              { label: 'Fat JAR — self-contained executable', tag: 'q' },
+              { label: 'Spring Boot starters — what they include', tag: 'q' },
+              { label: 'application.properties vs application.yml', tag: 'c' },
+            ]
+          },
+          {
+            title: 'Configuration',
+            items: [
+              { label: '@ConfigurationProperties — bind properties to POJO', tag: 'q' },
+              { label: 'Profiles — @Profile, spring.profiles.active', tag: 'q' },
+              { label: 'Profile-specific properties — application-dev.yml', tag: 'q' },
+              { label: 'Environment abstraction', tag: 'c' },
+              { label: 'CommandLineRunner vs ApplicationRunner', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Spring Actuator',
+            items: [
+              { label: 'Actuator — production-ready features', tag: 'q' },
+              { label: '/actuator/health endpoint', tag: 'c' },
+              { label: '/actuator/info, /metrics, /env, /beans', tag: 'c' },
+              { label: 'Custom health indicator', tag: 'c' },
+              { label: 'Securing actuator endpoints', tag: 'c' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'spring-mvc',
+        name: 'Spring MVC — REST APIs',
+        level: 'intermediate',
+        cards: [
+          {
+            title: 'Controllers & Mappings',
+            items: [
+              { label: '@RestController = @Controller + @ResponseBody', tag: 'q' },
+              { label: '@GetMapping, @PostMapping, @PutMapping, @PatchMapping, @DeleteMapping', tag: 'c' },
+              { label: '@RequestMapping — flexible mapping', tag: 'c' },
+              { label: '@PathVariable — /users/{id}', tag: 'c' },
+              { label: '@RequestParam — /users?page=1', tag: 'c' },
+              { label: '@RequestHeader — extract headers', tag: 'c' },
+              { label: 'ResponseEntity<T> — full control over response', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Request/Response Handling',
+            items: [
+              { label: '@RequestBody — deserialize JSON to object', tag: 'q' },
+              { label: '@ResponseBody — serialize object to JSON', tag: 'q' },
+              { label: 'HttpMessageConverter — Jackson for JSON', tag: 'q' },
+              { label: 'Content negotiation — Accept header', tag: 'c' },
+              { label: '@Valid with bean validation — @NotNull, @Size, @Email', tag: 'q' },
+              { label: 'BindingResult — validation errors', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Exception Handling',
+            items: [
+              { label: '@ControllerAdvice — global exception handler', tag: 'q' },
+              { label: '@ExceptionHandler — handle specific exception', tag: 'q' },
+              { label: '@ResponseStatus — set HTTP status on exception class', tag: 'q' },
+              { label: 'Custom error response DTO', tag: 'q' },
+              { label: 'Problem Details (RFC 7807) — Spring 6', tag: 't' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'spring-jpa',
+        name: 'Spring Data JPA — Full Coverage',
+        level: 'intermediate',
+        cards: [
+          {
+            title: 'JPA Basics',
+            items: [
+              { label: 'JPA — specification, Hibernate — implementation', tag: 'q' },
+              { label: '@Entity — marks class as DB table', tag: 'c' },
+              { label: '@Table(name="...") — custom table name', tag: 'c' },
+              { label: '@Id — primary key', tag: 'c' },
+              { label: '@GeneratedValue strategies: AUTO, IDENTITY, SEQUENCE, TABLE', tag: 'q' },
+              { label: '@Column — column constraints, nullable, length', tag: 'c' },
+              { label: '@Transient — field not persisted', tag: 'c' },
+            ]
+          },
+          {
+            title: 'Relationships',
+            items: [
+              { label: '@OneToOne — @JoinColumn', tag: 'q' },
+              { label: '@OneToMany — mappedBy on the "one" side', tag: 'q' },
+              { label: '@ManyToOne — foreign key side', tag: 'q' },
+              { label: '@ManyToMany — @JoinTable with join columns', tag: 'q' },
+              { label: 'Bidirectional vs unidirectional — when to use', tag: 'q' },
+              { label: 'CascadeType: ALL, PERSIST, MERGE, REMOVE, REFRESH, DETACH', tag: 'q' },
+              { label: 'orphanRemoval=true — delete orphan entities', tag: 'q' },
+            ]
+          },
+          {
+            title: 'FetchType & N+1 Problem',
+            items: [
+              { label: 'FetchType.LAZY — load on access (default for collections)', tag: 'q' },
+              { label: 'FetchType.EAGER — load immediately (default for @ManyToOne)', tag: 'q' },
+              { label: 'N+1 problem — 1 query for parents + N queries for children', tag: 'q' },
+              { label: '@EntityGraph — fetch associations in single query', tag: 'q' },
+              { label: 'JOIN FETCH in JPQL', tag: 'q' },
+              { label: 'LazyInitializationException — access outside session', tag: 'q' },
+              { label: 'Batch fetching — hibernate.default_batch_fetch_size', tag: 'c' },
+            ]
+          },
+          {
+            title: 'Queries',
+            items: [
+              { label: 'JpaRepository — findById, findAll, save, delete, existsById', tag: 'c' },
+              { label: 'Derived query methods — findByEmailAndActive', tag: 'q' },
+              { label: 'JPQL — object-oriented query', tag: 'q' },
+              { label: 'Native SQL query — @Query(nativeQuery=true)', tag: 'q' },
+              { label: '@Modifying with @Query for UPDATE/DELETE', tag: 'q' },
+              { label: 'Specification API — dynamic queries', tag: 'c' },
+              { label: 'Querydsl — type-safe queries', tag: 't' },
+              { label: 'Pageable — pagination + sorting', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Auditing',
+            items: [
+              { label: '@CreatedDate, @LastModifiedDate — auto timestamps', tag: 'q' },
+              { label: '@EnableJpaAuditing annotation', tag: 'q' },
+              { label: '@EntityListeners(AuditingEntityListener.class)', tag: 'q' },
+              { label: '@CreatedBy, @LastModifiedBy — track user', tag: 'c' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'spring-tx',
+        name: 'Spring Transactions',
+        level: 'advanced',
+        cards: [
+          {
+            title: 'Transaction Basics',
+            items: [
+              { label: 'ACID — Atomicity, Consistency, Isolation, Durability', tag: 'q' },
+              { label: '@Transactional — declarative transaction management', tag: 'q' },
+              { label: '@EnableTransactionManagement', tag: 'c' },
+              { label: 'Rollback on RuntimeException (unchecked) by default', tag: 'q' },
+              { label: 'rollbackFor = {IOException.class} — checked exceptions', tag: 'q' },
+              { label: 'noRollbackFor — commit even on exception', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Propagation Types',
+            items: [
+              { label: 'REQUIRED — join existing or create new (default)', tag: 'q' },
+              { label: 'REQUIRES_NEW — always create new, suspend existing', tag: 'q' },
+              { label: 'SUPPORTS — join if exists, else non-transactional', tag: 'q' },
+              { label: 'NOT_SUPPORTED — suspend existing, run non-transactional', tag: 'q' },
+              { label: 'MANDATORY — must have existing transaction', tag: 'q' },
+              { label: 'NEVER — must not have existing transaction', tag: 'q' },
+              { label: 'NESTED — savepoint within outer transaction', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Isolation Levels',
+            items: [
+              { label: 'READ_UNCOMMITTED — dirty reads possible', tag: 'q' },
+              { label: 'READ_COMMITTED — prevents dirty reads (Postgres default)', tag: 'q' },
+              { label: 'REPEATABLE_READ — prevents non-repeatable reads (MySQL default)', tag: 'q' },
+              { label: 'SERIALIZABLE — fully isolated, slowest', tag: 'q' },
+              { label: 'Dirty read, phantom read, non-repeatable read — explain each', tag: 'q' },
+              { label: 'Self-invocation problem — @Transactional on same class method', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'spring-security',
+        name: 'Spring Security',
+        level: 'advanced',
+        cards: [
+          {
+            title: 'Security Filter Chain',
+            items: [
+              { label: 'DelegatingFilterProxy — bridges Servlet and Spring', tag: 'q' },
+              { label: 'FilterChainProxy — applies multiple security filters', tag: 'q' },
+              { label: 'Security filter order — authentication before authorization', tag: 'q' },
+              { label: 'SecurityContext — stores Authentication', tag: 'q' },
+              { label: 'Authentication object — principal, credentials, authorities', tag: 'q' },
+            ]
+          },
+          {
+            title: 'JWT with Spring Security',
+            items: [
+              { label: 'UserDetailsService — loadUserByUsername()', tag: 'q' },
+              { label: 'Custom JwtAuthenticationFilter — extends OncePerRequestFilter', tag: 'q' },
+              { label: 'Disable session — SessionCreationPolicy.STATELESS', tag: 'q' },
+              { label: 'Configure SecurityFilterChain @Bean', tag: 'q' },
+              { label: 'PasswordEncoder — BCryptPasswordEncoder bean', tag: 'q' },
+              { label: 'AuthenticationManager — authenticate()', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Authorization',
+            items: [
+              { label: '@EnableMethodSecurity (was @EnableGlobalMethodSecurity)', tag: 'q' },
+              { label: '@PreAuthorize("hasRole(\'ADMIN\')")', tag: 'q' },
+              { label: '@PostAuthorize — check after method execution', tag: 'q' },
+              { label: '@Secured("ROLE_USER")', tag: 'q' },
+              { label: 'Role-based vs Permission-based authorization', tag: 'q' },
+              { label: 'CORS configuration in Spring Security', tag: 'q' },
+              { label: 'CSRF — when to disable (REST APIs)', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'spring-advanced',
+        name: 'Spring Boot — Advanced',
+        level: 'expert',
+        cards: [
+          {
+            title: 'AOP — Aspect-Oriented Programming',
+            items: [
+              { label: 'Cross-cutting concerns — logging, security, transactions', tag: 'q' },
+              { label: '@Aspect, @EnableAspectJAutoProxy', tag: 'q' },
+              { label: 'Pointcut expression — execution()', tag: 'q' },
+              { label: '@Before, @After, @AfterReturning, @AfterThrowing', tag: 'q' },
+              { label: '@Around — ProceedingJoinPoint, proceed()', tag: 'q' },
+              { label: 'JDK proxy vs CGLIB proxy', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Caching',
+            items: [
+              { label: '@EnableCaching', tag: 'c' },
+              { label: '@Cacheable — cache return value', tag: 'q' },
+              { label: '@CacheEvict — remove from cache', tag: 'q' },
+              { label: '@CachePut — update cache', tag: 'q' },
+              { label: 'Cache providers — ConcurrentHashMap, Redis, Ehcache', tag: 'q' },
+              { label: 'Redis with Spring Boot — RedisTemplate, Jedis, Lettuce', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Async & Scheduling',
+            items: [
+              { label: '@EnableAsync + @Async — non-blocking method', tag: 'q' },
+              { label: '@Async returns void or Future<T> / CompletableFuture<T>', tag: 'q' },
+              { label: 'Custom thread pool for @Async', tag: 'q' },
+              { label: '@EnableScheduling + @Scheduled', tag: 'q' },
+              { label: 'fixedRate vs fixedDelay vs cron expression', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Microservices',
+            items: [
+              { label: 'Monolith vs Microservices — trade-offs', tag: 'q' },
+              { label: 'Spring Cloud Netflix — Eureka service registry', tag: 'q' },
+              { label: 'OpenFeign — declarative REST client', tag: 'q' },
+              { label: 'Circuit Breaker — Resilience4j, @CircuitBreaker', tag: 'q' },
+              { label: 'API Gateway — Spring Cloud Gateway routing', tag: 'q' },
+              { label: 'Distributed tracing — Zipkin, Sleuth', tag: 'q' },
+              { label: 'Message queue — Kafka/RabbitMQ with Spring', tag: 'q' },
+              { label: 'Saga pattern — distributed transactions', tag: 't' },
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  mongo: {
+    color: '#4ade80',
+    label: '🍃 MongoDB',
+    sections: [
+      {
+        id: 'mongo-basics',
+        name: 'MongoDB — Foundations',
+        level: 'beginner',
+        cards: [
+          {
+            title: 'Core Concepts',
+            items: [
+              { label: 'Document database — JSON-like BSON documents', tag: 'q' },
+              { label: 'Collection vs Table, Document vs Row, Field vs Column', tag: 'q' },
+              { label: 'BSON types — String, Int32, Int64, Double, Boolean, Date, ObjectId, Array, Embedded doc', tag: 'q' },
+              { label: 'ObjectId — 12-byte: timestamp(4) + random(5) + counter(3)', tag: 'q' },
+              { label: '_id field — default primary key', tag: 'q' },
+              { label: 'MongoDB vs RDBMS — schema flexibility, horizontal scaling', tag: 'q' },
+            ]
+          },
+          {
+            title: 'CRUD Operations',
+            items: [
+              { label: 'insertOne() and insertMany()', tag: 'c' },
+              { label: 'find() — cursor, toArray(), limit(), skip(), sort()', tag: 'c' },
+              { label: 'findOne() — returns single document', tag: 'c' },
+              { label: 'updateOne(), updateMany() — update operators', tag: 'c' },
+              { label: 'replaceOne() — replace entire document', tag: 'c' },
+              { label: 'deleteOne(), deleteMany()', tag: 'c' },
+              { label: 'findOneAndUpdate(), findOneAndDelete() — atomic', tag: 'q' },
+              { label: 'upsert: true — insert if not exists', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Query Operators',
+            items: [
+              { label: 'Comparison: $eq, $ne, $gt, $gte, $lt, $lte', tag: 'c' },
+              { label: '$in, $nin — match values in array', tag: 'c' },
+              { label: 'Logical: $and, $or, $not, $nor', tag: 'c' },
+              { label: '$exists — field presence check', tag: 'q' },
+              { label: '$type — match by BSON type', tag: 'q' },
+              { label: '$regex — pattern matching', tag: 'c' },
+              { label: '$where — JavaScript expression (avoid!)', tag: 'q' },
+              { label: 'Projection — {field: 1} include, {field: 0} exclude', tag: 'c' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'mongo-update',
+        name: 'MongoDB — Update Operators',
+        level: 'intermediate',
+        cards: [
+          {
+            title: 'Field Update Operators',
+            items: [
+              { label: '$set — set field value', tag: 'c' },
+              { label: '$unset — remove field', tag: 'c' },
+              { label: '$inc — increment/decrement numeric', tag: 'c' },
+              { label: '$mul — multiply field value', tag: 'c' },
+              { label: '$rename — rename field', tag: 'c' },
+              { label: '$setOnInsert — set only on upsert insert', tag: 'q' },
+              { label: '$currentDate — set to current date', tag: 'c' },
+              { label: '$min, $max — update only if less/greater', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Array Update Operators',
+            items: [
+              { label: '$push — append to array', tag: 'c' },
+              { label: '$pull — remove matching elements', tag: 'c' },
+              { label: '$addToSet — push only if not exists (unique)', tag: 'q' },
+              { label: '$pop — remove first(-1) or last(1) element', tag: 'q' },
+              { label: '$each — push multiple elements', tag: 'c' },
+              { label: '$slice with $push — limit array size', tag: 'q' },
+              { label: '$sort with $push — maintain sorted order', tag: 'q' },
+              { label: '$ positional operator — update matched array element', tag: 'q' },
+              { label: '$[] and $[identifier] filtered positional', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'mongo-schema',
+        name: 'MongoDB Schema Design',
+        level: 'intermediate',
+        cards: [
+          {
+            title: 'Embedding vs Referencing',
+            items: [
+              { label: 'Embedding — store related data in single document', tag: 'q' },
+              { label: 'Referencing — store ObjectId, use $lookup to join', tag: 'q' },
+              { label: 'Embed when: data accessed together, 1-to-few relationship', tag: 'q' },
+              { label: 'Reference when: 1-to-many, many-to-many, large arrays', tag: 'q' },
+              { label: 'Document size limit — 16MB BSON', tag: 'q' },
+              { label: 'Data duplication trade-off — faster reads vs update complexity', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Design Patterns',
+            items: [
+              { label: 'Bucket pattern — group time-series data', tag: 'q' },
+              { label: 'Outlier pattern — handle exceptional large documents', tag: 'q' },
+              { label: 'Computed pattern — pre-compute expensive operations', tag: 'q' },
+              { label: 'Polymorphic pattern — mixed types in same collection', tag: 'q' },
+              { label: 'Schema versioning pattern', tag: 'q' },
+              { label: 'Extended reference pattern — duplicate key fields', tag: 'q' },
+              { label: 'Attribute pattern — flexible metadata fields', tag: 'q' },
+              { label: 'Subset pattern — working set optimization', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Data Modeling for Interviews',
+            items: [
+              { label: 'Design user + posts + comments schema', tag: 'q' },
+              { label: 'Design product catalog with categories', tag: 'q' },
+              { label: 'Design real-time chat schema', tag: 'q' },
+              { label: 'Design e-commerce order schema', tag: 'q' },
+              { label: 'Design social media followers schema', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'mongo-aggregation',
+        name: 'MongoDB — Aggregation Pipeline',
+        level: 'advanced',
+        cards: [
+          {
+            title: 'Core Stages',
+            items: [
+              { label: '$match — filter (place first for index use)', tag: 'q' },
+              { label: '$project — reshape, include/exclude/add fields', tag: 'q' },
+              { label: '$group — group by _id, use accumulators', tag: 'q' },
+              { label: '$sort — sort documents', tag: 'c' },
+              { label: '$limit — limit result count', tag: 'c' },
+              { label: '$skip — skip documents (pagination)', tag: 'c' },
+              { label: '$count — count documents', tag: 'c' },
+              { label: '$unwind — deconstruct array field', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Lookup & Joins',
+            items: [
+              { label: '$lookup — left outer join between collections', tag: 'q' },
+              { label: '$lookup with pipeline — complex joins', tag: 'q' },
+              { label: '$lookup with let + match — correlated subquery', tag: 'q' },
+              { label: '$graphLookup — recursive lookup (hierarchy)', tag: 'q' },
+              { label: '$unwind + $lookup — common pattern', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Accumulators & Expressions',
+            items: [
+              { label: '$sum, $avg, $min, $max — group accumulators', tag: 'q' },
+              { label: '$first, $last — get first/last in group', tag: 'q' },
+              { label: '$push — collect into array', tag: 'q' },
+              { label: '$addToSet — collect unique into array', tag: 'q' },
+              { label: '$concat, $substr, $toLower, $toUpper — string ops', tag: 'c' },
+              { label: '$dateToString, $year, $month, $dayOfMonth', tag: 'c' },
+              { label: '$cond — if/then/else in aggregation', tag: 'q' },
+              { label: '$switch — multiple conditions', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Advanced Pipeline Stages',
+            items: [
+              { label: '$addFields / $set — add/update fields (non-destructive)', tag: 'q' },
+              { label: '$replaceRoot — replace doc with nested document', tag: 'q' },
+              { label: '$facet — multiple pipelines in single stage', tag: 'q' },
+              { label: '$bucket — categorize into ranges', tag: 'q' },
+              { label: '$bucketAuto — auto-determine bucket boundaries', tag: 'q' },
+              { label: '$out — write results to collection', tag: 'c' },
+              { label: '$merge — merge results into existing collection', tag: 'c' },
+              { label: '$sample — random documents', tag: 'c' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'mongo-indexing',
+        name: 'MongoDB — Indexing (Critical Topic)',
+        level: 'advanced',
+        cards: [
+          {
+            title: 'Index Types',
+            items: [
+              { label: 'Single field index — ascending (1) or descending (-1)', tag: 'q' },
+              { label: 'Compound index — order of fields matters (ESR rule)', tag: 'q' },
+              { label: 'ESR rule: Equality → Sort → Range', tag: 'q' },
+              { label: 'Multikey index — automatically created for array fields', tag: 'q' },
+              { label: 'Text index — full-text search, language stop words', tag: 'q' },
+              { label: '2dsphere index — geospatial queries', tag: 'c' },
+              { label: 'Hashed index — range queries not supported', tag: 'q' },
+              { label: 'Wildcard index — dynamic field names', tag: 'c' },
+            ]
+          },
+          {
+            title: 'Index Properties',
+            items: [
+              { label: 'Unique index — enforce uniqueness', tag: 'q' },
+              { label: 'Sparse index — only index documents with field', tag: 'q' },
+              { label: 'Partial index — index matching filter only', tag: 'q' },
+              { label: 'TTL index — auto-expire documents (expire after seconds)', tag: 'q' },
+              { label: 'Hidden index — exists but not used by query planner', tag: 'c' },
+              { label: 'Background index creation (deprecated in 4.2)', tag: 'c' },
+            ]
+          },
+          {
+            title: 'Query Analysis',
+            items: [
+              { label: 'explain() — queryPlanner, executionStats, allPlansExecution', tag: 'q' },
+              { label: 'COLLSCAN vs IXSCAN — collection scan vs index scan', tag: 'q' },
+              { label: 'Covered query — query served entirely from index', tag: 'q' },
+              { label: 'Index selectivity — high cardinality = better index', tag: 'q' },
+              { label: 'Index intersection — multiple indexes for one query', tag: 'q' },
+              { label: 'Hint() — force specific index usage', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'mongo-advanced',
+        name: 'MongoDB — Advanced & Production',
+        level: 'expert',
+        cards: [
+          {
+            title: 'Transactions',
+            items: [
+              { label: 'Multi-document transactions — introduced in 4.0', tag: 'q' },
+              { label: 'Transactions require replica set or sharded cluster', tag: 'q' },
+              { label: 'session.startTransaction() → operations → commitTransaction()', tag: 'q' },
+              { label: 'Snapshot isolation with transactions', tag: 'q' },
+              { label: 'Transaction performance overhead', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Replication',
+            items: [
+              { label: 'Replica Set — primary + secondaries + arbiters', tag: 'q' },
+              { label: 'Oplog — operations log for replication', tag: 'q' },
+              { label: 'Automatic failover — election of new primary', tag: 'q' },
+              { label: 'Write concern — w:1, w:"majority", w:0', tag: 'q' },
+              { label: 'Read preference — primary, primaryPreferred, secondary, nearest', tag: 'q' },
+              { label: 'Read concern — local, majority, linearizable', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Sharding',
+            items: [
+              { label: 'Sharding — horizontal scaling across shards', tag: 'q' },
+              { label: 'Shard key selection — cardinality, frequency, monotonic', tag: 'q' },
+              { label: 'Range sharding vs hash sharding', tag: 'q' },
+              { label: 'Chunks — unit of data migration between shards', tag: 'q' },
+              { label: 'mongos — query router for sharded cluster', tag: 'q' },
+              { label: 'Scatter-gather vs targeted queries', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Change Streams & Storage',
+            items: [
+              { label: 'Change Streams — real-time data change notifications', tag: 'q' },
+              { label: 'Change stream resume token', tag: 'c' },
+              { label: 'WiredTiger storage engine — compression, transactions', tag: 'q' },
+              { label: 'Capped collections — fixed size, FIFO', tag: 'q' },
+              { label: 'GridFS — store files larger than 16MB', tag: 'q' },
+              { label: 'Atlas Search — Lucene-based full-text search', tag: 'c' },
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  sql: {
+    color: '#c084fc',
+    label: '🗄️ SQL / RDBMS',
+    sections: [
+      {
+        id: 'sql-basics',
+        name: 'SQL — Foundations',
+        level: 'beginner',
+        cards: [
+          {
+            title: 'SQL Categories',
+            items: [
+              { label: 'DDL — CREATE, ALTER, DROP, TRUNCATE, RENAME', tag: 'q' },
+              { label: 'DML — SELECT, INSERT, UPDATE, DELETE', tag: 'q' },
+              { label: 'DCL — GRANT, REVOKE', tag: 'q' },
+              { label: 'TCL — COMMIT, ROLLBACK, SAVEPOINT', tag: 'q' },
+              { label: 'DQL — SELECT (sometimes separate from DML)', tag: 'c' },
+              { label: 'TRUNCATE vs DELETE — differences', tag: 'q' },
+              { label: 'DROP vs TRUNCATE vs DELETE comparison', tag: 'q' },
+            ]
+          },
+          {
+            title: 'SELECT Fundamentals',
+            items: [
+              { label: 'SELECT * vs specific columns — avoid SELECT *', tag: 'q' },
+              { label: 'WHERE clause filtering', tag: 'c' },
+              { label: 'ORDER BY — ASC/DESC, multiple columns', tag: 'c' },
+              { label: 'LIMIT / TOP / FETCH FIRST', tag: 'c' },
+              { label: 'DISTINCT — remove duplicates', tag: 'c' },
+              { label: 'AS — column/table aliasing', tag: 'c' },
+              { label: 'BETWEEN — inclusive range', tag: 'c' },
+              { label: 'IN, NOT IN — list of values', tag: 'c' },
+              { label: 'LIKE — % wildcard, _ single char', tag: 'c' },
+              { label: 'IS NULL, IS NOT NULL — null checks', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Aggregate Functions',
+            items: [
+              { label: 'COUNT(*) vs COUNT(column) — NULLs excluded in COUNT(col)', tag: 'q' },
+              { label: 'SUM, AVG, MIN, MAX', tag: 'c' },
+              { label: 'GROUP BY — group rows for aggregation', tag: 'q' },
+              { label: 'HAVING — filter after GROUP BY (vs WHERE)', tag: 'q' },
+              { label: 'WHERE vs HAVING — WHERE before, HAVING after grouping', tag: 'q' },
+              { label: 'ROLLUP — hierarchical subtotals', tag: 'q' },
+              { label: 'CUBE — all combinations of groupings', tag: 'c' },
+              { label: 'GROUPING SETS', tag: 'c' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'sql-joins',
+        name: 'SQL — Joins (Most Asked)',
+        level: 'intermediate',
+        cards: [
+          {
+            title: 'Join Types',
+            items: [
+              { label: 'INNER JOIN — matching rows in both tables', tag: 'q' },
+              { label: 'LEFT JOIN — all left + matching right (NULLs for no match)', tag: 'q' },
+              { label: 'RIGHT JOIN — all right + matching left', tag: 'q' },
+              { label: 'FULL OUTER JOIN — all rows from both tables', tag: 'q' },
+              { label: 'CROSS JOIN — Cartesian product', tag: 'q' },
+              { label: 'SELF JOIN — join table to itself', tag: 'q' },
+              { label: 'NATURAL JOIN — join on same-named columns', tag: 'c' },
+            ]
+          },
+          {
+            title: 'Join Techniques',
+            items: [
+              { label: 'Multiple table joins — joining 3+ tables', tag: 'q' },
+              { label: 'Non-equi join — join on range condition', tag: 'q' },
+              { label: 'Join vs subquery — when each is better', tag: 'q' },
+              { label: 'Find rows in left not in right — LEFT JOIN WHERE IS NULL', tag: 'q' },
+              { label: 'Employees without managers (self join)', tag: 'q' },
+              { label: 'Duplicate detection using self join', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Classic Join Problems',
+            items: [
+              { label: 'Nth highest salary using JOIN/subquery', tag: 'q' },
+              { label: 'Employees earning more than their manager', tag: 'q' },
+              { label: 'Find departments with no employees', tag: 'q' },
+              { label: 'Manager to employee hierarchy', tag: 'q' },
+              { label: 'Customers who never ordered', tag: 'q' },
+              { label: 'Products never sold', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'sql-subqueries',
+        name: 'SQL — Subqueries & CTEs',
+        level: 'intermediate',
+        cards: [
+          {
+            title: 'Subqueries',
+            items: [
+              { label: 'Scalar subquery — returns single value', tag: 'q' },
+              { label: 'Row subquery — returns single row', tag: 'c' },
+              { label: 'Table subquery — returns multiple rows', tag: 'q' },
+              { label: 'Correlated subquery — references outer query', tag: 'q' },
+              { label: 'Non-correlated subquery — independent', tag: 'q' },
+              { label: 'EXISTS vs IN — performance considerations', tag: 'q' },
+              { label: 'NOT EXISTS — find missing records', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Common Table Expressions (CTE)',
+            items: [
+              { label: 'WITH clause syntax', tag: 'q' },
+              { label: 'Multiple CTEs in one query', tag: 'q' },
+              { label: 'CTE vs subquery — readability wins', tag: 'q' },
+              { label: 'Recursive CTE — hierarchical data (org chart, tree)', tag: 'q' },
+              { label: 'Recursive CTE anatomy — anchor + recursive member + UNION ALL', tag: 'q' },
+              { label: 'CTE vs temp table vs derived table', tag: 'q' },
+              { label: 'CTE performance — not always materialized', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'sql-window',
+        name: 'SQL — Window Functions (🔥 Top Interview)',
+        level: 'advanced',
+        cards: [
+          {
+            title: 'Window Function Basics',
+            items: [
+              { label: 'OVER() clause — defines the window (partition + order)', tag: 'q' },
+              { label: 'PARTITION BY — divide rows into groups', tag: 'q' },
+              { label: 'ORDER BY inside OVER — defines frame order', tag: 'q' },
+              { label: 'Window vs GROUP BY — window keeps all rows', tag: 'q' },
+              { label: 'Frame clause — ROWS/RANGE BETWEEN', tag: 'q' },
+              { label: 'UNBOUNDED PRECEDING, CURRENT ROW, UNBOUNDED FOLLOWING', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Ranking Functions',
+            items: [
+              { label: 'ROW_NUMBER() — unique, no ties', tag: 'q' },
+              { label: 'RANK() — gaps for ties (1,1,3)', tag: 'q' },
+              { label: 'DENSE_RANK() — no gaps for ties (1,1,2)', tag: 'q' },
+              { label: 'NTILE(n) — divide into n buckets', tag: 'q' },
+              { label: 'ROW_NUMBER for deduplication — CTE + delete', tag: 'q' },
+              { label: 'RANK for Nth highest salary', tag: 'q' },
+              { label: 'Top N per group using ROW_NUMBER', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Value Functions',
+            items: [
+              { label: 'LAG(col, offset) — access previous row value', tag: 'q' },
+              { label: 'LEAD(col, offset) — access next row value', tag: 'q' },
+              { label: 'FIRST_VALUE(col) — first value in frame', tag: 'q' },
+              { label: 'LAST_VALUE(col) — last value in frame (beware frame!)', tag: 'q' },
+              { label: 'NTH_VALUE(col, n) — nth value in window', tag: 'q' },
+              { label: 'Month-over-month comparison using LAG', tag: 'q' },
+              { label: 'Calculate difference from previous row', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Aggregate as Window',
+            items: [
+              { label: 'SUM() OVER() — running total', tag: 'q' },
+              { label: 'AVG() OVER() — moving average', tag: 'q' },
+              { label: 'COUNT() OVER() — running count', tag: 'q' },
+              { label: 'SUM() OVER(PARTITION BY dept) — dept total on each row', tag: 'q' },
+              { label: 'Percentage of total — col/SUM() OVER()', tag: 'q' },
+              { label: '7-day moving average', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'sql-design',
+        name: 'SQL — Database Design & Normalization',
+        level: 'intermediate',
+        cards: [
+          {
+            title: 'Keys & Constraints',
+            items: [
+              { label: 'Primary Key — uniquely identifies row, NOT NULL', tag: 'q' },
+              { label: 'Foreign Key — referential integrity', tag: 'q' },
+              { label: 'Unique constraint — allows one NULL', tag: 'q' },
+              { label: 'NOT NULL constraint', tag: 'c' },
+              { label: 'CHECK constraint — validate data', tag: 'c' },
+              { label: 'DEFAULT constraint', tag: 'c' },
+              { label: 'Composite primary key', tag: 'q' },
+              { label: 'Surrogate key vs natural key', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Normalization',
+            items: [
+              { label: '1NF — atomic values, no repeating groups', tag: 'q' },
+              { label: '2NF — 1NF + no partial dependency (composite PK)', tag: 'q' },
+              { label: '3NF — 2NF + no transitive dependency', tag: 'q' },
+              { label: 'BCNF — every determinant is a candidate key', tag: 'q' },
+              { label: '4NF — no multi-valued dependencies', tag: 'q' },
+              { label: 'Denormalization — trade normal form for performance', tag: 'q' },
+              { label: 'When to denormalize — read-heavy, reporting', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Relationships',
+            items: [
+              { label: 'One-to-One — FK in either table', tag: 'q' },
+              { label: 'One-to-Many — FK on "many" side', tag: 'q' },
+              { label: 'Many-to-Many — junction/bridge table', tag: 'q' },
+              { label: 'ON DELETE CASCADE vs RESTRICT vs SET NULL', tag: 'q' },
+              { label: 'ER diagram — entities, attributes, relationships', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'sql-indexing',
+        name: 'SQL — Indexing & Performance',
+        level: 'advanced',
+        cards: [
+          {
+            title: 'Index Types',
+            items: [
+              { label: 'Clustered index — data physically sorted by index (one per table)', tag: 'q' },
+              { label: 'Non-clustered index — separate structure with row pointers', tag: 'q' },
+              { label: 'Composite index — multiple columns', tag: 'q' },
+              { label: 'Covering index — includes all queried columns', tag: 'q' },
+              { label: 'Filtered/Partial index — index on subset of rows', tag: 'q' },
+              { label: 'Function-based index — index on expression', tag: 'q' },
+              { label: 'Full-text index — for CONTAINS/FREETEXT queries', tag: 'c' },
+            ]
+          },
+          {
+            title: 'Index Best Practices',
+            items: [
+              { label: 'Index columns in WHERE, JOIN, ORDER BY', tag: 'q' },
+              { label: 'Avoid indexing low-cardinality columns (boolean)', tag: 'q' },
+              { label: 'Index kills on left side of LIKE ("%text%" vs "text%")', tag: 'q' },
+              { label: 'Functions on indexed column break index', tag: 'q' },
+              { label: 'Too many indexes hurt INSERT/UPDATE/DELETE', tag: 'q' },
+              { label: 'Index order in composite — most selective first', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Query Optimization',
+            items: [
+              { label: 'EXPLAIN / EXPLAIN ANALYZE — read execution plan', tag: 'q' },
+              { label: 'Seq Scan vs Index Scan vs Index Only Scan', tag: 'q' },
+              { label: 'Avoid SELECT * — fetch only needed columns', tag: 'q' },
+              { label: 'Use LIMIT for large result sets', tag: 'c' },
+              { label: 'Avoid OR on indexed columns — use UNION', tag: 'q' },
+              { label: 'EXISTS vs COUNT — exists stops at first match', tag: 'q' },
+              { label: 'Avoid implicit type conversion — index breaks', tag: 'q' },
+              { label: 'Statistics — UPDATE STATISTICS, ANALYZE', tag: 'c' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'sql-transactions',
+        name: 'SQL — Transactions & Concurrency',
+        level: 'advanced',
+        cards: [
+          {
+            title: 'Transaction Basics',
+            items: [
+              { label: 'BEGIN / START TRANSACTION', tag: 'c' },
+              { label: 'COMMIT — persist changes', tag: 'c' },
+              { label: 'ROLLBACK — undo changes', tag: 'c' },
+              { label: 'SAVEPOINT name — partial rollback point', tag: 'q' },
+              { label: 'ROLLBACK TO SAVEPOINT', tag: 'q' },
+              { label: 'Implicit vs Explicit transactions', tag: 'q' },
+              { label: 'Autocommit mode', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Isolation Levels',
+            items: [
+              { label: 'READ UNCOMMITTED — dirty reads allowed', tag: 'q' },
+              { label: 'READ COMMITTED — no dirty reads', tag: 'q' },
+              { label: 'REPEATABLE READ — no non-repeatable reads', tag: 'q' },
+              { label: 'SERIALIZABLE — fully isolated', tag: 'q' },
+              { label: 'Dirty read — read uncommitted data', tag: 'q' },
+              { label: 'Non-repeatable read — different value on reread', tag: 'q' },
+              { label: 'Phantom read — different rows on reread', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Locks & Deadlocks',
+            items: [
+              { label: 'Shared lock (S) — read lock', tag: 'q' },
+              { label: 'Exclusive lock (X) — write lock', tag: 'q' },
+              { label: 'Row-level vs table-level locking', tag: 'q' },
+              { label: 'Deadlock — two transactions waiting on each other', tag: 'q' },
+              { label: 'Deadlock detection and victim selection', tag: 'q' },
+              { label: 'Optimistic locking — version/timestamp column', tag: 'q' },
+              { label: 'Pessimistic locking — SELECT FOR UPDATE', tag: 'q' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'sql-interview',
+        name: 'SQL — Real Interview Questions',
+        level: 'expert',
+        cards: [
+          {
+            title: 'Classic Interview Queries',
+            items: [
+              { label: 'Nth highest salary (ROW_NUMBER, DENSE_RANK, subquery)', tag: 'q' },
+              { label: 'Delete duplicate rows keeping one (ROW_NUMBER CTE)', tag: 'q' },
+              { label: 'Find consecutive dates with no gaps', tag: 'q' },
+              { label: 'Running total of sales per month', tag: 'q' },
+              { label: 'Top 3 earners per department', tag: 'q' },
+              { label: 'Employees hired same month as their manager', tag: 'q' },
+              { label: 'Pivot table — rows to columns', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Advanced Query Patterns',
+            items: [
+              { label: 'Islands and Gaps problem', tag: 'q' },
+              { label: 'Median calculation in SQL', tag: 'q' },
+              { label: 'Mode — most frequent value', tag: 'q' },
+              { label: 'Longest consecutive streak', tag: 'q' },
+              { label: 'Cumulative distribution (CUME_DIST, PERCENT_RANK)', tag: 'q' },
+              { label: 'Transpose columns to rows (UNPIVOT)', tag: 'q' },
+              { label: 'First and last record per group', tag: 'q' },
+            ]
+          },
+          {
+            title: 'Stored Procedures & Functions',
+            items: [
+              { label: 'Stored procedure — precompiled SQL block', tag: 'q' },
+              { label: 'Function — returns value, used in SELECT', tag: 'q' },
+              { label: 'SP vs function — when to use each', tag: 'q' },
+              { label: 'Trigger — fires on INSERT/UPDATE/DELETE', tag: 'q' },
+              { label: 'View — virtual table from SELECT', tag: 'q' },
+              { label: 'Materialized view — stored result set', tag: 'q' },
+              { label: 'Cursor — row-by-row processing (avoid!)', tag: 'q' },
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+
+const TIPS = [
+  { e:'🎯', t:'STAR Method for Behavioral', b:'Structure: Situation → Task → Action → Result. Prepare 5 stories: debugging crisis, deadline pressure, team conflict, architecture decision, failed project & learning.' },
+  { e:'💡', t:'Explain Projects with Depth', b:'For every project be ready to answer: Why this tech stack? Biggest technical challenge? How would you scale it? What would you do differently now?' },
+  { e:'🔄', t:'Event Loop Output Questions', b:'Practice predicting console.log output with mixed setTimeout, Promise, and process.nextTick. Order: <code>nextTick</code> → <code>Promise.then</code> → <code>setTimeout</code>' },
+  { e:'🏗️', t:'System Design Basics', b:'Know: Load balancer, Redis caching, CDN, horizontal vs vertical scaling, DB sharding, message queues (Kafka), API gateway, microservices trade-offs.' },
+  { e:'⚡', t:'Live Coding Strategy', b:'Always: Read loud → clarify → brute force first → optimize. State time/space complexity. Test with edge cases: empty, null, single element, large input.' },
+  { e:'🔍', t:'SQL Window Functions', b:'The most asked SQL topic in interviews. Master: <code>ROW_NUMBER()</code>, <code>RANK()</code>, <code>LAG()</code>, <code>LEAD()</code>, <code>SUM() OVER(PARTITION BY)</code>. Practice on LeetCode SQL section.' },
+  { e:'☕', t:'Spring Boot Top 5 Topics', b:'Interviewers love: 1) Bean lifecycle, 2) @Transactional gotchas (self-invocation!), 3) JPA N+1 problem, 4) JWT Security filter chain, 5) @Async and @Scheduled.' },
+  { e:'🍃', t:'MongoDB Schema vs SQL Schema', b:'Key decision: embed vs reference. Rule of thumb: embed for 1-to-few, reference for 1-to-many. Always explain trade-offs of data duplication vs join overhead.' },
+  { e:'📐', t:'Big-O for Interviews', b:'Know: Arrays O(1) access, HashMap O(1) avg, Sort O(n log n), Binary Search O(log n). For each DSA problem, state space/time complexity before coding.' },
+  { e:'🧪', t:'Testing Knowledge', b:'Unit = test one function in isolation. Integration = test multiple components together. E2E = test full flow. Know Jest + RTL for React, JUnit + Mockito for Java.' },
+  { e:'🔐', t:'JWT Deep Dive', b:'Structure: <code>header.payload.signature</code>. Access token (15min) + Refresh token (7d). Store access in memory, refresh in HttpOnly cookie. Know the XSS vs CSRF trade-off.' },
+  { e:'📊', t:'DSA Daily Practice', b:'Focus areas: Two pointer, Sliding window, BFS/DFS, Binary search, HashMap patterns. Do 2 LeetCode Mediums daily. Review patterns, not just solutions.' },
+];
+
+// ========== localStorage helpers ==========
+const LS_KEY = 'interview_prep_v3';
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }
+  catch(e) { return {}; }
+}
+
+function saveState(state) {
+  localStorage.setItem(LS_KEY, JSON.stringify(state));
+}
+
+let state = loadState();
+
+function isChecked(key) { return !!state[key]; }
+function toggle(key) {
+  state[key] = !state[key];
+  saveState(state);
+}
+
+// ========== Render ==========
+function itemKey(track, sectionId, cardTitle, label) {
+  return `${track}::${sectionId}::${cardTitle}::${label}`;
+}
+
+function renderCard(track, sectionId, card, color) {
+  const div = document.createElement('div');
+  div.className = 'card';
+
+  const bar = document.createElement('div');
+  bar.className = 'card-top-bar';
+  bar.style.background = color;
+  div.appendChild(bar);
+
+  const inner = document.createElement('div');
+  inner.className = 'card-inner';
+
+  const titleEl = document.createElement('div');
+  titleEl.className = 'card-title';
+  titleEl.textContent = card.title;
+  inner.appendChild(titleEl);
+
+  const ul = document.createElement('ul');
+  ul.className = 'items';
+
+  const keys = card.items.map(item => itemKey(track, sectionId, card.title, item.label));
+
+  card.items.forEach((item, idx) => {
+    const key = keys[idx];
+    const li = document.createElement('li');
+    li.className = 'item' + (isChecked(key) ? ' done' : '');
+    li.dataset.key = key;
+
+    const cb = document.createElement('div');
+    cb.className = 'checkbox';
+    if(isChecked(key)) {
+      cb.style.background = color;
+      cb.textContent = '✓';
+    }
+
+    const lbl = document.createElement('span');
+    lbl.className = 'label';
+    lbl.textContent = item.label;
+
+    li.appendChild(cb);
+    li.appendChild(lbl);
+
+    if(item.tag) {
+      const tag = document.createElement('span');
+      tag.className = `item-tag tag-${item.tag}`;
+      tag.textContent = item.tag === 'q' ? 'Q' : item.tag === 'c' ? 'Code' : 'New';
+      li.appendChild(tag);
+    }
+
+    li.addEventListener('click', () => {
+      toggle(key);
+      const done = isChecked(key);
+      li.classList.toggle('done', done);
+      cb.style.background = done ? color : '';
+      cb.textContent = done ? '✓' : '';
+      updateCardFooter(div, keys, color);
+      updateAllProgress();
+    });
+
+    ul.appendChild(li);
+  });
+
+  inner.appendChild(ul);
+  div.appendChild(inner);
+
+  const footer = document.createElement('div');
+  footer.className = 'card-footer';
+  footer.dataset.cfkeys = keys.join('|');
+  footer.dataset.color = color;
+
+  const countEl = document.createElement('span');
+  countEl.className = 'cf-count';
+  const cfBar = document.createElement('div');
+  cfBar.className = 'cf-bar';
+  const cfFill = document.createElement('div');
+  cfFill.className = 'cf-fill';
+  cfFill.style.background = color;
+  cfBar.appendChild(cfFill);
+  footer.appendChild(countEl);
+  footer.appendChild(cfBar);
+  div.appendChild(footer);
+
+  updateCardFooter(div, keys, color);
+  return div;
+}
+
+function updateCardFooter(card, keys, color) {
+  const done = keys.filter(k => isChecked(k)).length;
+  const total = keys.length;
+  const pct = total ? Math.round(done/total*100) : 0;
+  const footer = card.querySelector('.card-footer');
+  footer.querySelector('.cf-count').textContent = `${done}/${total}`;
+  footer.querySelector('.cf-fill').style.width = pct + '%';
+}
+
+function renderSection(track, section, color) {
+  const wrap = document.createElement('div');
+  wrap.className = 'section';
+
+  const hdr = document.createElement('div');
+  hdr.className = 'section-hdr';
+
+  const num = document.createElement('div');
+  num.className = 'section-num';
+
+  const name = document.createElement('div');
+  name.className = 'section-name';
+  name.textContent = section.name;
+
+  const badge = document.createElement('div');
+  badge.className = `section-badge lvl-${section.level}`;
+  badge.textContent = section.level;
+
+  const progWrap = document.createElement('div');
+  progWrap.className = 'section-progress';
+  const pctEl = document.createElement('span');
+  pctEl.className = 'sp-pct';
+  const spBar = document.createElement('div');
+  spBar.className = 'sp-bar';
+  const spFill = document.createElement('div');
+  spFill.className = 'sp-fill';
+  spFill.style.background = color;
+  spBar.appendChild(spFill);
+  progWrap.appendChild(pctEl);
+  progWrap.appendChild(spBar);
+
+  hdr.appendChild(num);
+  hdr.appendChild(name);
+  hdr.appendChild(badge);
+  hdr.appendChild(progWrap);
+  wrap.appendChild(hdr);
+
+  const grid = document.createElement('div');
+  grid.className = 'cards-grid';
+
+  let allKeys = [];
+  section.cards.forEach(card => {
+    const cardEl = renderCard(track, section.id, card, color);
+    grid.appendChild(cardEl);
+    const keys = card.items.map(item => itemKey(track, section.id, card.title, item.label));
+    allKeys = allKeys.concat(keys);
+  });
+
+  wrap.dataset.keys = allKeys.join('|');
+  wrap.dataset.spfill = '';
+  spFill.dataset.keys = allKeys.join('|');
+  pctEl.dataset.keys = allKeys.join('|');
+
+  function updateSectionProgress() {
+    const keys = allKeys;
+    const done = keys.filter(k => isChecked(k)).length;
+    const pct = keys.length ? Math.round(done/keys.length*100) : 0;
+    spFill.style.width = pct + '%';
+    pctEl.textContent = pct + '%';
+  }
+  updateSectionProgress();
+
+  wrap.addEventListener('click', () => { setTimeout(updateSectionProgress, 10); });
+  wrap.appendChild(grid);
+  return { el: wrap, keys: allKeys };
+}
+
+function renderTrack(trackKey) {
+  const track = ROADMAP[trackKey];
+  const container = document.getElementById(`panel-${trackKey}`);
+  container.innerHTML = '';
+  let allKeys = [];
+  track.sections.forEach((section, i) => {
+    const { el, keys } = renderSection(trackKey, section, track.color);
+    el.querySelector('.section-num').textContent = String(i+1).padStart(2,'0');
+    container.appendChild(el);
+    allKeys = allKeys.concat(keys);
+  });
+  return allKeys;
+}
+
+function renderAll() {
+  const container = document.getElementById('panel-all');
+  container.innerHTML = '';
+  Object.keys(ROADMAP).forEach(trackKey => {
+    const track = ROADMAP[trackKey];
+    const hdr = document.createElement('div');
+    hdr.style.cssText = `font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:${track.color};margin:32px 0 16px;padding-bottom:10px;border-bottom:2px solid ${track.color}22;`;
+    hdr.textContent = track.label;
+    container.appendChild(hdr);
+
+    track.sections.forEach((section, i) => {
+      const { el } = renderSection(trackKey, section, track.color);
+      el.querySelector('.section-num').textContent = String(i+1).padStart(2,'0');
+      container.appendChild(el);
+    });
+  });
+}
+
+function renderTips() {
+  const container = document.getElementById('panel-tips');
+  container.innerHTML = '';
+  const grid = document.createElement('div');
+  grid.className = 'tips-grid';
+  TIPS.forEach(tip => {
+    const card = document.createElement('div');
+    card.className = 'tip-card';
+    card.innerHTML = `<div class="tip-em">${tip.e}</div><div class="tip-t">${tip.t}</div><div class="tip-b">${tip.b}</div>`;
+    grid.appendChild(card);
+  });
+  container.appendChild(grid);
+}
+
+// Track keys for counting
+let trackKeys = {};
+
+function buildTrackKeys() {
+  Object.keys(ROADMAP).forEach(trackKey => {
+    const track = ROADMAP[trackKey];
+    let keys = [];
+    track.sections.forEach(section => {
+      section.cards.forEach(card => {
+        card.items.forEach(item => {
+          keys.push(itemKey(trackKey, section.id, card.title, item.label));
+        });
+      });
+    });
+    trackKeys[trackKey] = keys;
+  });
+}
+
+function updateAllProgress() {
+  let totalDone = 0, totalAll = 0;
+  ['mern','spring','mongo','sql'].forEach(t => {
+    const keys = trackKeys[t];
+    const done = keys.filter(k => isChecked(k)).length;
+    const total = keys.length;
+    const pct = total ? Math.round(done/total*100) : 0;
+    document.getElementById(`${t}-fill`).style.width = pct+'%';
+    document.getElementById(`${t}-stat`).textContent = `${done}/${total} · ${pct}%`;
+    totalDone += done;
+    totalAll += total;
+  });
+  const oPct = totalAll ? Math.round(totalDone/totalAll*100) : 0;
+  document.getElementById('done-total').textContent = totalDone;
+  document.getElementById('all-total').textContent = totalAll;
+  document.getElementById('overall-pct').textContent = oPct + '%';
+}
+
+function resetAll() {
+  if(!confirm('Reset ALL progress? This cannot be undone.')) return;
+  state = {};
+  saveState(state);
+  init();
+}
+
+// Tabs
+function initTabs() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(`panel-${btn.dataset.t}`).classList.add('active');
+    });
+  });
+}
+
+function init() {
+  buildTrackKeys();
+  renderAll();
+  renderTrack('mern');
+  renderTrack('spring');
+  renderTrack('mongo');
+  renderTrack('sql');
+  renderTips();
+  initTabs();
+  updateAllProgress();
+  // Re-attach update on all clicks
+  document.querySelectorAll('.item').forEach(el => {
+    el.addEventListener('click', () => setTimeout(updateAllProgress, 20));
+  });
+}
+
+init();
+</script>
+</body>
+</html>
